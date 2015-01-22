@@ -14,6 +14,8 @@
  *= require_tree .
  *= require_self
  */
+
+ /*For Bootstrap*/
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../assets/glyphicons-halflings-regular.eot');
@@ -22,3 +24,27 @@
        url('../assets/glyphicons-halflings-regular.ttf') format('truetype'), 
        url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
+
+.custom > li > a {
+    color: white;
+    font-family: focus;
+}
+.custom > li > a:hover {
+    background: #2980b9;
+    color: #2c3e50;
+}
+
+.custom > li > a:focus {
+    background: #2980b9;
+    color: #2c3e50;
+}
+
+.navbar-toggle .icon-bar {
+	background-color:white;
+}
+
+.header_band {
+  background-color: rgb(41, 128, 185);
+  box-shadow: 2.5px 4.33px 0px 0px rgba(41, 128, 185, 0.5);
+}
+
