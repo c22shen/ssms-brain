@@ -8,6 +8,7 @@ resources :articles do
 end
 
 resources :messages
+resources :statuses
 
 
 
