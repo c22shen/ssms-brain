@@ -1,0 +1,98 @@
+<%= render 'navbar' %>
+ <div class="dc-jumbotron">
+ 	<div class="dc-big-pic-text">
+
+      </div>
+ </div>
+
+ <div class="library-info-section">
+ 	<div class="container">
+ 		<div class="row">
+ 			
+ 			 	<div class="col-md-6">
+ 		<div class="rank" style="
+  border-radius: 4px;
+  background-color: rgb(41, 128, 185);
+  box-shadow: inset 2.5px 4.33px 0px 0px rgba(255, 255, 255, 0.004);
+    width: 190px;
+  height: 230px;
+  display: block;
+  margin: 10px auto;
+   border-bottom-style: solid;
+   border-width: 5px;
+   border-color: white;
+"> 
+<div class="text-center" style="
+  font-size: 100px;
+  font-family: 'Blanka';
+  color: rgb(255, 255, 255);
+  line-height: 0.329;
+  padding: 50px;
+">1 </div>
+
+<div class="rank" style="
+  font-size: 50px;
+  font-family: 'Roboto';
+  color: rgb(255, 255, 255);
+  line-height: 1.2;
+  text-align: center;
+">
+	RANK
+</div>
+
+
+ 			
+ 		</div>
+ 	</div>
+
+ 	<div class="col-md-6">
+ 		<div class="percentage-container" style="width: 50%;
+    margin: 0 auto;
+">
+ 		<div class="c100 p50 big green" >
+                    <span style="
+  font-family: 'Roboto';
+  color: rgb(255, 255, 255);
+
+">50%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                </div>
+
+ 	</div>	
+ 		</div>
+ 	</div>
+
+ </div>
+
+ <div class="library-map-section">
+ 	<div class="container">
+ 	<table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Library</th>
+          <th>uid</th>
+          <th>status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+	<% Status.all.each do |status| %>
+        <tr>
+
+
+          <td>Davis Centre</td>
+          <td><%=status.uid %></td>
+          <td><%= status.status %></td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+ </div>
+ </div>
+
+
+

@@ -9,6 +9,7 @@ end
 
 resources :messages
 resources :statuses
+resources :libraries
 
 
 
