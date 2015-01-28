@@ -65,7 +65,7 @@
     </div><!-- /.container -->
     </div>
 
-    <div class=" webapp-section">
+    <div class=" webapp-section">      
       <div class="container">
         <div class="row">
           <div class="col-md-8">
@@ -265,6 +265,7 @@ University of Waterloo Mechatronics Engineering
   </div>
    <div class="row">
 <%= form_for :message, remote: true, url: messages_path do |f| %>
+ <%= @message.errors.full_messages.first if @message.errors.any? %>
   <div class="col-md-6">
 
     <%= f.text_field :name, :placeholder => 'Name', :class => 'name-field'%>
@@ -275,7 +276,6 @@ University of Waterloo Mechatronics Engineering
 
     <%= f.text_area :message, :placeholder => 'Message', :class => 'message-field'  %>
    </div>
-
   <div class="col-md-6">
     <%#= f.submit 'SEND', :class => "submit-btn" %>
 
