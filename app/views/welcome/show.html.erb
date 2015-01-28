@@ -267,22 +267,41 @@ University of Waterloo Mechatronics Engineering
 <%= form_for :message, remote: true, url: messages_path do |f| %>
   <div class="col-md-6">
 
-    <%= f.text_field :name, :value => "Name", :class => 'name-field'%>
-    <%= f.text_field :email, :value => "Email", :class => 'email-field' %>
+    <%= f.text_field :name, :placeholder => 'Name', :class => 'name-field'%>
+    <%= f.text_field :email, :placeholder => 'Email', :class => 'email-field' %>
   </div>
  
   <div class="col-md-6">
 
-    <%= f.text_area :message, :value => "Message", :class => 'message-field'  %>
+    <%= f.text_area :message, :placeholder => 'Message', :class => 'message-field'  %>
    </div>
 
   <div class="col-md-6">
     <%#= f.submit 'SEND', :class => "submit-btn" %>
 
-      <button type="submit" class="submit-btn">
+      <button type="submit" class="submit-btn" data-toggle="modal" data-target="#myModal">
         SEND
                 <i class="fa fa-send-o"></i> 
             </button>
+
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background:#2980b9">
+      <h1 class="text-center" style="font-size: 72px;
+  font-family: 'Roboto';
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  line-height: 0.806;
+  margin: 50px auto;">MESSAGE SENT!</h1>
+    <button type="button" class="btn btn-success btn-lg" style="margin:20px auto; display:block" data-dismiss="modal">OKAY</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
  </div>
 
 <% end %>

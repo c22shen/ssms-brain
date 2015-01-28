@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
 		@message = Message.new(message_params)
 		@message.save!
 		# redirect_to 'welcome_url'
+		render nothing: true
 	end
 private
   	def message_params
