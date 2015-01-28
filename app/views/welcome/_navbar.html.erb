@@ -12,10 +12,22 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse  pull-right">
           <ul class="nav navbar-nav custom">
-            <li class=""><a href="#" >ABOUT</a></li>
-            <li><a href="#about" >WEB APP</a></li>
-            <li><a href="#contact" >TEAM</a></li>
-            <li><a href="#contact" >CONTACT US</a></li>
+
+
+            <li >
+              <%= content_tag("a","ABOUT", :style=> "", id: 'about') %>
+            </li>
+            <li>
+              <%= content_tag("a","WEB APP", :style=> "", id: 'webapp') %>
+            </li>
+             <li>
+              <%= content_tag("a","TEAM", :style=> "", id: 'team') %>
+
+            </li>
+            <li>
+              <%= content_tag("a","CONTACT US", :style=> "", id: 'contact') %>
+            </li>
+           
           </ul>
         </div><!--/.nav-collapse -->
       </div>
