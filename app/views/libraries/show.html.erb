@@ -129,21 +129,39 @@
                 enabled: false,
                 text: ''
             },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            lineColor: 'transparent',
+
+            minorTickLength: 0,
+            tickLength: 0
         },
         yAxis: {
             title: {
                 enabled: false,
                 text: ''
-            }
+            },
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            lineColor: 'transparent',
+            gridLineColor: 'transparent',
+            
+            minorTickLength: 0,
+            tickLength: 0
         },
         legend: {
             layout: 'vertical',
             align: 'left',
             verticalAlign: 'top',
-            x: 100,
+            x: 0,
             y: 70,
             floating: true,
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
