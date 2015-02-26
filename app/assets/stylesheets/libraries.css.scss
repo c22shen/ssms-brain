@@ -1,6 +1,25 @@
 // Place all the styles related to the Libraries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.tile {
+	width: 229px; 
+	height: 230px; 
+	margin-bottom:100px; 
+	background-image: image-url('tile.png');
+	margin-bottom:100px;
+}
+
+.new-tile {
+	width: 229px; 
+	height: 230px; 
+	margin-bottom:100px; 
+	background-image: image-url('new_tile.png');
+	margin-bottom:100px;
+}
+
+
+
 .dc-jumbotron {
 	background: asset-url("dc_jumbotron.png") no-repeat center center fixed; 
 	height: 600px;
