@@ -1,5 +1,8 @@
 class LibrariesController < ApplicationController
-	def show
+	def index 
+            
+      end
+      def show
 		@data1 = Array.new
 
             (1..20).each do |i|

@@ -13,5 +13,11 @@
 #   elemTop = $(elem).offset().top
 #   elemBottom = elemTop + $(elem).height()
 #   elemBottom <= docViewBottom and elemTop >= docViewTop
-
+$(document).ready ->
+  $('.modal-finish').click ->
+    $('#message_name').val ''
+    $('#message_email').val ''
+    $('#message_message').val ''
+    return
+  return
 
