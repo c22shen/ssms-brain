@@ -1,0 +1,72 @@
+.artGroup {
+	display:block;
+	width:200px;
+	height:182px;
+	position:relative;
+	margin-bottom:30px;
+	margin-right:20px;
+	float:left;
+}
+.artwork {
+	display:block;
+	width:100%;
+	height:100%;
+}
+.artGroup img {
+	width:100%;
+	height:100%;
+	position:absolute;
+	display:block;
+}
+.artGroup .detail {
+	display:block;
+	width:100%;
+	height:100%;
+	position:absolute;
+	background:#fff;
+}
+.artGroup .detail p {
+	font-size: 12px;
+	text-align: left;
+}
+/*	Without CSS3 */
+.artGroup.slide {
+	overflow: hidden;
+}
+.artGroup.slide .detail {
+	bottom:-364px;
+}
+/*  CSS3 Flip */	
+.artGroup.flip {
+	-webkit-perspective:800px;
+	-moz-perspective:800px;
+	-ms-perspective:800px;
+	-o-perspective:800px;
+	perspective:800px;
+}
+.artGroup.flip .artwork {
+	-webkit-transition: -webkit-transform 1s;
+	-moz-transition: -moz-transform 1s;
+	-ms-transition: -ms-transform 1s;
+	-o-transition: -o-transform 1s;
+	transition: transform 1s;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.artGroup.flip .detail, .artGroup.flip .theFlip {
+	-webkit-transform: rotateY(-180deg);
+	-moz-transform: rotateY(-180deg);
+	-ms-transform: rotateY(-180deg);
+	-o-transform: rotateY(-180deg);
+	transform: rotateY(-180deg);
+}
+.artGroup.flip img, .artGroup.flip .detail {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	backface-visibility: hidden;
+}

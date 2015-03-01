@@ -71,7 +71,27 @@ var marker = new google.maps.Marker({
 
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+
+
+<script type="text/javascript">
+  $(function () {   
+      $('.artGroup.flip').hover(
+        function () {
+          $(this).find('.artwork').addClass('theFlip');
+        },
+        function () {
+          $(this).find('.artwork').removeClass('theFlip');      
+        }
+      );
+
+  });
+  </script>
+
+
 <%= render 'navbar' %>
+
+
+
 
 
 
@@ -83,14 +103,18 @@ line-height: 0.986; margin-top:150px">UNIVERSITY OF WATERLOO</h1>
 
 <div class="container" style="margin-top: 100px">
 	<div class="row">
-		<div class="col-md-4 col-xs-6">
-			<%= link_to library_path(1) do %>
-			<div class="tile" >
-	<p style="
+    <div class="col-md-4 col-xs-6">
+      <div class="artGroup flip">
+  <div class="artwork"> 
+    <%#= image_tag 'tile.png', height: '230', width: '230' %>
+    
+
+    <p style="
   font-size: 24px;
   font-family: 'Roboto';
   color: rgb(255, 255, 255);
   line-height: 0.986;
+  top: 0;
   margin-left:40px;
   padding-top:5px
 ">Davis Center</p>
@@ -103,10 +127,20 @@ line-height: 0.986; margin-top:150px">UNIVERSITY OF WATERLOO</h1>
   margin-left:40px;
 ">70%
 </p>
-	
+
+
+    <!-- <img src="../_images/feature1.jpg"> -->
+    <div class="detail" style="padding-top:70px">
+      <%= link_to library_path(1) do %>
+         <button class="btn btn-block btn-primary" style="font-size:50px; background-color:#34495E">ENTER</button>
+         <% end %>
+      </div>
+  </div>
 </div>
-<% end %>
-		</div>
+    </div>
+
+
+		
 				<div class="col-md-4 col-xs-6">
 			<div class="tile" >
 	<p style="
