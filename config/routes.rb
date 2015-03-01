@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users 
+
+  get 'statuses/mode_update' => 'statuses#mode_update'
+  get 'statuses/get_mode' => 'statuses#get_mode'
+  
 # get 'welcome/index' => 'welcome#index'
 # resources :articles
 root 'welcome#show'

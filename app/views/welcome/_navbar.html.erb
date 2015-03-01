@@ -28,17 +28,23 @@
               <%= content_tag("a","CONTACT US", :style=> "", id: 'contact') %>
             </li>
             <% if user_signed_in? %>
-  <li><%= link_to 'EDIT ACCOUNT', edit_user_registration_path %></li>
+<!--   <li><%= link_to 'EDIT ACCOUNT', edit_user_registration_path %></li> -->
   <li><%= link_to 'SIGN OUT', destroy_user_session_path, :method=>'delete' %></li>
 <% else %>
   <li><%= link_to 'SIGN IN', new_user_session_path %></li>
-  <li><%= link_to 'SIGN UP', new_user_registration_path %></li>
+ <!--  <li><%= link_to 'SIGN UP', new_user_registration_path %></li> -->
 <% end %>
-            <% if user_signed_in? %>
-            <li> 
-              <button type="button" class="btn btn-success" style="margin-top:5px">MAPPING</button>
+            <% if user_is_admin? %>
+              <li> 
 
-            </li>
+                <% if current_user.mode == 'map' %>
+
+                  <button type="button" class="btn btn-success mode-btn" style="margin-top:5px">MAPPING</button>
+                <% else %>
+                  
+                  <button type="button" class="btn btn-default mode-btn" style="margin-top:5px">MONITOR</button>
+                <% end %>
+              </li>
            <% end %>
           </ul>
         </div><!--/.nav-collapse -->
