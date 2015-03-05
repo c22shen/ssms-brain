@@ -2,6 +2,11 @@ class StatusesController < ApplicationController
 	def create 
 		@status = Status.new(status_params)
 
+        uid = params[:uid]
+        seat = Seat.find_by_uid(uid)
+        seat.status = params[:status]
+        seat.save!
+
 		if @status.save
 	      render json: @status, status: :created
 	    else

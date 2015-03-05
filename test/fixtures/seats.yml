@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  x: 
+  'y': 
+  uid: 1
+
+two:
+  status: MyString
+  x: 
+  'y': 
+  uid: 1

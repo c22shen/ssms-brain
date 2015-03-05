@@ -7,4 +7,24 @@ source.addEventListener 'message', (e) ->
 
 	uid = $.parseJSON(e.data).uid
 	status = $.parseJSON(e.data).status
-	$('.testing').text("#{status}")
+	x = $.parseJSON(e.data).x
+	y = $.parseJSON(e.data).y
+	percent = $.parseJSON(e.data).percent
+	chart = $('#container').highcharts()
+	old_pt = chart.get(uid)
+	old_pt.remove()
+	new_pt = {
+    'name': uid,
+    'id': uid,
+    color: status,
+    'y': y,
+    'x': x
+	}
+	chart.series[0].addPoint(new_pt)
+	chart1 = $('#container1').highcharts()
+	x_time = (new Date()).getTime()
+
+	new_pt1 = [x_time, percent]
+
+	alert(percent)
+	chart1.series[0].addPoint(new_pt1,true,true)
