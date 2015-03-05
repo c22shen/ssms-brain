@@ -120,14 +120,41 @@ box-shadow: 0px 6px 0px 0px rgba(44,62,80,1);
   margin-bottom: 50px;
 }
 
-.head-icon {
-		background-image: asset-url("head-icon.png");
-	width:137px;
-	height: 137px;
+.xiao-icon {
+		background-image: asset-url("xiao-head.png");
+	width:138px;
+	height: 138px;
 	display: block;
   margin-left: auto;
   margin-right: auto;
 }
+
+.jay-icon {
+    background-image: asset-url("jay-head.png");
+  width:137px;
+  height: 137px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.john-icon {
+    background-image: asset-url("john-head.png");
+  width:137px;
+  height: 137px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sam-icon {
+    background-image: asset-url("sam-head.png");
+  width:137px;
+  height: 137px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 .contact-section {
 	padding: 80px 0;

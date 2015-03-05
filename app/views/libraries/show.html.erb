@@ -114,7 +114,7 @@
 
 
 
- <div class="library-info-section">
+<!--  <div class="library-info-section">
  	<div class="container">
  		<div class="row">
  			
@@ -173,7 +173,7 @@
  		</div>
  	</div>
 
- </div>
+ </div> -->
 
  <div class="library-map-section">
  	<div class="container">
@@ -184,7 +184,7 @@
 
 
 
-
+  <h1 class="testing"></h1>
 
  	<table class="table table-hover">
       <thead>
@@ -194,12 +194,10 @@
           <th>status</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="testingtable">
 
 	<% Status.all.each do |status| %>
         <tr>
-
-
           <td>Davis Centre</td>
           <td><%=status.uid %></td>
           <td><%= status.status %></td>

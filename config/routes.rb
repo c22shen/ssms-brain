@@ -13,7 +13,9 @@ resources :articles do
   resources :comments
 end
 
-resources :messages
+  resources :messages do
+    collection { get :events }
+  end
 resources :statuses
 resources :libraries
 

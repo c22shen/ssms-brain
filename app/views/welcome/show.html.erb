@@ -181,8 +181,8 @@ University of Waterloo Mechatronics Engineering
         </div>
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="teammember">
-              <div class="head-icon"></div>
+            <button class="teammember" type="button" data-toggle="modal" data-target="#xiaoModal">
+              <div class="xiao-icon"></div>
               <div class="text-center" style="
   font-size: 25px;
   font-family: 'Roboto';
@@ -201,11 +201,28 @@ University of Waterloo Mechatronics Engineering
 ">
   Design Lead
 </div>
-            </div>
+            </button>
+
+
+
+<!-- modal window -->
+<div class="modal fade" id="xiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color:#2980B9">
+      <%=image_tag "xiao_body.png",  width: '500' %>
+<h1 style="color:white; font-size: 60px">XIAO</h1>
+      </div>
+  </div>
+</div>
+
+
+
+
           </div>
           <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="teammember">
-              <div class="head-icon"></div>
+
+               <button class="teammember" type="button" data-toggle="modal" data-target="#jayModal">
+              <div class="jay-icon"></div>
               <div class="text-center" style="
   font-size: 25px;
   font-family: 'Roboto';
@@ -224,11 +241,25 @@ University of Waterloo Mechatronics Engineering
 ">
   software lead
 </div>
-            </div>
+            </button>
+
+            <!-- modal window -->
+<div class="modal fade" id="jayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color:#2980B9">
+<h1 style="color:white; font-size: 60px">JAESIK</h1>
+<%=image_tag "jay_body.jpg",  width: '500' %>
+      </div>
+  </div>
+</div>
           </div>
+
+
+
+
           <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="teammember">
-              <div class="head-icon"></div>
+             <button class="teammember" type="button" data-toggle="modal" data-target="#samModal">
+              <div class="sam-icon"></div>
               <div class="text-center" style="
   font-size: 25px;
   font-family: 'Roboto';
@@ -247,11 +278,27 @@ University of Waterloo Mechatronics Engineering
 ">
   Mechanical Lead
 </div>
-            </div>
+            </button>
+
+            <!-- modal window -->
+<div class="modal fade" id="samModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color:#2980B9">
+<h1 style="color:white; font-size: 60px">MIN GU</h1>
+<%=image_tag "sam_body.jpg",  width: '500' %>
+      </div>
+  </div>
+</div>
+
+
+
+
+
           </div>
           <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="teammember">
-              <div class="head-icon"></div>
+
+               <button class="teammember" type="button" data-toggle="modal" data-target="#johnModal">
+              <div class="john-icon"></div>
               <div class="text-center" style="
   font-size: 25px;
   font-family: 'Roboto';
@@ -270,7 +317,21 @@ University of Waterloo Mechatronics Engineering
 ">
   Electrical Lead
 </div>
-            </div>
+            </button>
+
+
+            <!-- modal window -->
+<div class="modal fade" id="johnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color:#2980B9">
+<h1 style="color:white; font-size: 60px">JUNGWOOK</h1>
+<%=image_tag "john_body.jpg",  width: '500' %>
+      </div>
+  </div>
+</div>
+
+
+
           </div>
 
         </div>
