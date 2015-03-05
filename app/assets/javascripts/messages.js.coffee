@@ -25,6 +25,4 @@ source.addEventListener 'message', (e) ->
 	x_time = (new Date()).getTime()
 
 	new_pt1 = [x_time, percent]
-
-	alert(percent)
 	chart1.series[0].addPoint(new_pt1,true,true)
