@@ -12,6 +12,9 @@
 
 <div class="features-section">
     <div class="container">
+      <div class="row">
+        <%= image_tag 'ssms-logo-business.png', :style=>"display:block; margin: 30px auto 100px auto" %>
+      </div>
       <div class="row" >
         <!-- <h1 class="text-center">Study Space Monitoring System</h1> -->
       <div class="col-sm-12 col-md-4">
@@ -99,26 +102,26 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-8">
-            <div  style="
+            <div  class="text-center" style="
   font-size: 72px;
-  font-family: 'Roboto';
+  font-family: 'lato';
+  font-weight:900;
   color: rgb(255, 255, 255);
-  font-weight: bold;
-  line-height: 0.329;
+  <!-- line-height: 0.329; -->
   text-align: center;
 ">
-              BEAUTIFUL MOBILE <br><br><br>
+              BEAUTIFUL MOBILE 
               EXPERIENCE
             </div>
 
 
 
-            <div class="" style="
+            <div class="text-center" style="
   font-size: 30px;
   font-family: 'Roboto';
   color: rgb(255, 255, 255);
   line-height: 1;
-  margin: 100px 30px;
+  margin: 80px 30px;
 ">
               Delivers best in class user experience. <br>
               Gorgeous and intuitive user interface. <br>
@@ -137,14 +140,14 @@
  
 <%= link_to libraries_path do %>
   
-              <button type="button" class="btn btn-lg">ACCESS <span> <i class="fa fa-arrow-circle-right"></i></span>
+              <button type="button" class="btn btn-lg" style="display:block; margin: 0 auto">ACCESS <span> <i class="fa fa-arrow-circle-right"></i></span>
             </button>
 <% end %>
 
             <!-- </div> -->
           </div>
-          <div class="col-md-4 hidden-sm">
-            <div class="iphone"></div>
+          <div class="col-md-4 col-sm-12">
+            <div class="iphone" style="margin-top:100px"></div>
           </div>
         </div>
       </div>
@@ -367,10 +370,10 @@ University of Waterloo Mechatronics Engineering
 
     <%= f.text_area :message, :placeholder => 'Message', :class => 'message-field'  %>
    </div>
-  <div class="col-md-6 col-sm-12">
+  <div class="col-sm-12">
     <%#= f.submit 'SEND', :class => "submit-btn" %>
 
-      <button type="submit" class="submit-btn" data-toggle="modal" data-target="#myModal">
+      <button type="submit" class="submit-btn" style="margin:0 auto; display:block; margin-top: 20px" data-toggle="modal" data-target="#myModal">
         SEND
                 <i class="fa fa-send-o"></i> 
             </button>
