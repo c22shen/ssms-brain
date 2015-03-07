@@ -1,11 +1,82 @@
+<script>
+$(function(){
+  $('#myCarousel').carousel();
+});
+</script>
+
+
 <%= render 'navbar' %>
 
 
-    <div class="ssms-big-pic">
+
+
+
+
+
+
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item">
+          <%= image_tag('big1.jpg') %> 
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Study at your favourite study area.</h1>
+              <p>Quickly find empty study spaces on campus with the help of <code>SSMS</code>.</p>
+              <p><%= link_to library_path(1) do %>
+  
+              <button type="button" class="btn btn-primary" style="display:block; margin: 0 auto">Try It Out</span>
+            </button>
+<% end %></p>
+            </div>
+          </div>
+        </div>
+        <div class="item active">
+          <%= image_tag('big2.jpg') %> 
+          <div class="container">
+            <div class="carousel-caption">
+               <h1>Provide an enjoyable university experience that doesn't involve running around trying to find study spaces.</h1>
+              <p>More than half of students at University of Waterloo expressed that finding empty study spaces is a painful experience, especially during exam times. Valuable study time is wasted, which can have negative impact on academic performance. </p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+         <%= image_tag('big3.jpg') %> 
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>A System built by students for students.</h1>
+              <p>SSMS is built and designed from the ground up by four <code>Mechatronics Engineering</code> students at University of Waterloo. The team possesses talents in mechanical, electrical, software and design.</p>
+              <p>
+<%= content_tag("a","Contact Us", :class=> "btn btn-primary", id: 'contact-btn') %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+
+
+<!--     <div class="ssms-big-pic">
       <div class="ssms-big-pic-text">
 
       </div>
-    </div>
+    </div> -->
 
 
 

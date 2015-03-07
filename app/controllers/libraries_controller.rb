@@ -3,6 +3,7 @@ class LibrariesController < ApplicationController
             
       end
       def show
+            @homestyle='black'
 # 		@data1 = Array.new
 
 #             arr ={"name" => 'pt', 'color' => '#00FF00', 'x'=>1, 'y'=>1 }
@@ -40,6 +41,8 @@ Seat.all.order( 'uid' ).each do |seat|
       seat_info[:color]=color
       seat_info[:x]=seat.x
       seat_info[:y]=seat.y
+      seat_info[:lineWidth]=1.5
+      seat_info[:lineColor]='white'
       seats_info.push(seat_info)
 end
 

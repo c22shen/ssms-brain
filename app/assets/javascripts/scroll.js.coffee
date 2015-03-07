@@ -23,3 +23,9 @@ $('.navbar').ready ->
     , "slow"
     $(".navbar-toggle").click()
     return
+  $("#contact-btn").click ->
+    $("html,body").animate
+      scrollTop: $(".contact-section").offset().top
+    , "slow"
+    $(".navbar-toggle").click()
+    return
