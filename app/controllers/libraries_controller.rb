@@ -23,7 +23,7 @@ class LibrariesController < ApplicationController
 
 admin_option = User.find_by_email('admin@ssmsgroup.ca').option
 
-query_string = (admin_option=='sim') ? "mode=='sim'" : "mode!='sim'"
+query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
 
 seats_info = Array.new
 Seat.where(query_string).order( 'uid' ).each do |seat|
