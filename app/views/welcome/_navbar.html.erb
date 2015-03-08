@@ -11,6 +11,7 @@
 <!--           <span class="navbar-brand ssms-shadow" style=""></span> -->
 
           <%= link_to '', root_url, :class=>"navbar-brand ssms-shadow" %>
+          
         </div>
         <div id="navbar" class="collapse navbar-collapse  pull-right">
           <ul class="nav navbar-nav custom">
@@ -41,10 +42,20 @@
 
                 <% if current_user.mode == 'map' %>
 
-                  <button type="button" class="btn btn-success mode-btn" style="margin-top:5px">MAPPING</button>
+                  <button type="button" class="btn btn-success btn-sm mode-btn" style="margin-top:10px;margin-right:5px">MAPPING</button>
                 <% else %>
                   
-                  <button type="button" class="btn btn-default mode-btn" style="margin-top:5px">MONITOR</button>
+                  <button type="button" class="btn btn-default btn-sm mode-btn" style="margin-top:10px;margin-right:5px">MONITOR</button>
+                <% end %>
+              </li>
+
+              <li>
+                                 <% if current_user.option == 'live' %>
+
+                  <button type="button" class="btn btn-success btn-sm option-btn" style="margin-top:10px">LIVE</button>
+                <% else %>
+                  
+                  <button type="button" class="btn btn-default btn-sm option-btn" style="margin-top:10px">SIMULATION</button>
                 <% end %>
               </li>
            <% end %>

@@ -21,8 +21,12 @@ class LibrariesController < ApplicationController
 # }]
 
 
+admin_option = User.find_by_email('admin@ssmsgroup.ca').option
+
+query_string = (admin_option=='sim') ? "mode=='sim'" : "mode!='sim'"
+
 seats_info = Array.new
-Seat.all.order( 'uid' ).each do |seat|
+Seat.where(query_string).order( 'uid' ).each do |seat|
 
       if seat.status =='free'
             color = '#00FF00'
@@ -41,8 +45,8 @@ Seat.all.order( 'uid' ).each do |seat|
       seat_info[:color]=color
       seat_info[:x]=seat.x
       seat_info[:y]=seat.y
-      seat_info[:lineWidth]=1.5
-      seat_info[:lineColor]='white'
+      # seat_info[:lineWidth]=1.5
+      # seat_info[:lineColor]='white'
       seats_info.push(seat_info)
 end
 

@@ -20,3 +20,22 @@ $(document).on "click", ".mode-btn", ->
         button.removeClass('btn-success').addClass('btn-default')
     	button.text('MONITOR')
     complete: () -> 
+
+$(document).on "click", ".option-btn", ->
+  button = $(this)
+  if button.hasClass('btn-success')
+    curr_style = 'success'
+  else
+    curr_style = 'default'  
+  $.ajax '/statuses/option_update',
+    type: 'GET'
+    dataType: 'html'
+    error: () -> alert('error')
+    success: () -> 
+      if curr_style is 'default'  
+        button.removeClass('btn-default').addClass('btn-success')
+        button.text('LIVE')
+      else
+        button.removeClass('btn-success').addClass('btn-default')
+        button.text('SIMULATION')
+    complete: () -> 

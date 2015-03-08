@@ -27,7 +27,7 @@
             },
             lineWidth: 0,
             minorGridLineWidth: 0,
-            lineColor: 'transparent',
+            // lineColor: 'transparent',
 
             minorTickLength: 0,
             tickLength: 0
@@ -65,23 +65,27 @@
         },
 
         plotOptions: {
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
 
-                        }
-                    }
-                },
+
+                      series: {
+                        allowPointSelect: true,
                 states: {
                     hover: {
-                        marker: {
-                            enabled: false
+                        halo: {
+                            size: 15,
+                            opacity:0.25,
+                            attributes: {
+                                // fill: '#FFFFFF'
+                            }
+                            
                         }
+ // radiusPlus: 5
                     }
+                }
+            },
+            scatter: {
+                marker: {
+                    radius: 5
                 },
                 tooltip: {
                     headerFormat: '',
@@ -92,7 +96,17 @@
         series: [{
             name: 'Busy',
             color: "#DC143C",
-            data: <%= @seats_info %>
+            data: <%= @seats_info %>,
+             marker: {
+                lineWidth: 0,
+                radius: 6,
+                lineColor: null,
+                states: {
+                hover: {
+                  
+                }
+            }
+            }
 
         }, {
             name: 'Free',
@@ -187,7 +201,7 @@ $(function () {
                     for (i = -19; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 5000,
-                            y: Math.random()*100
+                            y: Math.floor(Math.random()*20)+30
                         });
                     }
                     return data;
@@ -390,7 +404,7 @@ font-size: 40px;
       </thead>
       <tbody class="testingtable">
 
-	<% Status.all.each do |status| %>
+	<% Status.last(10).each do |status| %>
         <tr>
           <td>Davis Centre</td>
           <td><%=status.uid %></td>

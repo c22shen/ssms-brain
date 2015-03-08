@@ -3,9 +3,13 @@ class StatusesController < ApplicationController
 		@status = Status.new(status_params)
 
         uid = params[:uid]
-        seat = Seat.find_by_uid(uid)
+        seat = Seat.where("mode='live'").find_by_uid(uid)
         seat.status = params[:status]
+
         seat.save!
+        logger.debug '**************SEAT UPDATED!!!**********'
+        logger.debug seat.uid
+        logger.debug seat.status
 
 		if @status.save
 	      render json: @status, status: :created
@@ -32,6 +36,20 @@ class StatusesController < ApplicationController
 	      format.js {render :nothing => true, :status => 200, :content_type => 'text/html'}
 	    end
   	end
+
+    def option_update
+      @user = User.find_by_email('admin@ssmsgroup.ca')
+      
+      if @user.option  == 'live'
+        @user.option = 'sim'
+      else
+        @user.option = 'live'
+      end
+      @user.save!
+    respond_to do |format|
+        format.js {render :nothing => true, :status => 200, :content_type => 'text/html'}
+      end
+    end
 
 
 

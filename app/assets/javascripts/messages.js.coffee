@@ -10,17 +10,23 @@ source.addEventListener 'message', (e) ->
 	x = $.parseJSON(e.data).x
 	y = $.parseJSON(e.data).y
 	percent = $.parseJSON(e.data).percent
+	select = $.parseJSON(e.data).select
 	chart = $('#container').highcharts()
 	old_pt = chart.get(uid)
-	old_pt.remove()
-	new_pt = {
-    'name': uid,
-    'id': uid,
-    color: status,
-    'y': y,
-    'x': x
-	}
-	chart.series[0].addPoint(new_pt)
+	old_pt.update marker:
+	  fillColor: status
+	  states:
+	    hover:
+	      fillColor: status
+	      lineColor: status
+	    select:
+	      fillColor: status
+	      lineColor: status    
+	      lineWidth: 10
+	# old_pt.setState('hover')
+	if select == true
+	  old_pt.select()
+
 	chart1 = $('#container1').highcharts()
 	x_time = (new Date()).getTime()
 

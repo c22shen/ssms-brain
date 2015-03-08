@@ -27,5 +27,4 @@ $('.navbar').ready ->
     $("html,body").animate
       scrollTop: $(".contact-section").offset().top
     , "slow"
-    $(".navbar-toggle").click()
     return
