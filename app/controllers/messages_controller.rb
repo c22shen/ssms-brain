@@ -48,8 +48,8 @@ def events
     seat.y = curr_seat.y
     
 
-    free_seat_count=Seat.where("mode=='sim'").where("status='free'").count
-    free_seat_percentage =free_seat_count.to_f/Seat.where("mode=='sim'").count*100.0
+    free_seat_count=Seat.where("mode='sim'").where("status='free'").count
+    free_seat_percentage =free_seat_count.to_f/Seat.where("mode='sim'").count*100.0
     seat_json = seat.to_json
     seat_hash = JSON.parse(seat_json)
     seat_hash[:percent] = free_seat_percentage.round
