@@ -1,15 +1,38 @@
 class StatusesController < ApplicationController
 	def create 
 		@status = Status.new(status_params)
+        if params[:status][0]=='x'
+# MAPPING STATUS
+# EXAMPLE: x1:0.0,y1:0.0/x2:30.0,y2:40.0/x3:60.0,y3:0.0/x4:90.0,y4:40.00006/x5:120.0,y5:6.317126E-5/
+        # logger.debug '*************LOCATION STATUS INFO'
+
+        location_array = params[:status].split('/')
+
+        location_array.each_with_index {|val, index| 
+          location_info = val.split(',')
+          x_val = location_info[0].split(':')[1]
+          y_val = location_info[1].split(':')[1]
+          seat = Seat.where("mode='live'").find_by_uid(index)
+          unless seat.nil?
+            seat.x = x_val
+            seat.y = y_val
+             # logger.debug '*************X VAL **********'
+             # logger.debug x_val
+             # logger.debug '*************Y VAL **********'
+             # logger.debug y_val
+
+            seat.save!
+          end}
+
+        else
+# MONITORING STATUS
 
         uid = params[:uid]
         seat = Seat.where("mode='live'").find_by_uid(uid)
         seat.status = params[:status]
 
         seat.save!
-        logger.debug '**************SEAT UPDATED!!!**********'
-        logger.debug seat.uid
-        logger.debug seat.status
+      end
 
 		if @status.save
 	      render json: @status, status: :created

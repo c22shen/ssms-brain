@@ -66,7 +66,7 @@ def events
     curr_seat.save!
   else
     # live
-    logger.debug '*************LIVE********************'
+    # logger.debug '*************LIVE********************'
     
 
 
