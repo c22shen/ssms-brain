@@ -18,18 +18,18 @@ $ ->
           drag: (e) ->
             # Returning false stops the drag and drops. Example:
 
-            if e.newY < 0
-              @y = 0
-              return false
-            if e.newX < 0
-              @x = 0
-              return false
+            # if e.newY < 0
+            #   @y = 0
+            #   return false
+            # if e.newX < 0
+            #   @x = 0
+            #   return false
             
 
-            $('#drag').html 'Dragging <b> Device:' + this.name + '</b> to <b> x:' + Highcharts.numberFormat(e.newX, 2) + 'y:' + Highcharts.numberFormat(e.newY, 2) + '</b>'
+            $('#drag').html 'Dragging Device: ' + this.name + ' to <b> x:' + Highcharts.numberFormat(e.newX, 2) + ' y: ' + Highcharts.numberFormat(e.newY, 2) 
             return
           drop: ->
-            $('#drop').html 'Device:' + this.name + '</b>, <b>' + '</b> was set to <b> x:' + Highcharts.numberFormat(@x, 2) + ' y:' + Highcharts.numberFormat(@y, 2) + '</b>'
+            $('#drop').html 'Device: ' + this.name + ' was set to <b> x:' + Highcharts.numberFormat(@x, 2) + ' y: ' + Highcharts.numberFormat(@y, 2)
             $.ajax '/statuses/seat_location_update',
               type: 'GET'
               dataType: 'html'
