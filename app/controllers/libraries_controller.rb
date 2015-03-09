@@ -4,76 +4,53 @@ class LibrariesController < ApplicationController
       end
       def show
             @homestyle='black'
-# 		@data1 = Array.new
 
-#             arr ={"name" => 'pt', 'color' => '#00FF00', 'x'=>1, 'y'=>1 }
-#             @data1.push(arr)
+            admin_option = User.find_by_email('admin@ssmsgroup.ca').option
+
+            query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
+
+            seats_info = Array.new
+            Seat.where(query_string).order( 'uid' ).each do |seat|
+
+                  if seat.status =='free'
+                        color = '#00FF00'
+                  elsif seat.status == 'busy'
+                        color = '#DC143C'
+                  else
+                        color = "#4682B4"
+                  end
 
 
-#             data: [{
-#     name: 'Point 1',
-#     color: '#00FF00',
-#     y: 0
-# }, {
-#     name: 'Point 2',
-#     color: '#FF00FF',
-#     y: 5
-# }]
 
 
-admin_option = User.find_by_email('admin@ssmsgroup.ca').option
+                  seat_info = Hash.new
+                  seat_info[:name]=seat.uid
+                  seat_info[:id]=seat.uid
+                  seat_info[:color]=color
+                  seat_info[:x]=seat.x
+                  seat_info[:y]=seat.y
+                  # seat_info[:lineWidth]=1.5
+                  # seat_info[:lineColor]='white'
+                  seats_info.push(seat_info)
+            
 
-query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
+                  @seats_info = seats_info.to_json.html_safe
 
-seats_info = Array.new
-Seat.where(query_string).order( 'uid' ).each do |seat|
+                  @data2 = Array.new
+                  @data3 = Array.new
 
-      if seat.status =='free'
-            color = '#00FF00'
-      elsif seat.status == 'busy'
-            color = '#DC143C'
-      else
-            color = "#4682B4"
+                  # Library Detail Page
+
+                  option = User.find_by_email('admin@ssmsgroup.ca').option
+
+                  mode_query_string = (option == 'live') ? "mode='live'" : "mode='sim'"
+
+                  @busy_seat_count = Seat.where(mode_query_string).where("status='busy'").count
+                  @free_seat_count = Seat.where(mode_query_string).where("status='free'").count
+                  @away_seat_count = Seat.where(mode_query_string).where("status='away'").count
+      	
+
+                  @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count+@away_seat_count) 
+            end   
       end
-
-
-
-
-      seat_info = Hash.new
-      seat_info[:name]=seat.uid
-      seat_info[:id]=seat.uid
-      seat_info[:color]=color
-      seat_info[:x]=seat.x
-      seat_info[:y]=seat.y
-      # seat_info[:lineWidth]=1.5
-      # seat_info[:lineColor]='white'
-      seats_info.push(seat_info)
-end
-
-@seats_info = seats_info.to_json.html_safe
-# @seats_info ='xiao'
-# logger.info @seats_info
-
-
-            # (1..2).each do |i|
-            # 	arr =[rand(150...200),  rand(50...100)]
-            # 	@data1.push(arr)
-            # end 
-
-
-		@data2 = Array.new
-
-            # (1..2).each do |i|
-            # 	arr =[rand(150...200),  rand(50...100)]
-            # 	@data2.push(arr)
-            # end 
-
-
-            @data3 = Array.new
-
- #            (1..200).each do |i|
- #            	arr =[rand(150...200),  rand(50...100)]
- #            	@data3.push(arr)
- #            end 
-	end
 end

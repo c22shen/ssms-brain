@@ -25,7 +25,7 @@ def events
     if (0..0.2).include?(random_num)
       new_status ='away'
       color =  "#4682B4"
-    elsif (0.2..0.6).include?(random_num)
+    elsif (0.2..0.3).include?(random_num)
       color = "#00FF00"
       new_status='free'
     else
@@ -49,10 +49,20 @@ def events
     
 
     free_seat_count=Seat.where("mode='sim'").where("status='free'").count
-    free_seat_percentage =free_seat_count.to_f/Seat.where("mode='sim'").count*100.0
+    busy_seat_count=Seat.where("mode='sim'").where("status='busy'").count
+    away_seat_count=Seat.where("mode='sim'").where("status='away'").count
+    
+
+
+    free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count+away_seat_count)*100.0
     seat_json = seat.to_json
     seat_hash = JSON.parse(seat_json)
     seat_hash[:percent] = free_seat_percentage.round
+    seat_hash[:free_seat_count] = free_seat_count
+    seat_hash[:busy_seat_count] = busy_seat_count
+    seat_hash[:away_seat_count] = away_seat_count
+
+
     # seat_hash[:empty_seat_count] = free_seat_count
     
     select = false
@@ -96,12 +106,7 @@ def events
 
       	seat_hash = JSON.parse(seat_json)
 
-        free_seat_count=Seat.where("mode!='sim'").where("status='free'").count
-
-
-
-      	free_seat_percentage =free_seat_count.to_f/Seat.where("mode!='sim'").count*100.0
-      	seat_hash[:percent] = free_seat_percentage.round
+       
 
       	# logger.info '#######################'
       	# logger.info free_seat_percentage
@@ -110,6 +115,17 @@ def events
       #   select = true
       # end
       seat_hash[:select] = true
+
+      free_seat_count=Seat.where("mode='live'").where("status='free'").count
+      busy_seat_count=Seat.where("mode='live'").where("status='busy'").count
+      away_seat_count=Seat.where("mode='live'").where("status='away'").count
+      seat_hash[:free_seat_count] = free_seat_count
+      seat_hash[:busy_seat_count] = busy_seat_count
+      seat_hash[:away_seat_count] = away_seat_count
+
+      free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count+away_seat_count)*100.0
+      seat_hash[:percent] = free_seat_percentage.round
+
       seat_hash_json = seat_hash.to_json
 
 
@@ -117,8 +133,9 @@ def events
         # logger.info "Processing the request..."
         # logger.info status
 
-        start = Time.zone.now-5
+        # start = Time.zone.now-5
      end 
+
    end
   end
 

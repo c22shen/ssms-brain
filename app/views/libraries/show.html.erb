@@ -7,7 +7,7 @@
         chart: {
             type: 'scatter',
             zoomType: 'xy',
-            backgroundColor: 'black',
+            backgroundColor: null,
              marginRight: 120
         },
         title: {
@@ -142,7 +142,7 @@ $(function () {
 
         $('#container1').highcharts({
             chart: {
-              backgroundColor: 'black',
+              backgroundColor: null,
                 type: 'spline',
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10
@@ -201,7 +201,7 @@ $(function () {
                     for (i = -19; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 5000,
-                            y: Math.floor(Math.random()*20)+30
+                            y: Math.floor(Math.random()*20)+10
                         });
                     }
                     return data;
@@ -381,6 +381,83 @@ font-size: 40px;
  	</div>
 
  </div> -->
+
+ <div class="library-info-section" style="width:100%; ">
+  <div class="container" style="opacity:0.7; background: #252020; padding-bottom:20px">
+  <h1 style="font-family: roboto-thin; color:white; font-size:60px">Details</h1>
+  <hr>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="progress-pie-chart" data-percent=<%=@free_seat_percentage %> >
+  <div class="ppc-progress">
+    <div class="ppc-progress-fill"></div>
+  </div>
+  <div class="ppc-percents">
+    <div class="pcc-percents-wrapper">
+      <span>%</span>
+    </div>
+  </div>
+</div>
+
+<% if @free_seat_percentage>20 %>
+  <p class="text-center status-message" style="margin-top:20px; font-family:roboto-thin; color:white; font-size:20px" > 
+      <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
+      - Library is fairly empty right now, studying at the library seems like a great idea.
+    </p>
+<% else %>
+  <p class="text-center" style="margin-top:20px; font-family:roboto-thin; color:white; font-size:20px" > 
+        <i class="fa fa-frown-o" style="color:white; font-size:30px"></i>
+        - Library is pretty busy right now, maybe it is better to study at home today.
+  </p>
+<% end %>
+
+    </div>
+
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-xs-6">
+         <h1 style="font-family: roboto-thin; color:white">Seats free</h1> 
+        </div>
+        <div class="col-xs-6">
+          <h1 id='free_seat_count_label' style="text-align:right; font-family: roboto-thin; color:white; font-size:40px"><%= @free_seat_count %></h1>
+        </div>
+        <div class="col-xs-12">
+        <hr style="border-top: dotted 1px; color:grey" />
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-xs-6">
+         <h1 style="font-family: roboto-thin; color:white">Seats busy</h1> 
+        </div>
+        <div class="col-xs-6">
+          <h1 id='busy_seat_count_label' style="text-align:right; font-family: roboto-thin; color:white; font-size:40px"><%= @busy_seat_count %></h1>
+        </div>
+        <div class="col-xs-12">
+        <hr style="border-top: dotted 1px; color:grey" />
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-xs-6">
+         <h1 style="font-family: roboto-thin; color:white">Seats away</h1> 
+        </div>
+        <div class="col-xs-6">
+          <h1 id='away_seat_count_label' style="text-align:right; font-family: roboto-thin; color:white; font-size:40px"><%= @away_seat_count %></h1>
+        </div>
+        <div class="col-xs-12">
+        <hr style="border-top: dotted 1px; color:grey" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
 
  <div class="library-map-section">
  	<div class="container">
