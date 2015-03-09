@@ -60,6 +60,29 @@ class StatusesController < ApplicationController
 	    end
   	end
 
+    def seat_location_update
+      @user = User.find_by_email('admin@ssmsgroup.ca')
+      
+      query_string = (@user.option  == 'live') ? "mode='live'" : "mode='sim'"
+      # logger.debug "UID********************"
+      # logger.debug params[:uid]
+
+      # logger.debug "X********************"
+      # logger.debug params[:x]
+      
+      # logger.debug "Y********************"
+      # logger.debug params[:Y]
+      
+      seat = Seat.where(query_string).find_by_uid(params[:uid])
+      seat.x = params[:new_x]
+      seat.y = params[:new_y]
+      seat.save!
+
+    respond_to do |format|
+        format.js {render :nothing => true, :status => 200, :content_type => 'text/html'}
+      end
+    end
+
     def option_update
       @user = User.find_by_email('admin@ssmsgroup.ca')
       

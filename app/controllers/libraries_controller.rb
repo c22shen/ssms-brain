@@ -2,6 +2,43 @@ class LibrariesController < ApplicationController
 	def index 
             
       end
+
+      def set_location  
+            @homestyle='white'
+
+            admin_option = User.find_by_email('admin@ssmsgroup.ca').option
+
+            query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
+
+            seats_info = Array.new
+            Seat.where(query_string).order( 'uid' ).each do |seat|
+
+                  if seat.status =='free'
+                        color = '#468966'
+                  elsif seat.status == 'busy'
+                        color = '#8E2800'
+                  else
+                        color = "#FFB03B"
+                  end
+
+
+
+
+                  seat_info = Hash.new
+                  seat_info[:name]=seat.uid
+                  seat_info[:id]=seat.uid
+                  seat_info[:color]=color
+                  seat_info[:x]=seat.x
+                  seat_info[:y]=seat.y
+                  # seat_info[:lineWidth]=1.5
+                  # seat_info[:lineColor]='white'
+                  seats_info.push(seat_info)
+            
+            end
+                  @seats_info = seats_info.to_json.html_safe
+
+      end
+
       def show
             @homestyle='black'
 

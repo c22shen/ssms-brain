@@ -5,12 +5,15 @@ Rails.application.routes.draw do
   get 'statuses/mode_update' => 'statuses#mode_update'
   get 'statuses/get_mode' => 'statuses#get_mode'
   get 'statuses/option_update' => 'statuses#option_update'
+ get 'statuses/seat_location_update' => 'statuses#seat_location_update'
 
    get 'welcome/team' => 'welcome#team'
    
 # get 'welcome/index' => 'welcome#index'
 # resources :articles
 root 'welcome#show'
+
+get 'libraries/set_location' => 'libraries#set_location'
 
 
 resources :articles do
