@@ -7,14 +7,13 @@
         chart: {
             type: 'scatter',
             zoomType: 'xy',
-            backgroundColor: null,
-             marginRight: 120
+            backgroundColor: null
         },
         title: {
-            text: 'Study Space Occupancy Display'
+            text: ''
         },
         subtitle: {
-            text: 'Source: SSMS'
+            text: ''
         },
         xAxis: {
             title: {
@@ -37,6 +36,7 @@
                 enabled: false,
                 text: ''
             },
+
             labels:
             {
               enabled: false
@@ -50,35 +50,30 @@
             tickLength: 0
         },
         legend: {
-
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: 0,
-            y: 100,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
+           itemStyle: {
+                 font: '9pt Trebuchet MS, Verdana, sans-serif',
+                 color: 'white'
+              },
+            // layout: 'vertical',
+            // align: 'right',
+            // verticalAlign: 'top',
+            // x: 0,
+            // y: 100,
+            // floating: true,
+            // backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            // borderWidth: 1
         },
         exporting: {
          enabled: false
         },
 
         plotOptions: {
-
-
                       series: {
                         allowPointSelect: true,
                 states: {
                     hover: {
-                        halo: {
-                            size: 15,
-                            opacity:0.25,
-                            attributes: {
-                                // fill: '#FFFFFF'
-                            }
-                            
-                        }
+                      enabled: false
+
  // radiusPlus: 5
                     }
                 }
@@ -89,33 +84,28 @@
                 },
                 tooltip: {
                     headerFormat: '',
-                    pointFormat: '{point.x} , {point.y} '
+                    pointFormat: 'Device UID: {point.name} '
                 }
             }
         },
         series: [{
             name: 'Busy',
-            color: "#DC143C",
+            color: "#8E2800",
             data: <%= @seats_info %>,
              marker: {
                 lineWidth: 0,
-                radius: 6,
-                lineColor: null,
-                states: {
-                hover: {
-                  
-                }
-            }
+                radius: 8,
+                lineColor: null
             }
 
         }, {
             name: 'Free',
-            color: '#00FF00',
+            color: '#468966',
             data: <%= @data2 %>
             
         }, {
-            name: 'Away',
-            color: '#4682B4',
+            name: 'Break',
+            color: '#FFB03B',
             data: <%= @data3 %>
             
         }
@@ -144,8 +134,8 @@ $(function () {
             chart: {
               backgroundColor: null,
                 type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10
+                animation: Highcharts.svg // don't animate in old IE
+                // marginRight: 10
                 // events: {
                 //     load: function () {
 
@@ -161,20 +151,33 @@ $(function () {
                 // }
             },
             title: {
-                text: 'Live Library Occupancy Status'
+                text: ''
             },
+            min:0,
             xAxis: {
                 type: 'datetime',
-                tickPixelInterval: 150
+                tickPixelInterval: 150,
+                              labels: {
+         style: {
+            color: 'white',
+            font: '11px Trebuchet MS, Verdana, sans-serif'
+         }
+              }
             },
             yAxis: {
+              labels: {
+         style: {
+            color: 'white',
+            font: '11px Trebuchet MS, Verdana, sans-serif'
+         }
+              },
                 title: {
-                    text: 'Free Seats in Percentage'
+                    text: ''
                 },
                 plotLines: [{
                     value: 0,
                     width: 1,
-                    color: '#808080'
+                    color: '#6a6a6a'
                 }]
             },
             tooltip: {
@@ -192,6 +195,7 @@ $(function () {
             },
             series: [{
                 name: 'Library Occupancy',
+                color: 'white',
                 data: (function () {
                     // generate an array of random data
                     var data = [],
@@ -201,7 +205,7 @@ $(function () {
                     for (i = -19; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 5000,
-                            y: Math.floor(Math.random()*20)+10
+                            y: Math.floor(Math.random()* <%= @free_seat_count  %> + <%= @free_seat_count  %> * 0.5)
                         });
                     }
                     return data;
@@ -383,7 +387,8 @@ font-size: 40px;
  </div> -->
 
  <div class="library-info-section" style="width:100%; ">
-  <div class="container" style="opacity:0.7; background: #252020; padding-bottom:20px">
+    <div class="container" style="opacity:0.7; padding-bottom:20px">
+<!--   <div class="container" style="opacity:0.7; background: #252020; padding-bottom:20px"> -->
   <h1 style="font-family: roboto-thin; color:white; font-size:60px">Details</h1>
   <hr>
   <div class="row">
@@ -442,7 +447,7 @@ font-size: 40px;
 
       <div class="row">
         <div class="col-xs-6">
-         <h1 style="font-family: roboto-thin; color:white">Seats away</h1> 
+         <h1 style="font-family: roboto-thin; color:white">Study break</h1> 
         </div>
         <div class="col-xs-6">
           <h1 id='away_seat_count_label' style="text-align:right; font-family: roboto-thin; color:white; font-size:40px"><%= @away_seat_count %></h1>
@@ -460,13 +465,70 @@ font-size: 40px;
 
 
  <div class="library-map-section">
- 	<div class="container">
 
 
-<div id="container1" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+
+  <div class="container" style="background: #2980B9; opacity:0.7">
 
 
-<div id="container" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
+
+
+<!--   <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #2980B9 , #242d37); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #2980B9 , #242d37); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #2980B9 , #242d37); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+<!-- 
+  <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #2980B9 , #2D3E50); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #2980B9 , #2D3E50); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #2980B9 , #2D3E50); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+
+
+
+<!--  	<div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #ff8159 , #ff2617); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #ff8159 , #ff2617); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #ff8159 , #ff2617); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+<h1 style="font-family: roboto-thin; color:white; font-size:60px">Number of Free Seats Available</h1>
+<hr>
+<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px"><%=Date.today.strftime('%a %d %b %Y')%></h2>
+
+<div id="container1" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+</div>
+</div>
+
+<!-- <div class="library-map-section1" style="background:#0e0d0d"> -->
+<div class="library-map-section1" style="">
+
+<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
+<div class="container" style="opacity:1;">
+<!-- light, dark 
+dcdbe1 - light
+8a8a8c - dark  -->
+
+<h1 style="font-family: roboto-thin; color:white; font-size:60px">
+  Study Space Positions and Availabilities 
+</h1>
+<hr>
+<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+
+
+<div id="container" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
+
+</div>
+</div>
 
 
 <% if user_is_admin? %>
@@ -492,7 +554,7 @@ font-size: 40px;
     </table>
  <% end %>
 
- </div>
- </div>
+ <!-- </div> -->
+
 
 

@@ -32,7 +32,7 @@
 }
 
 .library-info-section {
-	padding: 80px 0;
+	padding: 0px 0 100px 0;
 }
 
 .dc-big-pic-text {
@@ -45,14 +45,18 @@
 }
 
 .library-map-section {
-	padding: 80px 0;
-	background: black;
+	padding: 100px 0;
+	background: #2980B9;
+  /*2D3E50*/
 }
 
-.library-info-section {
+.library-map-section1 {
   padding: 80px 0;
-  background: Black;
+  background: black;
 }
+
+
+
 
 .image-center {
 	display: block;

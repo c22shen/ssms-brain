@@ -13,11 +13,11 @@ class LibrariesController < ApplicationController
             Seat.where(query_string).order( 'uid' ).each do |seat|
 
                   if seat.status =='free'
-                        color = '#00FF00'
+                        color = '#468966'
                   elsif seat.status == 'busy'
-                        color = '#DC143C'
+                        color = '#8E2800'
                   else
-                        color = "#4682B4"
+                        color = "#FFB03B"
                   end
 
 

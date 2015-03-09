@@ -19,17 +19,17 @@ def events
   
   # initialize
   if @option == 'sim'
-    color = '#00FF00'
+    color = '#468966'
     # generate random seat change 
     random_num = rand
-    if (0..0.2).include?(random_num)
+    if (0..0.1).include?(random_num)
       new_status ='away'
-      color =  "#4682B4"
-    elsif (0.2..0.3).include?(random_num)
-      color = "#00FF00"
+      color =  "#FFB03B"
+    elsif (0.1..0.3).include?(random_num)
+      color = "#468966"
       new_status='free'
     else
-      color = "#DC143C"
+      color = "#8E2800"
       new_status='busy'
 
 
@@ -89,11 +89,11 @@ def events
       	seat = Seat.new
 
       	if status.status =='free'
-    		  color = '#00FF00'
+    		  color = '#468966'
     		elsif status.status == 'busy'
-    			color = '#DC143C'
+    			color = '#8E2800'
     		else
-    			color = "#4682B4"
+    			color = "#FFB03B"
     		end
 
 

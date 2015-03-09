@@ -28,15 +28,11 @@ source.addEventListener 'message', (e) ->
 	      lineWidth: 10
 	if select == true
 		old_pt.select()
-		setTimeout (->
-		  old_pt.select false
-		  return
-		), 3000
 
 	chart1 = $('#container1').highcharts()
 	x_time = (new Date()).getTime()
 
-	new_pt1 = [x_time, free_seat_percent]
+	new_pt1 = [x_time, free_seat_count]
 	chart1.series[0].addPoint(new_pt1,true,true)
 
 	$('#free_seat_count_label').text free_seat_count
