@@ -29,9 +29,13 @@ $(function(){
             <div class="carousel-caption">
               <h1 style="background-color:black; opacity:0.7">Big exam coming up? Maximize your efficiency by studying at your favourite place on campus. </h1>
               <p style="background-color:black; opacity:0.7">Quickly find empty study spaces on campus with the help of <code>SSMS</code>. Our web application is designed for ease of use, whether on the computer or on your tablet or phone. New occupancy updates will be instantly pushed to the screen without the need to refresh.</p>
+              <p></p>
               <p><%= link_to library_path(1) do %>
   
-              <button type="button" class="btn btn-primary btn-lg" style="display:block; margin: 0 auto">Try It Out</span>
+              <button type="button" class="btn btn-primary btn-lg" style="display:block; margin: 0 auto;padding: 15px 30px;
+  font-size: 35px;
+  line-height: 1.3333333;
+  border-radius: 6px;">Try It Out</span>
             </button>
 <% end %></p>
             </div>
@@ -44,6 +48,14 @@ $(function(){
                <h1 style="background-color:black; opacity:0.7">Provide an enjoyable university experience that doesn't involve running around trying to find study spaces.</h1>
               <p style="background-color:black; opacity:0.7">More than half of students at University of Waterloo expressed that finding empty study spaces is a painful experience, especially during exam times. Valuable study time is wasted, which can have negative impact on academic performance. </p>
               <p></p>
+               <p><%= link_to library_path(1) do %>
+  
+              <button type="button" class="btn btn-primary btn-lg" style="display:block; margin: 0 auto;padding: 15px 30px;
+  font-size: 35px;
+  line-height: 1.3333333;
+  border-radius: 6px;">Solution</span>
+            </button>
+<% end %></p>
             </div>
           </div>
         </div>
@@ -53,8 +65,12 @@ $(function(){
             <div class="carousel-caption">
               <h1 style="background-color:black; opacity:0.7">A System built by students for students. Tailor-fitted to the students' need.</h1>
               <p style="background-color:black; opacity:0.7">SSMS is built and designed from the ground up by four <code>Mechatronics Engineering</code> students at University of Waterloo. The team possesses breadth of knowledge in software mechanical electrical and design, gained from industrial experience gained through their co-op internships.</p>
+              <p></p>
               <p>
-<%= content_tag("a","Contact Us", :class=> "btn btn-primary btn-lg", id: 'contact-btn') %>
+<%= content_tag("a","Contact Us", :class=> "btn btn-primary btn-lg", :style=>"padding: 15px 30px;
+  font-size: 35px;
+  line-height: 1.3333333;
+  border-radius: 6px;", id: 'contact-btn') %>
               </p>
             </div>
           </div>
@@ -208,7 +224,7 @@ $(function(){
       <div class="col-md-6">
         <h1 class="" style="font-family:'roboto-thin'; font-size:50px; color:black;margin: 100px 0 20px 0">Simple mechanical design,
 
-        Efficient and unobtrusive.
+        efficient and unobtrusive.
           </h1>
          <p style="font-family:'roboto-thin'; font-size:20px">3D printed using PC-ABS, the sensor container is a mechanical art-piece that is small in size, high in impact tolerance, sufficient in heat resistance and asthetically pleasing.</p>
       </div>
@@ -291,6 +307,7 @@ University of Waterloo <% end %> Mechatronics Engineering
           </div>
         </div>
         <div class="row">
+
           <div class="col-xs-12 col-sm-6 col-md-3">
             <button class="teammember" type="button" data-toggle="modal" data-target="#xiaoModal">
               <div class="xiao-icon"></div>
@@ -300,7 +317,7 @@ University of Waterloo <% end %> Mechatronics Engineering
   color: rgb(255, 255, 255);
   text-transform: uppercase;
   line-height: 2.32;
-"> chongxiao shen
+"> xiao shen
 </div>
 
 <div class="text-center" style="
@@ -317,13 +334,68 @@ University of Waterloo <% end %> Mechatronics Engineering
 
 
 <!-- modal window -->
-<div class="modal fade" id="xiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color:#2980B9">
-      <%=image_tag "xiao_body.png",  width: '500' %>
-<h1 style="color:white; font-size: 60px">XIAO</h1>
-      </div>
+<div class="modal fade" id="xiaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="background-color:#3d84b8;   padding: 10px 35px">
+
+      <div class="row">
+      <div class="col-xs-4">
+  <a href="mailto:c22shen@uwaterloo.ca">
+        <p style="color:White; font-size: 30px;
+  margin-top: 80px;" class="text-center">
+
+  <i class="fa fa-envelope-o"></i>
+      </p>
+    </a>
+        </div>
+      <div class="col-xs-4">
+  <%= image_tag 'xiao-head.png', :style=>"display:block; margin: 30px auto 30px auto" %>
+    </div>
+</div>
+<div class="row text-center">
+  <h1 style="font-family: 'roboto'; color:white">XIAO SHEN</h1>
+</div>
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Skill Highlights
+  </h3>
+  <h4 class="">
+    <span class="label label-primary">Web Development</span>
+    <span class="label label-primary">Graphic Design</span>
+    <span class="label label-primary">Machine Learning</span>
+</h4>
+
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Past Experiences
+  </h3>
+<div class="list-group">
+  <a href="#" class="list-group-item active">
+    IFDS - BIG DATA SYSTEM DEVELOPER
+  </a>
+  <a href="#" class="list-group-item active">CIBC WORLD MARKETS - ELECTRONIC TRADING ANALYST</a>
+  <a href="#" class="list-group-item active">BANK OF AMERICA MERRIL LYNCH - SOFTWARE ENGINEER </a>
+</div>
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Mini Biography
+  </h3>
+  <p style="font-family: 'roboto'; color:white;background: #337AB7;padding: 10px">
+    
+
+    Xiao is Graduating from University of Waterloo, Mechatronics Engineering program. 
+<br><br>
+    During the development of SSMS, his main responsibility is the web application design and development. 
+<br><br>
+    He will be working as a consultant specializing in the technology and financial sector in June 2015. <br><br>
+    Interests: Basketball, accordion, finance
+  </p>
+
   </div>
+</div>
 </div>
 
 
@@ -355,13 +427,63 @@ University of Waterloo <% end %> Mechatronics Engineering
             </button>
 
             <!-- modal window -->
-<div class="modal fade" id="jayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color:#2980B9">
-<h1 style="color:white; font-size: 60px">JAESIK</h1>
-<%=image_tag "jay_body.jpg",  width: '500' %>
-      </div>
+<<div class="modal fade" id="jayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="background-color:#3d84b8;   padding: 10px 35px">
+
+      <div class="row">
+      <div class="col-xs-4">
+  <a href="mailto:tensaijskim1991@gmail.com ">
+        <p style="color:White; font-size: 30px;
+  margin-top: 80px;" class="text-center">
+
+  <i class="fa fa-envelope-o"></i>
+      </p>
+    </a>
+        </div>
+      <div class="col-xs-4">
+  <%= image_tag 'jay-head.png', :style=>"display:block; margin: 30px auto 30px auto" %>
+    </div>
+</div>
+<div class="row text-center">
+  <h1 style="font-family: 'roboto'; color:white">JAESIK KIM</h1>
+</div>
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Skill Highlights
+  </h3>
+  <h4 class="">
+    <span class="label label-primary">Software development</span>
+    <span class="label label-primary">Robotics</span>
+    <span class="label label-primary">Embedded System</span>
+</h4>
+
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Past Experiences
+  </h3>
+<div class="list-group">
+  <a href="#" class="list-group-item active">
+    CISCO - Interning Engineer
+  </a>
+  <a href="#" class="list-group-item active">IDC - Interning Engineer</a>
+  <a href="#" class="list-group-item active">RuggedCom - Interning Engineer </a>
+</div>
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    MINI-BIO
+  </h3>
+  <p style="font-family: 'roboto'; color:white;background: #337AB7;padding: 10px">
+    Jaesik is Graduating from University of Waterloo, Mechatronics Engineering program.  <br><br>
+    During the development of SSMS, his main responsibility are  software development of the Rfduino mobule, and the implementation of the trilateration algorithm with Processing language. <br><br>
+    Interests: working out, soccer, drums
+  </p>
+
   </div>
+</div>
 </div>
           </div>
 
@@ -392,13 +514,63 @@ University of Waterloo <% end %> Mechatronics Engineering
             </button>
 
             <!-- modal window -->
-<div class="modal fade" id="samModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color:#2980B9">
-<h1 style="color:white; font-size: 60px">MIN GU</h1>
-<%=image_tag "sam_body.jpg",  width: '500' %>
-      </div>
+<div class="modal fade" id="samModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="background-color:#3d84b8;   padding: 10px 35px">
+
+      <div class="row">
+      <div class="col-xs-4">
+  <a href="mailto:Mgskwon@gmail.com">
+        <p style="color:White; font-size: 30px;
+  margin-top: 80px;" class="text-center">
+
+  <i class="fa fa-envelope-o"></i>
+      </p>
+    </a>
+        </div>
+      <div class="col-xs-4">
+  <%= image_tag 'sam-head.png', :style=>"display:block; margin: 30px auto 30px auto" %>
+    </div>
+</div>
+<div class="row text-center">
+  <h1 style="font-family: 'roboto'; color:white">MIN GU KWON</h1>
+</div>
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Skill Highlights
+  </h3>
+  <h4 class="">
+    <span class="label label-primary">Mechanical Design</span>
+    <span class="label label-primary">Algorithms</span>
+    <span class="label label-primary">Software development</span>
+</h4>
+
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Past Experiences
+  </h3>
+<div class="list-group">
+  <a href="#" class="list-group-item active">
+    Blackberry - Software Developer
+  </a>
+  <a href="#" class="list-group-item active">General Motors - Interning Engineer</a>
+  <a href="#" class="list-group-item active">Honeywell Aerospace - Interning Engineer </a>
+</div>
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    MINI-BIO
+  </h3>
+  <p style="font-family: 'roboto'; color:white;background: #337AB7;padding: 10px">
+    Min Gu is Graduating from University of Waterloo, Mechatronics Engineering program.  <br><br>
+    For the development of SSMS, his main responsibilities are mechanical design of the sensor container, and the design of the trilateration algorithm. <br><br>
+    Interests: Soccer, Music, Taekwondo
+  </p>
+
   </div>
+</div>
 </div>
 
 
@@ -432,13 +604,64 @@ University of Waterloo <% end %> Mechatronics Engineering
 
 
             <!-- modal window -->
-<div class="modal fade" id="johnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color:#2980B9">
-<h1 style="color:white; font-size: 60px">JUNGWOOK</h1>
-<%=image_tag "john_body.jpg",  width: '500' %>
-      </div>
+<div class="modal fade" id="johnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="background-color:#3d84b8;   padding: 10px 35px">
+
+      <div class="row">
+      <div class="col-xs-4">
+  <a href="mailto:jungwook.l.92@gmail.com">
+        <p style="color:White; font-size: 30px;
+  margin-top: 80px;" class="text-center">
+
+  <i class="fa fa-envelope-o"></i>
+      </p>
+    </a>
+        </div>
+      <div class="col-xs-4">
+  <%= image_tag 'john-head.png', :style=>"display:block; margin: 30px auto 30px auto" %>
+    </div>
+</div>
+<div class="row text-center">
+  <h1 style="font-family: 'roboto'; color:white">JUNG WOOK LEE</h1>
+</div>
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Skill Highlights
+  </h3>
+  <h4 class="">
+    <span class="label label-primary">Robotics</span>
+    <span class="label label-primary">PCB Design</span>
+    <span class="label label-primary">Controls</span>
+</h4>
+
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    Past Experiences
+  </h3>
+<div class="list-group">
+  <a href="#" class="list-group-item active">
+     Wavlab - Interning Engineer
+  </a>
+
+  <a href="#" class="list-group-item active">Adaptive Systems Lab - Interning Engineer</a>
+</div>
+</div>
+
+<div class="row">
+  <h3 style="font-family: 'roboto'; color:white">
+    MINI-BIO
+  </h3>
+  <p style="font-family: 'roboto'; color:white;background: #337AB7;padding: 10px">
+    Jungwook is Graduating from University of Waterloo, Mechatronics Engineering program.  <br><br>
+    For the development of SSMS, his main responsibilies are the design and manufacturing of PCB boards, and integration of all electrical components. <br><br>
+    Jungwook is mainly interested in Autonomous Robotics and computer vision system. He is looking to innovate the future with cutting edge technology.
+
+  </p>
+
   </div>
+</div>
 </div>
 
 
@@ -527,6 +750,6 @@ University of Waterloo <% end %> Mechatronics Engineering
   color: rgb(189, 195, 199);
   line-height: 0.986;
 ">
-    @2015 DESIGNED BY CHONGXIAO SHEN | SSMS ALL RIGHTS RESERVED
+    @2015 WEB DESIGN BY XIAO SHEN | SSMS ALL RIGHTS RESERVED
   </div>
 </div>
