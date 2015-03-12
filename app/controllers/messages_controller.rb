@@ -22,10 +22,10 @@ def events
     color = '#468966'
     # generate random seat change 
     random_num = rand
-    if (0..0.1).include?(random_num)
-      new_status ='away'
-      color =  "#FFB03B"
-    elsif (0.1..0.3).include?(random_num)
+    # if (0..0.1).include?(random_num)
+    #   new_status ='away'
+    #   color =  "#FFB03B"
+    if (0..0.3).include?(random_num)
       color = "#468966"
       new_status='free'
     else
@@ -63,12 +63,24 @@ def events
     seat_hash[:away_seat_count] = away_seat_count
 
 
+    free_array = Array.new 
+      free_array.push(free_seat_count)
+      free_array.push(rand(10..40))
+
+      busy_array = Array.new 
+      busy_array.push(busy_seat_count)
+      busy_array.push(rand(10..40))
+
+      seat_hash[:free_array] = free_array
+      seat_hash[:busy_array] = busy_array
+
+
     # seat_hash[:empty_seat_count] = free_seat_count
     
-    select = false
-    if curr_seat.status != new_status 
+    # select = false
+    # if curr_seat.status != new_status 
       select = true
-    end
+    # end
     seat_hash[:select] = select
     seat_hash_json = seat_hash.to_json
     response.stream.write "data: #{seat_hash_json}\n\n"
@@ -118,12 +130,24 @@ def events
 
       free_seat_count=Seat.where("mode='live'").where("status='free'").count
       busy_seat_count=Seat.where("mode='live'").where("status='busy'").count
-      away_seat_count=Seat.where("mode='live'").where("status='away'").count
+      # away_seat_count=Seat.where("mode='live'").where("status='away'").count
       seat_hash[:free_seat_count] = free_seat_count
       seat_hash[:busy_seat_count] = busy_seat_count
-      seat_hash[:away_seat_count] = away_seat_count
+      # seat_hash[:away_seat_count] = away_seat_count
 
-      free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count+away_seat_count)*100.0
+      free_array = Array.new 
+      free_array.push(free_seat_count)
+      free_array.push(rand(10..40))
+
+      busy_array = Array.new 
+      busy_array.push(busy_seat_count)
+      busy_array.push(rand(10..40))
+
+      seat_hash[:free_array] = free_array
+      seat_hash[:busy_array] = busy_array
+
+
+      free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count)*100.0
       seat_hash[:percent] = free_seat_percentage.round
 
       seat_hash_json = seat_hash.to_json

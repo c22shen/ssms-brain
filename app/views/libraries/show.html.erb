@@ -32,6 +32,7 @@
             tickLength: 0
         },
         yAxis: {
+
             title: {
                 enabled: false,
                 text: ''
@@ -102,13 +103,13 @@
             name: 'Free',
             color: '#468966',
             data: <%= @data2 %>
+      }      
+        // }, {
+        //     name: 'Break',
+        //     color: '#FFB03B',
+        //     data: <%= @data3 %>
             
-        }, {
-            name: 'Break',
-            color: '#FFB03B',
-            data: <%= @data3 %>
-            
-        }
+        // }
         ]
     });
 
@@ -212,6 +213,110 @@ $(function () {
                 }())
             }]
         });
+    });
+});
+
+
+
+
+// LAST CHART - LIBRARY COMPARISONS
+
+$(function () {
+    $('#container3').highcharts({
+        chart: {
+            type: 'bar',
+            backgroundColor: null
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+                    gridLineWidth: 0,
+                minorGridLineWidth: 0,
+                minorTickLength: 0,
+   tickLength: 0,
+   gridLineColor: 'transparent',
+   // lineColor: 'transparent',
+
+            categories: ['Davis Centre', 'Dana Porter'],
+            title: {
+                text: ''
+            },
+            labels: {
+                overflow: 'justify',
+                style:{
+                        color:'white'
+                    }
+            },
+
+
+        },
+        yAxis: {
+          gridLineWidth: 0,
+                minorGridLineWidth: 0,
+                minorTickLength: 0,
+   tickLength: 0,
+   // gridLineColor: 'transparent',
+   // lineColor: 'transparent',
+            min: 0,
+
+            title: {
+                text: '',
+                align: 'high',
+                // style: {
+                //   color: '#ffffff'
+                // },
+
+            },
+
+            labels: {
+              enabled: false,
+                style:{
+                        color:'white'
+                    }
+            },
+
+        },
+        tooltip: {
+            valueSuffix: 'seats'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: false
+                },
+
+            },series: {
+                borderWidth: 0,
+                borderColor: 'black'
+            }
+        },
+        legend: {
+itemStyle: {
+                 font: '9pt Trebuchet MS, Verdana, sans-serif',
+                 color: 'white'
+              }
+            },
+        exporting: {
+                enabled: false
+            },
+        credits: {
+            enabled: false
+        },
+        series: [ 
+        {
+            name: 'Busy',
+            color: "#8E2800",
+            data: <%= @busy_count %>
+        },{
+            name: 'Free',
+            color: '#468966',
+            data: <%= @free_count %>
+        }
+        ]
     });
 });
 
@@ -386,7 +491,7 @@ font-size: 40px;
 
  </div> -->
 
- <div class="library-info-section" style="width:100%; ">
+ <div class="library-info-section" style="width:100%; background: #252020">
     <div class="container" style="opacity:0.7; padding-bottom:20px">
 <!--   <div class="container" style="opacity:0.7; background: #252020; padding-bottom:20px"> -->
   <h1 style="font-family: roboto-thin; color:white; font-size:60px">Details</h1>
@@ -445,7 +550,7 @@ font-size: 40px;
       </div>
 
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xs-6">
          <h1 style="font-family: roboto-thin; color:white">Study break</h1> 
         </div>
@@ -455,7 +560,7 @@ font-size: 40px;
         <div class="col-xs-12">
         <hr style="border-top: dotted 1px; color:grey" />
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -526,6 +631,40 @@ dcdbe1 - light
 
 
 <div id="container" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="library-map-section2" style="">
+
+<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
+<div class="container" style="opacity:1;">
+<!-- light, dark 
+dcdbe1 - light
+8a8a8c - dark  -->
+
+<h1 style="font-family: roboto-thin; color:white; font-size:60px">
+  Library Comparison
+</h1>
+<hr>
+<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+
+
+<div id="container3" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
 
 </div>
 </div>

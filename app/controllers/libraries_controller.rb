@@ -40,7 +40,7 @@ class LibrariesController < ApplicationController
       end
 
       def show
-            @homestyle='black'
+            @homestyle='#252020'
 
             admin_option = User.find_by_email('admin@ssmsgroup.ca').option
 
@@ -84,10 +84,27 @@ class LibrariesController < ApplicationController
 
                   @busy_seat_count = Seat.where(mode_query_string).where("status='busy'").count
                   @free_seat_count = Seat.where(mode_query_string).where("status='free'").count
-                  @away_seat_count = Seat.where(mode_query_string).where("status='away'").count
+                  # @away_seat_count = Seat.where(mode_query_string).where("status='away'").count
       	
+                  @free_count = Array.new 
+                  @free_count.push(@free_seat_count)
 
-                  @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count+@away_seat_count) 
+                  @free_count.push(rand(10..40))
+                  # @free_count.push(rand(10..40))
+
+                  @busy_count = Array.new 
+                  @busy_count.push(@busy_seat_count)
+
+                  @busy_count.push(rand(10..40))
+                  # @busy_count.push(rand(10..40))
+
+                  # @away_count = Array.new 
+                  # @away_count.push(@away_seat_count)
+
+                  # @away_count.push(rand(10..40))
+                  # @away_count.push(rand(10..40))
+
+                  @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count) 
             end   
       end
 end
