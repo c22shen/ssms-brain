@@ -44,49 +44,52 @@ def events
     
     seat.status = color
     curr_seat = Seat.where("mode='sim'").where("uid=#{rand_uid}").last
-    seat.x = curr_seat.x
-    seat.y = curr_seat.y
-    seat.z = curr_seat.z
-    
+    # logger.debug "*************************#{rand_uid}"
+    unless curr_seat.nil?
+      seat.x = curr_seat.x
+      seat.y = curr_seat.y
+      seat.z = curr_seat.z
+      
 
-    free_seat_count=Seat.where("mode='sim'").where("status='free'").count
-    busy_seat_count=Seat.where("mode='sim'").where("status='busy'").count
-    away_seat_count=Seat.where("mode='sim'").where("status='away'").count
-    
-
-
-    free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count+away_seat_count)*100.0
-    seat_json = seat.to_json
-    seat_hash = JSON.parse(seat_json)
-    seat_hash[:percent] = free_seat_percentage.round
-    seat_hash[:free_seat_count] = free_seat_count
-    seat_hash[:busy_seat_count] = busy_seat_count
-    seat_hash[:away_seat_count] = away_seat_count
+      free_seat_count=Seat.where("mode='sim'").where("status='free'").count
+      busy_seat_count=Seat.where("mode='sim'").where("status='busy'").count
+      away_seat_count=Seat.where("mode='sim'").where("status='away'").count
+      
 
 
-    free_array = Array.new 
-      free_array.push(free_seat_count)
-      free_array.push(rand(10..40))
-
-      busy_array = Array.new 
-      busy_array.push(busy_seat_count)
-      busy_array.push(rand(10..40))
-
-      seat_hash[:free_array] = free_array
-      seat_hash[:busy_array] = busy_array
+      free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count+away_seat_count)*100.0
+      seat_json = seat.to_json
+      seat_hash = JSON.parse(seat_json)
+      seat_hash[:percent] = free_seat_percentage.round
+      seat_hash[:free_seat_count] = free_seat_count
+      seat_hash[:busy_seat_count] = busy_seat_count
+      seat_hash[:away_seat_count] = away_seat_count
 
 
-    # seat_hash[:empty_seat_count] = free_seat_count
-    
-    # select = false
-    # if curr_seat.status != new_status 
-      select = true
-    # end
-    seat_hash[:select] = select
-    seat_hash_json = seat_hash.to_json
-    response.stream.write "data: #{seat_hash_json}\n\n"
-    curr_seat.status=new_status
-    curr_seat.save!
+      free_array = Array.new 
+        free_array.push(free_seat_count)
+        free_array.push(rand(10..40))
+
+        busy_array = Array.new 
+        busy_array.push(busy_seat_count)
+        busy_array.push(rand(10..40))
+
+        seat_hash[:free_array] = free_array
+        seat_hash[:busy_array] = busy_array
+
+
+      # seat_hash[:empty_seat_count] = free_seat_count
+      
+      # select = false
+      # if curr_seat.status != new_status 
+        select = true
+      # end
+      seat_hash[:select] = select
+      seat_hash_json = seat_hash.to_json
+      response.stream.write "data: #{seat_hash_json}\n\n"
+      curr_seat.status=new_status
+      curr_seat.save!
+    end
   else
     # live
     # logger.debug '*************LIVE********************'

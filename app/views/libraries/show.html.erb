@@ -796,7 +796,8 @@ font-size: 40px;
  <div class="library-info-section" style="width:100%; background: #252020">
     <div class="container" style="opacity:0.7; padding-bottom:20px">
 <!--   <div class="container" style="opacity:0.7; background: #252020; padding-bottom:20px"> -->
-  <h1 style="font-family: roboto-thin; color:white; font-size:60px">Details</h1>
+  <h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:60px">Details</h1>
   <hr>
   <div class="row">
     <div class="col-sm-6">
@@ -812,12 +813,14 @@ font-size: 40px;
 </div>
 
 <% if @free_seat_percentage>20 %>
-  <p class="text-center status-message" style="margin-top:20px; font-family:roboto-thin; color:white; font-size:20px" > 
+  <p class="text-center status-message" style="margin-top:20px; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:20px" > 
       <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
       - Library is fairly empty right now, studying at the library seems like a great idea.
     </p>
 <% else %>
-  <p class="text-center" style="margin-top:20px; font-family:roboto-thin; color:white; font-size:20px" > 
+  <p class="text-center" style="margin-top:20px; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:20px" > 
         <i class="fa fa-frown-o" style="color:white; font-size:30px"></i>
         - Library is pretty busy right now, maybe it is better to study at home today.
   </p>
@@ -828,10 +831,12 @@ font-size: 40px;
     <div class="col-sm-6">
       <div class="row">
         <div class="col-xs-6">
-         <h1 style="font-family: roboto-thin; color:white">Seats free</h1> 
+         <h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white">Seats free</h1> 
         </div>
         <div class="col-xs-6">
-          <h1 id='free_seat_count_label' style="text-align:right; font-family: roboto-thin; color:white; font-size:40px"><%= @free_seat_count %></h1>
+          <h1 id='free_seat_count_label' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px"><%= @free_seat_count %></h1>
         </div>
         <div class="col-xs-12">
         <hr style="border-top: dotted 1px; color:grey" />
@@ -841,7 +846,8 @@ font-size: 40px;
 
       <div class="row">
         <div class="col-xs-6">
-         <h1 style="font-family: roboto-thin; color:white">Seats busy</h1> 
+         <h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white">Seats busy</h1> 
         </div>
         <div class="col-xs-6">
           <h1 id='busy_seat_count_label' style="text-align:right; font-family: roboto-thin; color:white; font-size:40px"><%= @busy_seat_count %></h1>
