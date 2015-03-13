@@ -36,7 +36,7 @@ def events
     end
 
 
-    rand_uid = rand(49)
+    rand_uid = rand(99)
 
     seat = Seat.new
     seat.uid = rand_uid
@@ -46,6 +46,7 @@ def events
     curr_seat = Seat.where("mode='sim'").where("uid=#{rand_uid}").last
     seat.x = curr_seat.x
     seat.y = curr_seat.y
+    seat.z = curr_seat.z
     
 
     free_seat_count=Seat.where("mode='sim'").where("status='free'").count
@@ -113,6 +114,7 @@ def events
       	seat.uid = status.uid
       	seat.x = Seat.find_by_uid(status.uid).x
       	seat.y = Seat.find_by_uid(status.uid).y
+        seat.z = Seat.find_by_uid(status.uid).z
 
       	seat_json = seat.to_json
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307225311) do
+ActiveRecord::Schema.define(version: 20150313021454) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20150307225311) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mode"
+    t.float    "z"
   end
 
   create_table "statuses", force: true do |t|

@@ -39,6 +39,22 @@ $(document).on "click", ".option-btn", ->
         button.removeClass('btn-success').addClass('btn-default')
         button.text('SIMULATION')
     complete: () -> 
+$(document).on "click", ".floor1-btn", ->
+  $("html,body").animate
+      scrollTop: $(".floor-detail-section").offset().top
+    , "fast"
+  $('.library-map-section1').slideDown()
+  $('.library-map-sectionfloor').slideUp()
+
+$(document).on "click", ".floor2-btn", ->
+  $("html,body").animate
+      scrollTop: $(".floor-detail-section").offset().top
+    , "fast"
+  $('.library-map-sectionfloor').slideDown()
+  $('.library-map-section1').slideUp()
+  
+
+
 $ ->
   $ppc = $('.progress-pie-chart')
   percent = parseInt($ppc.data('percent'))

@@ -16,6 +16,8 @@ class StatusesController < ApplicationController
           unless seat.nil?
             seat.x = x_val
             seat.y = y_val
+            seat.z = 1 
+            # DEFAULT to FLOOR 1
              # logger.debug '*************X VAL **********'
              # logger.debug x_val
              # logger.debug '*************Y VAL **********'

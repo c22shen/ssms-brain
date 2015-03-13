@@ -1,6 +1,6 @@
 $ ->
   $('.artGroup.flip').hover (->
-    alert 'xiao'
+    # alert 'xiao'
     $(this).find('.artwork').addClass 'theFlip'
     return
   ), ->

@@ -1,6 +1,7 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
  <script type="text/javascript">
     $(function () {
     $('#container').highcharts({
@@ -117,6 +118,128 @@
 
 
 });
+
+
+
+// 2nd floor
+    $(function () {
+    $('#containerfloor2').highcharts({
+        chart: {
+            type: 'scatter',
+            zoomType: 'xy',
+            backgroundColor: null
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            title: {
+                enabled: false,
+                text: ''
+            },
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            // lineColor: 'transparent',
+
+            minorTickLength: 0,
+            tickLength: 0
+        },
+        yAxis: {
+
+            title: {
+                enabled: false,
+                text: ''
+            },
+
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            lineColor: 'transparent',
+            gridLineColor: 'transparent',
+            
+            minorTickLength: 0,
+            tickLength: 0
+        },
+        legend: {
+           itemStyle: {
+                 font: '9pt Trebuchet MS, Verdana, sans-serif',
+                 color: 'white'
+              },
+            // layout: 'vertical',
+            // align: 'right',
+            // verticalAlign: 'top',
+            // x: 0,
+            // y: 100,
+            // floating: true,
+            // backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            // borderWidth: 1
+        },
+        exporting: {
+         enabled: false
+        },
+
+        plotOptions: {
+                      series: {
+                        allowPointSelect: true,
+                states: {
+                    hover: {
+                      enabled: false
+
+ // radiusPlus: 5
+                    }
+                }
+            },
+            scatter: {
+                marker: {
+                    radius: 5
+                },
+                tooltip: {
+                    headerFormat: '',
+                    pointFormat: 'Device UID: {point.name} X: {point.x:.2f} Y: {point.y:.2f}'
+                }
+            }
+        },
+        series: [{
+            name: 'Busy',
+            color: "#8E2800",
+            data: <%= @seats_info_floor2 %>,
+             marker: {
+                lineWidth: 0,
+                radius: 8,
+                lineColor: null
+            }
+
+        }, {
+            name: 'Free',
+            color: '#468966',
+            data: <%= @data2 %>
+      }      
+        // }, {
+        //     name: 'Break',
+        //     color: '#FFB03B',
+        //     data: <%= @data3 %>
+            
+        // }
+        ]
+    });
+
+
+
+
+});
+
+
+
 
 
 
@@ -319,6 +442,185 @@ itemStyle: {
         ]
     });
 });
+
+
+
+
+
+
+
+
+$(function () {
+
+    // Give the points a 3D feel by adding a radial gradient
+    Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function (color) {
+        return {
+            radialGradient: {
+                cx: 0.4,
+                cy: 0.3,
+                r: 0.5
+            },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.2).get('rgb')]
+            ]
+        };
+    });
+
+    // Set up the chart
+     var chart = new Highcharts.Chart({
+        chart: {
+            margin: 100,
+            renderTo: 'container3d',
+            type: 'scatter',
+// inverted: true,
+            backgroundColor: null,
+            options3d: {
+                enabled: true,
+                  alpha: 15,
+                beta: 30,
+                // depth: 250,
+                // viewDistance: 5,
+
+                frame: {
+                    bottom: { 
+                       size: 1, 
+                      color: 'rgba(0,0,0,0.04)' 
+                  },
+                    back: { 
+                      size: 1, 
+                      color: 'rgba(0,0,0,0.06)'   
+                    },
+                    side: { 
+                      size: 1, 
+                      color: 'rgba(0,0,0,0.08)' 
+                    }
+                }
+            }
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        plotOptions: {
+            scatter: {
+              marker: {
+                    radius: 5
+                },
+                // width: 10,
+                // height: 10,
+                // depth: 10
+            }
+        },
+        yAxis: {
+            // min: 0,
+            // max: 10,
+            title: null,
+            allowDecimals: false,
+labels:
+            {
+              format: 'Floor: {value}',
+              style: {
+                    color: 'black',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                }
+            },
+            ineWidth: 0,
+            minorGridLineWidth: 0,
+            lineColor: 'transparent',
+            gridLineColor: 'transparent',
+            
+            minorTickLength: 0,
+            tickLength: 0
+        },
+        xAxis: {
+            // min: 0,
+            // max: 10,
+            gridLineWidth: 0,
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            // lineColor: 'transparent',
+
+            minorTickLength: 0,
+            tickLength: 0
+        },
+        zAxis: {
+            min: 0,
+             max: <%= @z_max +1%>,
+             labels:
+            {
+              format: 'Floor: {value}',
+              style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                }
+            },
+        },
+                tooltip: {
+                formatter: function () {
+                    return ''
+                },
+                enabled: false
+            },
+
+        legend: {
+            enabled: false
+        },
+        exporting: {
+         enabled: false
+        },
+        series: [{
+            name: 'seatStatus',
+            colorByPoint: true,
+            data: <%= @seats_info1 %>
+        }]
+    });
+
+
+    // Add mouse events for rotation
+    $(chart.container).bind('mousedown.hc touchstart.hc', function (e) {
+        e = chart.pointer.normalize(e);
+
+        var posX = e.pageX,
+            posY = e.pageY,
+            alpha = chart.options.chart.options3d.alpha,
+            beta = chart.options.chart.options3d.beta,
+            newAlpha,
+            newBeta,
+            sensitivity = 5; // lower is more sensitive
+
+        $(document).bind({
+            'mousemove.hc touchdrag.hc': function (e) {
+                // Run beta
+                newBeta = beta + (posX - e.pageX) / sensitivity;
+                newBeta = Math.min(100, Math.max(-100, newBeta));
+                chart.options.chart.options3d.beta = newBeta;
+
+                // Run alpha
+                newAlpha = alpha + (e.pageY - posY) / sensitivity;
+                newAlpha = Math.min(100, Math.max(-100, newAlpha));
+                chart.options.chart.options3d.alpha = newAlpha;
+
+                chart.redraw(false);
+            },
+            'mouseup touchend': function () {
+                $(document).unbind('.hc');
+            }
+        });
+    });
+
+});
+
+
+
+
+
 
 
 // GOOGLE MAP HERE
@@ -604,11 +906,46 @@ font-size: 40px;
 <hr>
 <h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px"><%=Date.today.strftime('%a %d %b %Y')%></h2>
 
+
 <div id="container1" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
 </div>
 </div>
 
 <!-- <div class="library-map-section1" style="background:#0e0d0d"> -->
+<div class="library-map-section3d" style="">
+
+<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
+<div class="container" style="opacity:1;">
+<!-- light, dark 
+dcdbe1 - light
+8a8a8c - dark  -->
+
+
+<h1 style="font-family: roboto-thin; color:black; font-size:60px">
+  Library Study Spaces and Availabilities 
+</h1>
+
+<hr style="border-top: solid 1px; color:black">
+<h2 style="font-family: roboto-thin; color:black; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+
+<button type="button" class="btn btn-info btn-sm floor1-btn" style="margin-top:10px;margin-right:5px">Floor 1 Detail</button>
+<button type="button" class="btn btn-info btn-sm floor2-btn" style="margin-top:10px;margin-right:5px">Floor 2 Detail</button>
+<div id="container3d"> </div>
+
+
+</div>
+</div>
+
+<div class="floor-detail-section">
+  
+
+
 <div class="library-map-section1" style="">
 
 <!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
@@ -623,17 +960,56 @@ font-size: 40px;
 dcdbe1 - light
 8a8a8c - dark  -->
 
-<h1 style="font-family: roboto-thin; color:white; font-size:60px">
-  Study Space Positions and Availabilities 
-</h1>
-<hr>
-<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
 
+<h1 style="font-family: roboto-thin; color:white; font-size:60px">
+  Floor Detail
+</h1>
+
+<hr style="">
+<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">Floor One</h2>
+<div id="container3d">
+  
+</div>
 
 <div id="container" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
 
 </div>
 </div>
+
+
+
+
+<!-- SECOND FLOOR -->
+
+
+<div class="library-map-sectionfloor" style="">
+
+<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
+    opacity:0.7"> -->
+
+<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
+<div class="container" style="opacity:1;">
+<!-- light, dark 
+dcdbe1 - light
+8a8a8c - dark  -->
+
+
+<h1 style="font-family: roboto-thin; color:white; font-size:60px">
+  Floor Detail
+</h1>
+
+<hr style="">
+<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">Floor Two</h2>
+
+<div id="containerfloor2" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
+
+</div>
+</div>
+</div>
+
 
 
 
@@ -661,7 +1037,7 @@ dcdbe1 - light
   Library Comparison
 </h1>
 <hr>
-<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+<h2 style="font-family: roboto-thin; color:white; font-size:30px; margin-bottom:20px">University of Waterloo</h2>
 
 
 <div id="container3" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>

@@ -20,6 +20,7 @@ source.addEventListener 'message', (e) ->
 	status = $.parseJSON(e.data).status
 	x = $.parseJSON(e.data).x
 	y = $.parseJSON(e.data).y
+	z = $.parseJSON(e.data).z
 	free_seat_percent = $.parseJSON(e.data).percent
 	free_seat_count = $.parseJSON(e.data).free_seat_count
 	busy_seat_count = $.parseJSON(e.data).busy_seat_count
@@ -28,10 +29,42 @@ source.addEventListener 'message', (e) ->
 	free_array = $.parseJSON(e.data).free_array
 	busy_array = $.parseJSON(e.data).busy_array
 
-	select = $.parseJSON(e.data).select
-	chart = $('#container').highcharts()
-	old_pt = chart.get(uid)
-	old_pt.update marker:
+	# select = $.parseJSON(e.data).select
+	if z == 1
+		chart = $('#container').highcharts()
+		old_pt = chart.get(uid)
+		old_pt.update marker:
+		  fillColor: status
+		  states:
+		    hover:
+		      fillColor: status
+		      lineColor: status
+		    select:
+		      fillColor: shadeColor2(status,0.3)
+		      lineColor: shadeColor2(status,0.3)
+		      lineWidth: 5
+		old_pt.select()
+	else if z == 2 
+		chart = $('#containerfloor2').highcharts()
+		old_pt = chart.get(uid)
+		old_pt.update marker:
+		  fillColor: status
+		  states:
+		    hover:
+		      fillColor: status
+		      lineColor: status
+		    select:
+		      fillColor: shadeColor2(status,0.3)
+		      lineColor: shadeColor2(status,0.3)
+		      lineWidth: 5
+		old_pt.select()
+	      
+	# if select == true
+	
+
+	chart3d = $('#container3d').highcharts()
+	old_pt3d = chart3d.get(uid)
+	old_pt3d.update marker:
 	  fillColor: status
 	  states:
 	    hover:
@@ -40,10 +73,8 @@ source.addEventListener 'message', (e) ->
 	    select:
 	      fillColor: shadeColor2(status,0.3)
 	      lineColor: shadeColor2(status,0.3)
-	      lineWidth: 10
-	      
-	if select == true
-		old_pt.select()
+	      lineWidth: 1
+	old_pt3d.select()
 
 	chart1 = $('#container1').highcharts()
 	x_time = (new Date()).getTime()
