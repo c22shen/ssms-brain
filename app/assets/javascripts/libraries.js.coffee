@@ -46,12 +46,15 @@ $(document).on "click", ".floor1-btn", ->
   $('.library-map-section1').slideDown()
   $('.library-map-sectionfloor').slideUp()
 
+
+
 $(document).on "click", ".floor2-btn", ->
   $("html,body").animate
       scrollTop: $(".floor-detail-section").offset().top
     , "fast"
   $('.library-map-sectionfloor').slideDown()
   $('.library-map-section1').slideUp()
+
   
 
 

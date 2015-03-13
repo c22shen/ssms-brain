@@ -1,6 +1,6 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<!-- <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
  <script type="text/javascript">
     $(function () {
@@ -479,7 +479,8 @@ $(function () {
                 enabled: true,
                   alpha: 15,
                 beta: 30,
-                // depth: 250,
+                viewDistance: 5,
+                depth: 150,
                 // viewDistance: 5,
 
                 frame: {
@@ -581,6 +582,23 @@ labels:
             data: <%= @seats_info1 %>
         }]
     });
+
+ // Activate the sliders
+    $('#R0').on('change', function () {
+        chart.options.chart.options3d.alpha = this.value;
+       // $('#R0-value').html(chart.options.chart.options3d.alpha);
+        // $('#R1-value').html(chart.options.chart.options3d.beta);
+        chart.redraw(false);
+    });
+    $('#R1').on('change', function () {
+        chart.options.chart.options3d.beta = this.value;
+        // $('#R0-value').html(chart.options.chart.options3d.alpha);
+        // $('#R1-value').html(chart.options.chart.options3d.beta);
+        chart.redraw(false);
+    });
+
+    // $('#R0-value').html(chart.options.chart.options3d.alpha);
+        // $('#R1-value').html(chart.options.chart.options3d.beta);
 
 
     // Add mouse events for rotation
@@ -952,12 +970,18 @@ dcdbe1 - light
 <button type="button" class="btn btn-info btn-sm floor1-btn" style="margin-top:10px;margin-right:5px">Floor 1 Detail</button>
 <button type="button" class="btn btn-info btn-sm floor2-btn" style="margin-top:10px;margin-right:5px">Floor 2 Detail</button>
 <div id="container3d"> </div>
+<div id="sliders" class="hidden-lg">
+  <table>
+    <tr><td>Vertical Rotation </td><td><input id="R0" type="range" min="0" max="45" value="15"/> <span id="R0-value" class="value"></span></td></tr>
+      <tr><td>Horizontal Rotation</td><td><input id="R1" type="range" min="0" max="45" value="15"/> <span id="R1-value" class="value"></span></td></tr>
+  </table>
+</div>
 
 
 </div>
 </div>
 
-<div class="floor-detail-section">
+<div class="floor-detail-section" style="">
   
 
 
