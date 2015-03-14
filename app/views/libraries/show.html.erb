@@ -1,10 +1,10 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
-<!-- <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
  <script type="text/javascript">
-    $(function () {
-    $('#container').highcharts({
+
+    function drawFloorChart(container_name, seat_data) {
+    $(container_name).highcharts({
         chart: {
             type: 'scatter',
             zoomType: 'xy',
@@ -56,14 +56,8 @@
                  font: '9pt Trebuchet MS, Verdana, sans-serif',
                  color: 'white'
               },
-            // layout: 'vertical',
-            // align: 'right',
-            // verticalAlign: 'top',
-            // x: 0,
-            // y: 100,
-            // floating: true,
-            // backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            // borderWidth: 1
+               enabled: false
+
         },
         exporting: {
          enabled: false
@@ -91,152 +85,18 @@
             }
         },
         series: [{
-            name: 'Busy',
-            color: "#8E2800",
-            data: <%= @seats_info %>,
+            name: 'ssms',
+            color: "#EF5E43",
+            data: seat_data,
              marker: {
                 lineWidth: 0,
-                radius: 8,
+                radius: 12,
                 lineColor: null
             }
-
-        }, {
-            name: 'Free',
-            color: '#468966',
-            data: <%= @data2 %>
-      }      
-        // }, {
-        //     name: 'Break',
-        //     color: '#FFB03B',
-        //     data: <%= @data3 %>
-            
-        // }
+        }
         ]
     });
-
-
-
-
-});
-
-
-
-// 2nd floor
-    $(function () {
-    $('#containerfloor2').highcharts({
-        chart: {
-            type: 'scatter',
-            zoomType: 'xy',
-            backgroundColor: null
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        xAxis: {
-            title: {
-                enabled: false,
-                text: ''
-            },
-            labels:
-            {
-              enabled: false
-            },
-            lineWidth: 0,
-            minorGridLineWidth: 0,
-            // lineColor: 'transparent',
-
-            minorTickLength: 0,
-            tickLength: 0
-        },
-        yAxis: {
-
-            title: {
-                enabled: false,
-                text: ''
-            },
-
-            labels:
-            {
-              enabled: false
-            },
-            lineWidth: 0,
-            minorGridLineWidth: 0,
-            lineColor: 'transparent',
-            gridLineColor: 'transparent',
-            
-            minorTickLength: 0,
-            tickLength: 0
-        },
-        legend: {
-           itemStyle: {
-                 font: '9pt Trebuchet MS, Verdana, sans-serif',
-                 color: 'white'
-              },
-            // layout: 'vertical',
-            // align: 'right',
-            // verticalAlign: 'top',
-            // x: 0,
-            // y: 100,
-            // floating: true,
-            // backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            // borderWidth: 1
-        },
-        exporting: {
-         enabled: false
-        },
-
-        plotOptions: {
-                      series: {
-                        allowPointSelect: true,
-                states: {
-                    hover: {
-                      enabled: false
-
- // radiusPlus: 5
-                    }
-                }
-            },
-            scatter: {
-                marker: {
-                    radius: 5
-                },
-                tooltip: {
-                    headerFormat: '',
-                    pointFormat: 'Device UID: {point.name} X: {point.x:.2f} Y: {point.y:.2f}'
-                }
-            }
-        },
-        series: [{
-            name: 'Busy',
-            color: "#8E2800",
-            data: <%= @seats_info_floor2 %>,
-             marker: {
-                lineWidth: 0,
-                radius: 8,
-                lineColor: null
-            }
-
-        }, {
-            name: 'Free',
-            color: '#468966',
-            data: <%= @data2 %>
-      }      
-        // }, {
-        //     name: 'Break',
-        //     color: '#FFB03B',
-        //     data: <%= @data3 %>
-            
-        // }
-        ]
-    });
-
-
-
-
-});
+}
 
 
 
@@ -246,33 +106,12 @@
 
 
 
-$(function () {
-    $(document).ready(function () {
-        Highcharts.setOptions({
-            global: {
-                useUTC: false
-            }
-        });
-
-        $('#container1').highcharts({
+ function drawSplineChart(container_name, free_seat_count) {
+        $(container_name).highcharts({
             chart: {
               backgroundColor: null,
                 type: 'spline',
                 animation: Highcharts.svg // don't animate in old IE
-                // marginRight: 10
-                // events: {
-                //     load: function () {
-
-                //         // set up the updating of the chart each second
-                //         var series = this.series[0];
-                //         setInterval(function () {
-                //             var x = (new Date()).getTime(), // current time
-                //                 y = Math.random()*100;
-                //                 // percentage of free seats
-                //             series.addPoint([x, y], true, true);
-                //         }, 5000);
-                //     }
-                // }
             },
             title: {
                 text: ''
@@ -326,26 +165,25 @@ $(function () {
                         time = (new Date()).getTime(),
                         i;
 
-                    for (i = -19; i <= 0; i += 1) {
+                    for (i = -10; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 5000,
-                            y: Math.floor(Math.random()* <%= @free_seat_count  %> + <%= @free_seat_count  %> * 0.5)
+                            y: Math.floor(Math.random()*1.5* free_seat_count)
                         });
                     }
                     return data;
                 }())
             }]
         });
-    });
-});
+}
 
 
 
 
-// LAST CHART - LIBRARY COMPARISONS
 
-$(function () {
-    $('#container3').highcharts({
+
+function drawBarGraph(container_name, library_names, free_data, busy_data ) {
+    $(container_name).highcharts({
         chart: {
             type: 'bar',
             backgroundColor: null
@@ -357,14 +195,14 @@ $(function () {
             text: ''
         },
         xAxis: {
-                    gridLineWidth: 0,
+                gridLineWidth: 0,
                 minorGridLineWidth: 0,
                 minorTickLength: 0,
    tickLength: 0,
    gridLineColor: 'transparent',
    // lineColor: 'transparent',
 
-            categories: ['Davis Centre', 'Dana Porter'],
+            categories: library_names,
             title: {
                 text: ''
             },
@@ -432,16 +270,16 @@ itemStyle: {
         series: [ 
         {
             name: 'Busy',
-            color: "#8E2800",
-            data: <%= @busy_count %>
+            color: "#EF5E43",
+            data: busy_data
         },{
             name: 'Free',
-            color: '#468966',
-            data: <%= @free_count %>
+            color: '#8DEB95',
+            data: free_data
         }
         ]
     });
-});
+}
 
 
 
@@ -449,36 +287,20 @@ itemStyle: {
 
 
 
-
-$(function () {
-
-    // Give the points a 3D feel by adding a radial gradient
-    Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function (color) {
-        return {
-            radialGradient: {
-                cx: 0.4,
-                cy: 0.3,
-                r: 0.5
-            },
-            stops: [
-                [0, color],
-                [1, Highcharts.Color(color).brighten(-0.2).get('rgb')]
-            ]
-        };
-    });
-
+function draw3DScatterGraph(container_name, seat_data, z_max, y_max) 
+{
     // Set up the chart
      var chart = new Highcharts.Chart({
         chart: {
             margin: 100,
-            renderTo: 'container3d',
+            renderTo: container_name.substring(1),
             type: 'scatter',
 // inverted: true,
             backgroundColor: null,
             options3d: {
                 enabled: true,
                   alpha: 15,
-                beta: 30,
+                beta: 25,
                 viewDistance: 5,
                 depth: 150,
                 // viewDistance: 5,
@@ -486,15 +308,15 @@ $(function () {
                 frame: {
                     bottom: { 
                        size: 1, 
-                      color: 'rgba(0,0,0,0.04)' 
+                      color: 'rgba(255,255,255,0.06)' 
                   },
                     back: { 
                       size: 1, 
-                      color: 'rgba(0,0,0,0.06)'   
+                      color: 'rgba(255,255,255,0.08)'   
                     },
                     side: { 
                       size: 1, 
-                      color: 'rgba(0,0,0,0.08)' 
+                      color: 'rgba(255,255,255,0.10)' 
                     }
                 }
             }
@@ -516,15 +338,15 @@ $(function () {
             }
         },
         yAxis: {
-            // min: 0,
-            // max: 10,
+             min: 1,
+             max: y_max,
             title: null,
             allowDecimals: false,
 labels:
             {
-              format: 'Floor: {value}',
+              format: 'Floor {value}',
               style: {
-                    color: 'black',
+                    color: 'white',
                     font: '11px Trebuchet MS, Verdana, sans-serif'
                 }
             },
@@ -553,7 +375,7 @@ labels:
         },
         zAxis: {
             min: 0,
-             max: <%= @z_max +1%>,
+             max: z_max,
              labels:
             {
               format: 'Floor: {value}',
@@ -579,7 +401,7 @@ labels:
         series: [{
             name: 'seatStatus',
             colorByPoint: true,
-            data: <%= @seats_info1 %>
+            data: seat_data
         }]
     });
 
@@ -597,8 +419,8 @@ labels:
         chart.redraw(false);
     });
 
-    // $('#R0-value').html(chart.options.chart.options3d.alpha);
-        // $('#R1-value').html(chart.options.chart.options3d.beta);
+    $('#R0-value').html(chart.options.chart.options3d.alpha);
+        $('#R1-value').html(chart.options.chart.options3d.beta);
 
 
     // Add mouse events for rotation
@@ -633,20 +455,13 @@ labels:
         });
     });
 
-});
+}
 
 
 
-
-
-
-
-// GOOGLE MAP HERE
-
- function initialize() {
-        var mapCanvas = document.getElementById('map-canvas');
-
-var dc = new google.maps.LatLng(43.4726720,-80.5422160);
+function initialize(lat,lon) {
+var mapCanvas = document.getElementById('map-canvas');
+var dc = new google.maps.LatLng(lat,lon);
 var mapOptions = {
   zoom: 18,
   center: dc
@@ -661,13 +476,7 @@ var marker = new google.maps.Marker({
     title:"University of Waterloo"
 });
 
-
-
-
-     
-
-
- map.set('styles', [
+map.set('styles', [
   {
     featureType: 'road',
     elementType: 'geometry',
@@ -701,28 +510,19 @@ var marker = new google.maps.Marker({
     ]
   }
 ]);     
-      }
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-
+}
 </script>
-
-
    
 
+
+<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array}) %>
 
 <%= render 'navbar' %>
 <!-- <div class="map-section"> -->
     <div id="map-canvas" class="jumbotron" style="height:100%; width:100%;background:  transparent no-repeat 1 1;
   height:       450px;
   margin-top:52px;
-  margin-bottom:0;
-  z-index:      -1;">
-
-
-
-
-
+  margin-bottom:0;">
 </div>
 
  <div id="overlay" style=" background:  #fff;
@@ -740,76 +540,6 @@ font-family:'Lato Hairline', Arial;
 font-size: 40px;
         ">Welcome to Davis Centre Library</h1>
   </div>
-<!-- </div> -->
-
-<!--  <div class="dc-jumbotron">
- 	<div class="dc-big-pic-text">
-
-      </div>
- </div> -->
-
-
-
-<!--  <div class="library-info-section">
- 	<div class="container">
- 		<div class="row">
- 			
- 			 	<div class="col-sm-6">
- 		<div class="rank" style="
-  border-radius: 4px;
-  background-color: rgb(41, 128, 185);
-  box-shadow: inset 2.5px 4.33px 0px 0px rgba(255, 255, 255, 0.004);
-    width: 190px;
-  height: 230px;
-  display: block;
-  margin: 50px auto;
-   border-bottom-style: solid;
-   border-width: 5px;
-   border-color: white;
-"> 
-<div class="text-center" style="
-  font-size: 100px;
-  font-family: 'Blanka';
-  color: rgb(255, 255, 255);
-  line-height: 0.329;
-  padding: 50px;
-">1 </div>
-
-<div class="rank" style="
-  font-size: 50px;
-  font-family: 'Roboto';
-  color: rgb(255, 255, 255);
-  line-height: 1.2;
-  text-align: center; 
-">
-	RANK
-</div>
-
-
- 			
- 		</div>
- 	</div>
-
- 	<div class="col-sm-6" >
-
- 		<div class="c100 p50 big green" style="margin: 50px auto; float:none
-">
-                    <span style="
-  font-family: 'Roboto';
-  color: rgb(255, 255, 255);
-">50%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>
-
-
- 	</div>	
- 		</div>
- 	</div>
-
- </div> -->
 
  <div class="library-info-section" style="width:100%; background: #252020">
     <div class="container" style="opacity:0.7; padding-bottom:20px">
@@ -830,7 +560,7 @@ font-size: 40px;
   </div>
 </div>
 
-<% if @free_seat_percentage>20 %>
+<% if @free_seat_percentage > 20 %>
   <p class="text-center status-message" style="margin-top:20px; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:20px" > 
       <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
@@ -905,8 +635,6 @@ font-size: 40px;
   <div class="container" style="background: #2980B9; opacity:0.7">
 
 
-
-
 <!--   <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(bottom , #2980B9 , #242d37); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(bottom , #2980B9 , #242d37); /* For Firefox 3.6 to 15 */
@@ -937,8 +665,7 @@ font-size: 40px;
 <h2 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%=Date.today.strftime('%a %d %b %Y')%></h2>
 
-
-<div id="container1" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+<div id=<%=@splineChartContainerName[1..-1] %> style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
 </div>
 </div>
 
@@ -959,24 +686,29 @@ dcdbe1 - light
 
 
 <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:60px">
-  Library Study Spaces and Availabilities 
+    font-weight: 100; color:white; font-size:60px">
+  Study Space Locations and Availabilities 
 </h1>
 
-<hr style="border-top: solid 1px; color:black">
+<hr style="border-top: solid 1px; color:white">
 <h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
 
-<button type="button" class="btn btn-info btn-sm floor1-btn" style="margin-top:10px;margin-right:5px">Floor 1 Detail</button>
-<button type="button" class="btn btn-info btn-sm floor2-btn" style="margin-top:10px;margin-right:5px">Floor 2 Detail</button>
-<div id="container3d"> </div>
+
+<% @library.floor_array.each do |floor| %>
+
+<%= content_tag(:button, getFloorBtnText(floor), class: getFloorBtnClass(floor)) %>
+
+<% end %>
+
+<div id=<%= @d3ChartContainerName[1..-1] %>> </div>
 <div id="sliders" class="hidden-lg">
 
     <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:20px; margin:50px">Vertical Rotation</h1> 
+    font-weight: 100; color:white; font-size:20px; margin:50px">Vertical Rotation</h1> 
     <input id="R0" type="range" min="0" max="45" value="15"/> 
       <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:20px; margin:50px">Horizontal Rotation</h1>
+    font-weight: 100; color:white; font-size:20px; margin:50px">Horizontal Rotation</h1>
       <input id="R1" type="range" min="0" max="45" value="15"/> 
   </table>
 </div>
@@ -1005,62 +737,21 @@ dcdbe1 - light
 
 
 <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:60px">
+    font-weight: 100; color:black; font-size:60px">
   Floor Detail
 </h1>
 
-<hr style="">
+<hr style="border-top: solid 1px; color:black">
 <h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">Floor One</h2>
-<div id="container3d">
-  
-</div>
+    font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= getFloorName(@display_floor) %> </h2>
 
-<div id="container" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
+
+<div id=<%= @floorChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
 
 </div>
 </div>
 
-
-
-
-<!-- SECOND FLOOR -->
-
-
-<div class="library-map-sectionfloor" style="">
-
-<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
-
-<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
-<div class="container" style="opacity:1;">
-<!-- light, dark 
-dcdbe1 - light
-8a8a8c - dark  -->
-
-
-<h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:60px">
-  Floor Detail
-</h1>
-
-<hr style="">
-<h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">Floor Two</h2>
-
-<div id="containerfloor2" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
-
 </div>
-</div>
-</div>
-
-
-
-
-
 
 
 
@@ -1089,36 +780,9 @@ dcdbe1 - light
     font-weight: 100; color:white; font-size:30px; margin-bottom:20px">University of Waterloo</h2>
 
 
-<div id="container3" style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
+<div id= <%= @barChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
 
 </div>
 </div>
-
-
-<% if user_is_admin? %>
-
- 	<table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Library</th>
-          <th>uid</th>
-          <th>status</th>
-        </tr>
-      </thead>
-      <tbody class="testingtable">
-
-	<% Status.last(10).each do |status| %>
-        <tr>
-          <td>Davis Centre</td>
-          <td><%=status.uid %></td>
-          <td><%= status.status %></td>
-        </tr>
-  <% end %>
-      </tbody>
-    </table>
- <% end %>
-
- <!-- </div> -->
-
 
 

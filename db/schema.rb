@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313021454) do
+ActiveRecord::Schema.define(version: 20150314043307) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20150313021454) do
 
   add_index "comments", ["article_id"], name: "index_comments_on_article_id"
 
+  create_table "libraries", force: true do |t|
+    t.string   "name"
+    t.float    "lat"
+    t.float    "lon"
+    t.string   "floors"
+    t.string   "school"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "messages", force: true do |t|
     t.string   "name"
     t.string   "email"
@@ -47,6 +58,7 @@ ActiveRecord::Schema.define(version: 20150313021454) do
     t.datetime "updated_at"
     t.string   "mode"
     t.float    "z"
+    t.integer  "library_id"
   end
 
   create_table "statuses", force: true do |t|

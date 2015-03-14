@@ -8,8 +8,8 @@ class MessagesController < ApplicationController
 	end
 
 def events
-  @user = User.find_by_email('admin@ssmsgroup.ca')
-  @option = @user.option
+  # @user = User.find_by_email('admin@ssmsgroup.ca')
+  # @option = @user.option
 
 
 
@@ -18,18 +18,20 @@ def events
 
   
   # initialize
-  if @option == 'sim'
-    color = '#468966'
+  
+
+  # ***************SIMULATION**************
+    color = '#8DEB95'
     # generate random seat change 
     random_num = rand
     # if (0..0.1).include?(random_num)
     #   new_status ='away'
     #   color =  "#FFB03B"
     if (0..0.3).include?(random_num)
-      color = "#468966"
+      color = "#8DEB95"
       new_status='free'
     else
-      color = "#8E2800"
+      color = "#EF5E43"
       new_status='busy'
 
 
@@ -90,7 +92,7 @@ def events
       curr_seat.status=new_status
       curr_seat.save!
     end
-  else
+  # else
     # live
     # logger.debug '*************LIVE********************'
     
@@ -105,9 +107,9 @@ def events
       	seat = Seat.new
 
       	if status.status =='free'
-    		  color = '#468966'
+    		  color = '#8DEB95'
     		elsif status.status == 'busy'
-    			color = '#8E2800'
+    			color = '#EF5E43'
     		else
     			color = "#FFB03B"
     		end
@@ -165,7 +167,7 @@ def events
         # start = Time.zone.now-5
      end 
 
-   end
+   # end
   end
 
 rescue IOError

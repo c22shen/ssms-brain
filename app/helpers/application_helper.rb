@@ -8,6 +8,27 @@ def user_is_admin?
   return false
 end
 
+def getFloorBtnClass(id)
+
+	result = ["btn", "btn-info", "btn-sm", "floor"+id.to_s+"-btn"]
+	return result 
+end
+
+def getFloorBtnText(id)
+	result = "Floor "+id.to_s+" Details"
+	return result
+end
+
+def getFloorName(id)
+	result ="Floor "+id.to_words.capitalize
+	return result
+end
+# def personalizeContainer(original,suffix)
+# 	return original+suffix
+# end
+
+
+
 # def status_to_color(status)
 # 	if status =='free'
 # 		color = '#00FF00'

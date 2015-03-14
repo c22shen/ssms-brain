@@ -4,25 +4,23 @@ class LibrariesController < ApplicationController
       end
 
       def set_location  
+            # CLEAN UP LATERRRR
             @homestyle='white'
 
-            admin_option = User.find_by_email('admin@ssmsgroup.ca').option
+            # admin_option = User.find_by_email('admin@ssmsgroup.ca').option
 
-            query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
+            # query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
 
             seats_info = Array.new
-            Seat.where(query_string).order( 'uid' ).each do |seat|
+            Seat.where("mode='live'").order( 'uid' ).each do |seat|
 
                   if seat.status =='free'
-                        color = '#468966'
+                        color = '#8DEB95'
                   elsif seat.status == 'busy'
-                        color = '#8E2800'
+                        color = '#EF5E43'
                   else
                         color = "#FFB03B"
                   end
-
-
-
 
                   seat_info = Hash.new
                   seat_info[:name]=seat.uid
@@ -40,96 +38,76 @@ class LibrariesController < ApplicationController
 
       end
 
+      def getStatusColor(status)
+            if status =='free'
+                  color = ENV['COLOR_FREE']
+            else
+                  color = ENV['COLOR_BUSY']
+            end
+      end
+
       def show
+# Responsible for the very first time display 
             @homestyle='#252020'
+            @library = Library.find(params[:id]) 
+            seats_floor_array = Array.new
+            seats_3d_array = Array.new
+            @display_floor = @library.floor_array.min
 
-            admin_option = User.find_by_email('admin@ssmsgroup.ca').option
 
-            query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
+            # z and y are switched in the 3D plot
+            @plot_3d_z_max = @library.seats.maximum("y")
+            @plot_3d_y_max = @library.seats.maximum("z")+1
+            @library.seats.each do |seat|
+                  color = getStatusColor(seat.status)
+                  seat_info_3d = Hash.new
+                  seat_info_3d[:name]=seat.id
+                  seat_info_3d[:id]=seat.id
+                  seat_info_3d[:color]= color
+                  # Change display orientation, switched on purpose
+                  seat_info_3d[:x]=seat.x
+                  seat_info_3d[:y]=seat.z
+                  seat_info_3d[:z]=seat.y
+                  seats_3d_array.push(seat_info_3d)
 
-            seats_info = Array.new
-            seats_info1 = Array.new
-            seats_info_floor2 = Array.new
-            Seat.where(query_string).order( 'uid' ).each do |seat|
-
-                  if seat.status =='free'
-                        color = '#468966'
-                  elsif seat.status == 'busy'
-                        color = '#8E2800'
-                  else
-                        color = "#FFB03B"
+                  if seat.z == @display_floor
+                        seat_info_floor = Hash.new
+                        seat_info_floor[:name]=seat.id
+                        seat_info_floor[:id]=seat.id
+                        seat_info_floor[:color]=color
+                        seat_info_floor[:x]=seat.x
+                        seat_info_floor[:y]=seat.y
+                        seats_floor_array.push(seat_info_floor)
                   end
 
-
-                  if seat.z==1
-
-                        seat_info = Hash.new
-                        seat_info[:name]=seat.uid
-                        seat_info[:id]=seat.uid
-                        seat_info[:color]=color
-                        seat_info[:x]=seat.x
-                        seat_info[:y]=seat.y
-                        # seat_info[:z]=seat.z
-                        seats_info.push(seat_info)
-                  elsif seat.z==2
-                        seat_info2 = Hash.new
-                        seat_info2[:name]=seat.uid
-                        seat_info2[:id]=seat.uid
-                        seat_info2[:color]=color
-                        seat_info2[:x]=seat.x
-                        seat_info2[:y]=seat.y
-                        # seat_info2[:z]=seat.z
-                        seats_info_floor2.push(seat_info2)
-                  end
-
-# for 3d graph
-                  seat_info1 = Hash.new
-                  seat_info1[:name]=seat.uid
-                  seat_info1[:id]=seat.uid
-                  seat_info1[:color]=color
-                  seat_info1[:x]=seat.x
-                  seat_info1[:y]=seat.z
-                  seat_info1[:z]=seat.y
-                  # seat_info[:lineWidth]=1.5
-                  # seat_info[:lineColor]='white'
-                  # seats_info.push(seat_info)
-                  seats_info1.push(seat_info1)
-            
-
-                  
-
-                  @data2 = Array.new
-                  @data3 = Array.new
-
-                  # Library Detail Page
-
-                  @busy_seat_count = Seat.where(query_string).where("status='busy'").count
-                  @free_seat_count = Seat.where(query_string).where("status='free'").count
-                  # @<%= @seats_info %>away_seat_count = Seat.where(mode_query_string).where("status='away'").count
-      	
-                  @free_count = Array.new 
-                  @free_count.push(@free_seat_count)
-
-                  @free_count.push(rand(10..40))
-                  # @free_count.push(rand(10..40))
-
-                  @busy_count = Array.new 
-                  @busy_count.push(@busy_seat_count)
-
-                  @busy_count.push(rand(10..40))
-                  # @busy_count.push(rand(10..40))
-
-                  # @away_count = Array.new 
-                  # @away_count.push(@away_seat_count)
-
-                  # @away_count.push(rand(10..40))
-                  # @away_count.push(rand(10..40))
-
+                  # Library Detail Section
+                  @busy_seat_count = @library.seats.where("status='busy'").count
+                  @free_seat_count = @library.seats.where("status='free'").count
                   @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count) 
+
+
+                  library_free_info_array = Array.new
+                  library_busy_info_array = Array.new
+                  Library.all.each do |library|
+                        library_free_info_array.push(library.seats.where("status='free'").count)
+                        library_busy_info_array.push(library.seats.where("status='busy'").count)
+                  end
+                  # Libraries Occupany Comparison
+                  @library_names_array = Library.pluck(:name)
+                  # @library_names = library_names.to_json.html_safe
+                  @library_free_info_array = library_free_info_array
+                  @library_busy_info_array = library_busy_info_array
             end  
-            @seats_info = seats_info.to_json.html_safe 
-            @seats_info1 = seats_info1.to_json.html_safe 
-            @seats_info_floor2 = seats_info_floor2.to_json.html_safe 
-            @z_max= Seat.where(query_string).maximum('y')
+
+            @seats_floor_array = seats_floor_array
+            @seats_3d_array = seats_3d_array
+
+            # container names - Easier to generate in rails
+            @splineChartContainerName = ENV['CONTAINER_SPLINE']+@library.acronym
+            @d3ChartContainerName = ENV['CONTAINER_3D']+@library.acronym
+            @barChartContainerName = ENV['CONTAINER_BAR']+@library.acronym
+            @floorChartContainerName = ENV['CONTAINER_FLOOR']+@library.acronym
+
+            
       end
 end
