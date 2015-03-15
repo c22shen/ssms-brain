@@ -30,7 +30,7 @@ class StatusesController < ApplicationController
 # MONITORING STATUS
 
         uid = params[:uid]
-        seat = Seat.where("mode='live'").find_by_uid(uid)
+        seat = Seat.find_by_id(uid)
         seat.status = params[:status]
 
         seat.save!

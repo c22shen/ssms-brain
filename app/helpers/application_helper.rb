@@ -8,10 +8,8 @@ def user_is_admin?
   return false
 end
 
-def getFloorBtnClass(id)
-
-	result = ["btn", "btn-info", "btn-sm", "floor"+id.to_s+"-btn"]
-	return result 
+def getFloorChartBtnId(id)
+	return "floorChart"+id.to_s+"Btn"
 end
 
 def getFloorBtnText(id)

@@ -3,6 +3,29 @@ class LibrariesController < ApplicationController
             
       end
 
+
+      def update_floor_chart
+            seats_floor_array = Array.new
+            library = Library.find(params[:library_id])
+            library.seats.where("z=#{params[:floor_number]}").each do |seat|
+                  seat_info_floor = Hash.new
+                  seat_info_floor[:name]=seat.id
+                  seat_info_floor[:id]=seat.id
+                  seat_info_floor[:color]= getStatusColor(seat.status)
+                  seat_info_floor[:x]=seat.x
+                  seat_info_floor[:y]=seat.y
+                  seats_floor_array.push(seat_info_floor)
+            end
+            # return seats_floor_array
+            logger.debug "******************************"
+            logger.debug "floor: #{params[:floor_number]}"
+            logger.debug "library: #{params[:library_id]}"
+            logger.debug seats_floor_array
+            respond_to do |format|
+                  format.js {render json: seats_floor_array.to_json}
+            end
+      end
+
       def set_location  
             # CLEAN UP LATERRRR
             @homestyle='white'
@@ -53,7 +76,7 @@ class LibrariesController < ApplicationController
             seats_floor_array = Array.new
             seats_3d_array = Array.new
             @displayFloor = @library.floor_array.min
-
+            @currLibraryId =  @library.id
 
             # z and y are switched in the 3D plot
             @plot_3d_z_max = @library.seats.maximum("y")

@@ -18,6 +18,7 @@ source.addEventListener 'message', (e) ->
 	x = data_source.x
 	y = data_source.y
 	z = data_source.z
+	library_id = data_source.library_id
 	free_seat_percent = data_source.free_seat_percentage
 	free_seat_count = data_source.free_seat_count
 	busy_seat_count = data_source.busy_seat_count
@@ -35,10 +36,32 @@ source.addEventListener 'message', (e) ->
 	freeSeatPercentChartName = data_source.freeSeatPercentChartName
 	occupancyMsgContainerName = data_source.occupancyMsgContainerName
 	
-	displayFloor = $('#info-div').data('displayfloor')
-	if z == displayFloor
-		floorChart = $(floorChartContainerName).highcharts()
-		old_pt = floorChart.get(id)
+	infoDiv = $('#info-div')
+	displayFloor = infoDiv.attr('data-displayfloor')
+	curr_library_id = infoDiv.attr('data-currlibraryid')
+	# console.log 'displayFloor' 
+	# console.log displayFloor
+	# console.log curr_library_id
+	# console.log library_id
+	if library_id == parseInt(curr_library_id, 10 )
+		if z == parseInt(displayFloor,10)
+			floorChart = $(floorChartContainerName).highcharts()
+			old_pt = floorChart.get(id)
+			old_pt.update marker:
+			  fillColor: status
+			  states:
+			    hover:
+			      fillColor: status
+			      lineColor: status
+			    select:
+			      fillColor: shadeColor2(status,0.3)
+			      lineColor: shadeColor2(status,0.3)
+			      lineWidth: 5
+			old_pt.select()
+		
+
+		d3Chart = $(d3ChartContainerName).highcharts()
+		old_pt = d3Chart.get(id)
 		old_pt.update marker:
 		  fillColor: status
 		  states:
@@ -48,51 +71,36 @@ source.addEventListener 'message', (e) ->
 		    select:
 		      fillColor: shadeColor2(status,0.3)
 		      lineColor: shadeColor2(status,0.3)
-		      lineWidth: 5
+		      lineWidth: 1
 		old_pt.select()
-	
-	
-	d3Chart = $(d3ChartContainerName).highcharts()
-	old_pt = d3Chart.get(id)
-	old_pt.update marker:
-	  fillColor: status
-	  states:
-	    hover:
-	      fillColor: status
-	      lineColor: status
-	    select:
-	      fillColor: shadeColor2(status,0.3)
-	      lineColor: shadeColor2(status,0.3)
-	      lineWidth: 1
-	old_pt.select()
 
-	splineChart = $(splineChartContainerName).highcharts()
-	x_time = (new Date()).getTime() #current time
-	new_pt = [x_time, free_seat_count]
-	splineChart.series[0].addPoint(new_pt,true,true)
+		splineChart = $(splineChartContainerName).highcharts()
+		x_time = (new Date()).getTime() #current time
+		new_pt = [x_time, free_seat_count]
+		splineChart.series[0].addPoint(new_pt,true,true)
 
-	$(freeSeatCountLabelName).text free_seat_count
-	$(busySeatCountLabelName).text busy_seat_count
-	$(freeSeatPercentChartName).data 'percent', free_seat_percent
+		$(freeSeatCountLabelName).text free_seat_count
+		$(busySeatCountLabelName).text busy_seat_count
+		$(freeSeatPercentChartName).data 'percent', free_seat_percent
 
-	$ppc = $('.progress-pie-chart')
-	percent = free_seat_percent
-	deg = 360 * percent / 100
-	if percent > 50
-		$ppc.addClass 'gt-50'
-	$('.ppc-progress-fill').css 'transform', 'rotate(' + deg + 'deg)'
-	$('.ppc-percents span').html percent + '%'
+		$ppc = $('.progress-pie-chart')
+		percent = free_seat_percent
+		deg = 360 * percent / 100
+		if percent > 50
+			$ppc.addClass 'gt-50'
+		$('.ppc-progress-fill').css 'transform', 'rotate(' + deg + 'deg)'
+		$('.ppc-percents span').html percent + '%'
 
-	if percent > 20
-		$(occupancyMsgContainerName).html("   <i class='fa fa-smile-o' style='color:white; font-size:30px'></i>
-      - Library is fairly empty right now, studying at the library seems like a great idea.")
-	else
-		$(occupancyMsgContainerName).html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i>
-        - Library is pretty busy right now, maybe it is better to study at home today.")
-	
-	barChart = $(barChartContainerName).highcharts()
-	barChart.series[1].setData(free_seat_data_array)
-	barChart.series[0].setData(busy_seat_data_array)
+		if percent > 20
+			$(occupancyMsgContainerName).html("   <i class='fa fa-smile-o' style='color:white; font-size:30px'></i>
+	      - Library is fairly empty right now, studying at the library seems like a great idea.")
+		else
+			$(occupancyMsgContainerName).html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i>
+	        - Library is pretty busy right now, maybe it is better to study at home today.")
+		
+		barChart = $(barChartContainerName).highcharts()
+		barChart.series[1].setData(free_seat_data_array)
+		barChart.series[0].setData(busy_seat_data_array)
 
 
 

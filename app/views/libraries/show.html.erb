@@ -401,14 +401,11 @@ labels:
  // Activate the sliders
     $('#R0').on('change', function () {
         chart.options.chart.options3d.alpha = this.value;
-       // $('#R0-value').html(chart.options.chart.options3d.alpha);
-        // $('#R1-value').html(chart.options.chart.options3d.beta);
         chart.redraw(false);
     });
     $('#R1').on('change', function () {
         chart.options.chart.options3d.beta = this.value;
-        // $('#R0-value').html(chart.options.chart.options3d.alpha);
-        // $('#R1-value').html(chart.options.chart.options3d.beta);
+
         chart.redraw(false);
     });
 
@@ -508,7 +505,7 @@ map.set('styles', [
    
 
 
-<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor}) %>
+<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, currLibraryId: @currLibraryId}) %>
 
 <%= render 'navbar' %>
 <!-- <div class="map-section"> -->
@@ -600,19 +597,6 @@ font-size: 40px;
       </div>
 
 
-      <!-- <div class="row">
-        <div class="col-xs-6">
-         <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white">Study break</h1> 
-        </div>
-        <div class="col-xs-6">
-          <h1 id='away_seat_count_label' style="text-align:right; font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:40px"><%= @away_seat_count %></h1>
-        </div>
-        <div class="col-xs-12">
-        <hr style="border-top: dotted 1px; color:grey" />
-        </div>
-      </div> -->
 
     </div>
   </div>
@@ -628,28 +612,6 @@ font-size: 40px;
   <div class="container" style="background: #2980B9; opacity:0.7">
 
 
-<!--   <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #2980B9 , #242d37); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #2980B9 , #242d37); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #2980B9 , #242d37); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
-
-<!-- 
-  <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #2980B9 , #2D3E50); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #2980B9 , #2D3E50); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #2980B9 , #2D3E50); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
-
-
-
-
-<!--  	<div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #ff8159 , #ff2617); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #ff8159 , #ff2617); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #ff8159 , #ff2617); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
-
 <h1 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:60px">Number of Free Seats Available</h1>
 <hr>
@@ -662,20 +624,9 @@ font-size: 40px;
 </div>
 </div>
 
-<!-- <div class="library-map-section1" style="background:#0e0d0d"> -->
 <div class="library-map-section3d" style="">
 
-<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
-
-<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
 <div class="container" style="opacity:1;">
-<!-- light, dark 
-dcdbe1 - light
-8a8a8c - dark  -->
 
 
 <h1 style="font-family: 'Roboto', sans-serif;
@@ -690,8 +641,7 @@ dcdbe1 - light
 
 <% @library.floor_array.each do |floor| %>
 
-<%= content_tag(:button, getFloorBtnText(floor), class: getFloorBtnClass(floor)) %>
-
+<%= content_tag(:button, getFloorBtnText(floor), class:["btn", "btn-info", "btn-sm", "floor-btn"], :"data-floor" => floor, :"data-library" => @library.id) %>
 <% end %>
 
 <div id=<%= @d3ChartContainerName[1..-1] %>> </div>
@@ -710,59 +660,29 @@ dcdbe1 - light
 </div>
 </div>
 
-<div class="floor-detail-section" style="">
-  
-
-
 <div class="library-map-section1" style="">
+  <div class="container" style="opacity:1;">
+    <h1 style="font-family: 'Roboto', sans-serif;
+      font-weight: 100; color:black; font-size:60px">
+      Floor Detail
+    </h1>
 
-<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
+    <hr style="border-top: solid 1px; color:black">
+     <div class="floor-chart" style="left: 0px; top: 0px;">
+        <h2 id='floorNameDisplay' style="font-family: 'Roboto', sans-serif;font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= getFloorName(@displayFloor) %> </h2>
+        <div id=<%= @floorChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
+      </div>
 
-<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
-<div class="container" style="opacity:1;">
-<!-- light, dark 
-dcdbe1 - light
-8a8a8c - dark  -->
-
-
-<h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:60px">
-  Floor Detail
-</h1>
-
-<hr style="border-top: solid 1px; color:black">
-<h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= getFloorName(@displayFloor) %> </h2>
-
-
-<div id=<%= @floorChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
-
+  </div>
 </div>
-</div>
-
-</div>
-
 
 
 
 
 <div class="library-map-section2" style="">
 
-<!-- <div class="container" style="background: -webkit-linear-gradient(top, #ff8159 , #ff2617); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom , #D0CFD5 , #8a8a8c); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom , #D0CFD5 , #8a8a8c); /* Standard syntax (must be last) */
-    opacity:0.7"> -->
 
-<!-- <div class="container" style="opacity:1; background:#0e0d0d"> -->
 <div class="container" style="opacity:1;">
-<!-- light, dark 
-dcdbe1 - light
-8a8a8c - dark  -->
 
 <h1 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:60px">

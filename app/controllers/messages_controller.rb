@@ -36,8 +36,8 @@ class MessagesController < ApplicationController
       end
     end
     
-    # logger.debug "************#{new_id}*******************"
-    # logger.debug "************#{new_status}*******************"
+    # logger.debug "*******************#{new_id}*************"
+    # logger.debug "***************#{new_status}************************"
   # only two piece of info required: UID, STATUS
 
     curr_seat = Seat.find_by_id(new_id)
@@ -56,6 +56,7 @@ class MessagesController < ApplicationController
       new_seat.x = curr_seat.x
       new_seat.y = curr_seat.y
       new_seat.z = curr_seat.z
+      new_seat.library_id = curr_seat.library_id
 
       # try to eliminate 
       free_seat_count=library.seats.where("status='free'").count

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 root 'welcome#show'
 
 get 'libraries/set_location' => 'libraries#set_location'
+get 'libraries/update_floor_chart' => 'libraries#update_floor_chart'
 
 
 resources :articles do

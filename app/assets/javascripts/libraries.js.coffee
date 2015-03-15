@@ -39,21 +39,34 @@ $(document).on "click", ".option-btn", ->
         button.removeClass('btn-success').addClass('btn-default')
         button.text('SIMULATION')
     complete: () -> 
-$(document).on "click", ".floor1-btn", ->
-  $("html,body").animate
-      scrollTop: $(".floor-detail-section").offset().top
-    , "fast"
-  $('.library-map-section1').slideDown()
-  $('.library-map-sectionfloor').slideUp()
 
 
 
-$(document).on "click", ".floor2-btn", ->
-  $("html,body").animate
-      scrollTop: $(".floor-detail-section").offset().top
-    , "fast"
-  $('.library-map-sectionfloor').slideDown()
-  $('.library-map-section1').slideUp()
+$(document).on "click", ".floor-btn", ->
+  button = $(this)
+  floor = button.attr('data-floor')
+  library = button.attr('data-library')
+  $.ajax '/libraries/update_floor_chart',
+      type: 'GET'
+      dataType: 'html'
+      data:
+        floor_number: floor
+        library_id: library
+      error: () -> alert('error')
+      success: (data) -> 
+        $('#info-div').attr('data-seatsfloorarray', data)
+        $('#info-div').attr('data-displayfloor', floor)
+      complete: () -> 
+        infoDiv = $('#info-div')
+        floorContainerName = infoDiv.attr('data-floorcontainername')
+        seatsFloorArray = infoDiv.attr('data-seatsfloorarray')
+        drawFloorChart(floorContainerName, JSON.parse(seatsFloorArray))
+        $('#floorNameDisplay').html('FLOOR: '+floor)
+        $("html,body").animate
+              scrollTop: $(".library-map-section1").offset().top
+            , "slow"
+
+        
 
   
 
