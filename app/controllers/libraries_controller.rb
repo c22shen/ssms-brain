@@ -52,7 +52,7 @@ class LibrariesController < ApplicationController
             @library = Library.find(params[:id]) 
             seats_floor_array = Array.new
             seats_3d_array = Array.new
-            @display_floor = @library.floor_array.min
+            @displayFloor = @library.floor_array.min
 
 
             # z and y are switched in the 3D plot
@@ -70,7 +70,7 @@ class LibrariesController < ApplicationController
                   seat_info_3d[:z]=seat.y
                   seats_3d_array.push(seat_info_3d)
 
-                  if seat.z == @display_floor
+                  if seat.z == @displayFloor
                         seat_info_floor = Hash.new
                         seat_info_floor[:name]=seat.id
                         seat_info_floor[:id]=seat.id
@@ -102,12 +102,18 @@ class LibrariesController < ApplicationController
             @seats_floor_array = seats_floor_array
             @seats_3d_array = seats_3d_array
 
-            # container names - Easier to generate in rails
+            # container names - Easier to generate in ruby
             @splineChartContainerName = ENV['CONTAINER_SPLINE']+@library.acronym
             @d3ChartContainerName = ENV['CONTAINER_3D']+@library.acronym
             @barChartContainerName = ENV['CONTAINER_BAR']+@library.acronym
             @floorChartContainerName = ENV['CONTAINER_FLOOR']+@library.acronym
 
-            
+            @freeSeatCountLabelName = ENV['LABEL_FREE']+@library.acronym
+            @busySeatCountLabelName = ENV['LABEL_BUSY']+@library.acronym
+            @freeSeatPercentChartName = ENV['CHART_PERCENT']+@library.acronym
+            @occupancyMsgContainerName = ENV['CONTAINER_OCCUPANCY_MSG']+@library.acronym
+             
+            @library_welcome_msg = "Welcome to " + @library.name + " Library"
+
       end
 end

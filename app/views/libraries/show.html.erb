@@ -2,7 +2,6 @@
   <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
  <script type="text/javascript">
-
     function drawFloorChart(container_name, seat_data) {
     $(container_name).highcharts({
         chart: {
@@ -97,12 +96,6 @@
         ]
     });
 }
-
-
-
-
-
-
 
 
 
@@ -515,7 +508,7 @@ map.set('styles', [
    
 
 
-<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array}) %>
+<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor}) %>
 
 <%= render 'navbar' %>
 <!-- <div class="map-section"> -->
@@ -538,7 +531,7 @@ map.set('styles', [
 color: #2D3E50;
 font-family:'Lato Hairline', Arial;
 font-size: 40px;
-        ">Welcome to Davis Centre Library</h1>
+        "><%=@library_welcome_msg %></h1>
   </div>
 
  <div class="library-info-section" style="width:100%; background: #252020">
@@ -549,7 +542,7 @@ font-size: 40px;
   <hr>
   <div class="row">
     <div class="col-sm-6">
-      <div class="progress-pie-chart" data-percent=<%=@free_seat_percentage %> >
+      <div class="progress-pie-chart" id=<%= @freeSeatPercentChartName[1..-1] %> data-percent=<%=@free_seat_percentage %> >
   <div class="ppc-progress">
     <div class="ppc-progress-fill"></div>
   </div>
@@ -561,7 +554,7 @@ font-size: 40px;
 </div>
 
 <% if @free_seat_percentage > 20 %>
-  <p class="text-center status-message" style="margin-top:20px; font-family: 'Roboto', sans-serif;
+  <p class="text-center status-message" id=<%= @occupancyMsgContainerName[1..-1] %> style="margin-top:20px; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:20px" > 
       <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
       - Library is fairly empty right now, studying at the library seems like a great idea.
@@ -583,7 +576,7 @@ font-size: 40px;
     font-weight: 100; color:white">Seats free</h1> 
         </div>
         <div class="col-xs-6">
-          <h1 id='free_seat_count_label' style="text-align:right; font-family: 'Roboto', sans-serif;
+          <h1 id=<%= @freeSeatCountLabelName[1..-1] %> style="text-align:right; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:40px"><%= @free_seat_count %></h1>
         </div>
         <div class="col-xs-12">
@@ -598,7 +591,7 @@ font-size: 40px;
     font-weight: 100; color:white">Seats busy</h1> 
         </div>
         <div class="col-xs-6">
-          <h1 id='busy_seat_count_label' style="text-align:right; font-family: 'Roboto', sans-serif;
+          <h1 id=<%= @busySeatCountLabelName[1..-1] %> style="text-align:right; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:40px"><%= @busy_seat_count %></h1>
         </div>
         <div class="col-xs-12">
@@ -743,7 +736,7 @@ dcdbe1 - light
 
 <hr style="border-top: solid 1px; color:black">
 <h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= getFloorName(@display_floor) %> </h2>
+    font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= getFloorName(@displayFloor) %> </h2>
 
 
 <div id=<%= @floorChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>

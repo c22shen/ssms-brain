@@ -10,61 +10,51 @@ shadeColor2 = (color, percent) ->
   B = f & 0x0000FF
   '#' + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + Math.round((t - B) * p) + B).toString(16).slice(1)
 
-
-
-
 source = new EventSource('/messages/events')
 source.addEventListener 'message', (e) ->
+	data_source = $.parseJSON(e.data)
+	id = data_source.id
+	status = data_source.status
+	x = data_source.x
+	y = data_source.y
+	z = data_source.z
+	free_seat_percent = data_source.free_seat_percentage
+	free_seat_count = data_source.free_seat_count
+	busy_seat_count = data_source.busy_seat_count
 
-	uid = $.parseJSON(e.data).uid
-	status = $.parseJSON(e.data).status
-	x = $.parseJSON(e.data).x
-	y = $.parseJSON(e.data).y
-	z = $.parseJSON(e.data).z
-	free_seat_percent = $.parseJSON(e.data).percent
-	free_seat_count = $.parseJSON(e.data).free_seat_count
-	busy_seat_count = $.parseJSON(e.data).busy_seat_count
-	away_seat_count = $.parseJSON(e.data).away_seat_count
+	free_seat_data_array = data_source.free_seat_data_array
+	busy_seat_data_array = data_source.busy_seat_data_array
 
-	free_array = $.parseJSON(e.data).free_array
-	busy_array = $.parseJSON(e.data).busy_array
+	splineChartContainerName = data_source.splineChartContainerName
+	d3ChartContainerName = data_source.d3ChartContainerName
+	barChartContainerName = data_source.barChartContainerName
+	floorChartContainerName = data_source.floorChartContainerName
 
-	# select = $.parseJSON(e.data).select
-	if z == 1
-		chart = $('#container').highcharts()
-		old_pt = chart.get(uid)
-		old_pt.update marker:
-		  fillColor: status
-		  states:
-		    hover:
-		      fillColor: status
-		      lineColor: status
-		    select:
-		      fillColor: shadeColor2(status,0.3)
-		      lineColor: shadeColor2(status,0.3)
-		      lineWidth: 5
-		old_pt.select()
-	else if z == 2 
-		chart = $('#containerfloor2').highcharts()
-		old_pt = chart.get(uid)
-		old_pt.update marker:
-		  fillColor: status
-		  states:
-		    hover:
-		      fillColor: status
-		      lineColor: status
-		    select:
-		      fillColor: shadeColor2(status,0.3)
-		      lineColor: shadeColor2(status,0.3)
-		      lineWidth: 5
-		old_pt.select()
-	      
-	# if select == true
+	freeSeatCountLabelName = data_source.freeSeatCountLabelName
+	busySeatCountLabelName = data_source.busySeatCountLabelName
+	freeSeatPercentChartName = data_source.freeSeatPercentChartName
+	occupancyMsgContainerName = data_source.occupancyMsgContainerName
 	
-
-	chart3d = $('#container3d').highcharts()
-	old_pt3d = chart3d.get(uid)
-	old_pt3d.update marker:
+	displayFloor = $('#info-div').data('displayfloor')
+	if z == displayFloor
+		floorChart = $(floorChartContainerName).highcharts()
+		old_pt = floorChart.get(id)
+		old_pt.update marker:
+		  fillColor: status
+		  states:
+		    hover:
+		      fillColor: status
+		      lineColor: status
+		    select:
+		      fillColor: shadeColor2(status,0.3)
+		      lineColor: shadeColor2(status,0.3)
+		      lineWidth: 5
+		old_pt.select()
+	
+	
+	d3Chart = $(d3ChartContainerName).highcharts()
+	old_pt = d3Chart.get(id)
+	old_pt.update marker:
 	  fillColor: status
 	  states:
 	    hover:
@@ -74,18 +64,16 @@ source.addEventListener 'message', (e) ->
 	      fillColor: shadeColor2(status,0.3)
 	      lineColor: shadeColor2(status,0.3)
 	      lineWidth: 1
-	old_pt3d.select()
+	old_pt.select()
 
-	chart1 = $('#container1').highcharts()
-	x_time = (new Date()).getTime()
+	splineChart = $(splineChartContainerName).highcharts()
+	x_time = (new Date()).getTime() #current time
+	new_pt = [x_time, free_seat_count]
+	splineChart.series[0].addPoint(new_pt,true,true)
 
-	new_pt1 = [x_time, free_seat_count]
-	chart1.series[0].addPoint(new_pt1,true,true)
-
-	$('#free_seat_count_label').text free_seat_count
-	$('#busy_seat_count_label').text busy_seat_count
-	$('#away_seat_count_label').text away_seat_count
-	$('.progress-pie-chart').data 'percent', free_seat_percent
+	$(freeSeatCountLabelName).text free_seat_count
+	$(busySeatCountLabelName).text busy_seat_count
+	$(freeSeatPercentChartName).data 'percent', free_seat_percent
 
 	$ppc = $('.progress-pie-chart')
 	percent = free_seat_percent
@@ -96,14 +84,15 @@ source.addEventListener 'message', (e) ->
 	$('.ppc-percents span').html percent + '%'
 
 	if percent > 20
-		$('.status-message').html("   <i class='fa fa-smile-o' style='color:white; font-size:30px'></i>
+		$(occupancyMsgContainerName).html("   <i class='fa fa-smile-o' style='color:white; font-size:30px'></i>
       - Library is fairly empty right now, studying at the library seems like a great idea.")
 	else
-		$('.status-message').html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i>
+		$(occupancyMsgContainerName).html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i>
         - Library is pretty busy right now, maybe it is better to study at home today.")
-	chart3 = $('#container3').highcharts()
-	chart3.series[1].setData(free_array)
-	chart3.series[0].setData(busy_array)
+	
+	barChart = $(barChartContainerName).highcharts()
+	barChart.series[1].setData(free_seat_data_array)
+	barChart.series[0].setData(busy_seat_data_array)
 
 
 

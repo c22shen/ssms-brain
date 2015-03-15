@@ -7,174 +7,107 @@ class MessagesController < ApplicationController
 		render nothing: true
 	end
 
-def events
-  # @user = User.find_by_email('admin@ssmsgroup.ca')
-  # @option = @user.option
-
-
-
-
-  response.headers["Content-Type"] = "text/event-stream"
-
-  
-  # initialize
-  
-
-  # ***************SIMULATION**************
-    color = '#8DEB95'
-    # generate random seat change 
-    random_num = rand
-    # if (0..0.1).include?(random_num)
-    #   new_status ='away'
-    #   color =  "#FFB03B"
-    if (0..0.3).include?(random_num)
-      color = "#8DEB95"
-      new_status='free'
-    else
-      color = "#EF5E43"
-      new_status='busy'
-
-
-    end
-
-
-    rand_uid = rand(99)
-
-    seat = Seat.new
-    seat.uid = rand_uid
-
+  def events
+  # this is the messaging generator/reader 
+  #2 ways to generate message 
+  #1. generate random seat status change - for dp library 
+  #2. read in status database change - for dc library 
+    response.headers["Content-Type"] = "text/event-stream"
     
-    seat.status = color
-    curr_seat = Seat.where("mode='sim'").where("uid=#{rand_uid}").last
-    # logger.debug "*************************#{rand_uid}"
-    unless curr_seat.nil?
-      seat.x = curr_seat.x
-      seat.y = curr_seat.y
-      seat.z = curr_seat.z
-      
-
-      free_seat_count=Seat.where("mode='sim'").where("status='free'").count
-      busy_seat_count=Seat.where("mode='sim'").where("status='busy'").count
-      away_seat_count=Seat.where("mode='sim'").where("status='away'").count
-      
-
-
-      free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count+away_seat_count)*100.0
-      seat_json = seat.to_json
-      seat_hash = JSON.parse(seat_json)
-      seat_hash[:percent] = free_seat_percentage.round
-      seat_hash[:free_seat_count] = free_seat_count
-      seat_hash[:busy_seat_count] = busy_seat_count
-      seat_hash[:away_seat_count] = away_seat_count
-
-
-      free_array = Array.new 
-        free_array.push(free_seat_count)
-        free_array.push(rand(10..40))
-
-        busy_array = Array.new 
-        busy_array.push(busy_seat_count)
-        busy_array.push(rand(10..40))
-
-        seat_hash[:free_array] = free_array
-        seat_hash[:busy_array] = busy_array
-
-
-      # seat_hash[:empty_seat_count] = free_seat_count
-      
-      # select = false
-      # if curr_seat.status != new_status 
-        select = true
-      # end
-      seat_hash[:select] = select
-      seat_hash_json = seat_hash.to_json
-      response.stream.write "data: #{seat_hash_json}\n\n"
-      curr_seat.status=new_status
-      curr_seat.save!
-    end
-  # else
-    # live
-    # logger.debug '*************LIVE********************'
-    
-
+    new_id = 0
+    new_status = String.new
 
     Status.uncached do
-    start = Time.zone.now-5
-    status = Status.where('created_at > ?', start).last
-      # Perhaps each is overdue
-      # REMOVE LATER
-      if !status.nil?
-      	seat = Seat.new
+      status = Status.where('created_at > ?', Time.zone.now-5).last
+      unless status.nil? 
+        new_id = status.uid
+        new_status=status.status
+      else
+        random_num = rand
+        if (0..0.3).include?(random_num)
+          new_status='free'
+        else
+          new_status='busy'
+        end
 
-      	if status.status =='free'
-    		  color = '#8DEB95'
-    		elsif status.status == 'busy'
-    			color = '#EF5E43'
-    		else
-    			color = "#FFB03B"
-    		end
+        # DC library reserved for live 
+        dc_library = Library.find(1)
+        new_id = rand(dc_library.seats.maximum(:id)+1..Seat.maximum(:id))
+      end
+    end
+    
+    # logger.debug "************#{new_id}*******************"
+    # logger.debug "************#{new_status}*******************"
+  # only two piece of info required: UID, STATUS
 
+    curr_seat = Seat.find_by_id(new_id)
 
-      	seat.status = color
-      	seat.uid = status.uid
-      	seat.x = Seat.find_by_uid(status.uid).x
-      	seat.y = Seat.find_by_uid(status.uid).y
-        seat.z = Seat.find_by_uid(status.uid).z
+    # can't find the seat.
+    unless curr_seat.nil?
+      new_seat = Seat.new
+      if new_status =='free'
+        color = ENV['COLOR_FREE']
+      elsif new_status == 'busy'
+        color = ENV['COLOR_BUSY']
+      end    
+      new_seat.status = color
+      library = curr_seat.library
+      new_seat.id = new_id
+      new_seat.x = curr_seat.x
+      new_seat.y = curr_seat.y
+      new_seat.z = curr_seat.z
 
-      	seat_json = seat.to_json
-
-      	seat_hash = JSON.parse(seat_json)
-
-       
-
-      	# logger.info '#######################'
-      	# logger.info free_seat_percentage
-      #   select = false
-      # if curr_seat.status != new_status 
-      #   select = true
-      # end
-      seat_hash[:select] = true
-
-      free_seat_count=Seat.where("mode='live'").where("status='free'").count
-      busy_seat_count=Seat.where("mode='live'").where("status='busy'").count
-      # away_seat_count=Seat.where("mode='live'").where("status='away'").count
-      seat_hash[:free_seat_count] = free_seat_count
-      seat_hash[:busy_seat_count] = busy_seat_count
-      # seat_hash[:away_seat_count] = away_seat_count
-
-      free_array = Array.new 
-      free_array.push(free_seat_count)
-      free_array.push(rand(10..40))
-
-      busy_array = Array.new 
-      busy_array.push(busy_seat_count)
-      busy_array.push(rand(10..40))
-
-      seat_hash[:free_array] = free_array
-      seat_hash[:busy_array] = busy_array
-
-
+      # try to eliminate 
+      free_seat_count=library.seats.where("status='free'").count
+      busy_seat_count=library.seats.where("status='busy'").count
       free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count)*100.0
-      seat_hash[:percent] = free_seat_percentage.round
+      
 
-      seat_hash_json = seat_hash.to_json
+      new_seat_json = new_seat.to_json
+      new_seat_hash = JSON.parse(new_seat_json)
+      # Detail Section
+      new_seat_hash[:free_seat_percentage] = free_seat_percentage.round
+      new_seat_hash[:free_seat_count] = free_seat_count
+      new_seat_hash[:busy_seat_count] = busy_seat_count
+
+      new_seat_hash[:freeSeatCountLabelName] = ENV['LABEL_FREE']+library.acronym
+      new_seat_hash[:busySeatCountLabelName] = ENV['LABEL_BUSY']+library.acronym
+      new_seat_hash[:freeSeatPercentChartName] = ENV['CHART_PERCENT']+library.acronym
+      new_seat_hash[:occupancyMsgContainerName] = ENV['CONTAINER_OCCUPANCY_MSG']+library.acronym
+            
+      # bar chart info
+      free_seat_data_array = Array.new 
+      busy_seat_data_array = Array.new 
+      
+      Library.all.each do |library|
+        free_seat_data_array.push(library.seats.where("status='free'").count)
+        busy_seat_data_array.push(library.seats.where("status='busy'").count)
+      end
+
+      new_seat_hash[:free_seat_data_array] = free_seat_data_array
+      new_seat_hash[:busy_seat_data_array] = busy_seat_data_array
+
+      #containerNames
+      new_seat_hash[:splineChartContainerName] = ENV['CONTAINER_SPLINE']+library.acronym
+      new_seat_hash[:d3ChartContainerName] = ENV['CONTAINER_3D']+library.acronym
+      new_seat_hash[:barChartContainerName] = ENV['CONTAINER_BAR']+library.acronym
+      new_seat_hash[:floorChartContainerName] = ENV['CONTAINER_FLOOR']+library.acronym
+      
+
+      # send data to javascript
+      new_seat_hash_json = new_seat_hash.to_json
+      response.stream.write "data: #{new_seat_hash_json}\n\n"
+      # update seat data
+      curr_seat.status = new_status
+      curr_seat.save!
+    end
 
 
-        response.stream.write "data: #{seat_hash_json}\n\n"
-        # logger.info "Processing the request..."
-        # logger.info status
-
-        # start = Time.zone.now-5
-     end 
-
-   # end
+  rescue IOError
+    logger.info "Stream closed"
+  ensure
+    response.stream.close
   end
-
-rescue IOError
-  logger.info "Stream closed"
-ensure
-  response.stream.close
-end
 
 private
   	def message_params
