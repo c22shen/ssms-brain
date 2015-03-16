@@ -3,6 +3,21 @@ class LibrariesController < ApplicationController
             
       end
 
+      def save_retrieve_comments
+            new_article = Article.new 
+            new_article.library_id = params[:library_id]
+            new_article.title = params[:title]
+            new_article.rating = params[:rating]
+            new_article.text = params[:text]
+            new_article.save!
+
+            library = Library.find_by_id(params[:library_id])
+            new_articles = library.articles.where("id>#{params[:recent_article_id]}")
+            respond_to do |format| 
+                  format.js {render :partial => "libraries/articles", :locals => {:articles => new_articles}} 
+            end            
+      end
+
 
       def update_floor_chart
             seats_floor_array = Array.new

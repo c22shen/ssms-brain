@@ -1,0 +1,18 @@
+ <% articles.order("id DESC").each do |article| %>
+   <div class="article-container" style="width: 100%; background: #F2F2F5; padding:10px 20px 10px 20px; margin: 12px auto; opacity:0.7; " data-articleid = <%=article.id %> >
+      <p style="font-family: 'Roboto', sans-serif;
+           font-weight: 500; font-size: 1.5em">
+        <i class="fa fa-quote-left "></i>
+       <%= article.text %>
+      </p>
+      <p style="font-family: 'Roboto', sans-serif;
+           font-weight: 500; font-size: 1.3em">
+        <em> - <%= article.title %> </em>
+      </p>
+      <h3 style="color:#2980B9; margin:0">
+        <% (1..article.rating).each do |i| %> 
+          <i class="fa fa-star "></i>
+        <% end %>
+      </h3>
+    </div>
+  <% end %>

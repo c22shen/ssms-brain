@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 # resources :articles
 root 'welcome#show'
 
+get 'libraries/save_retrieve_comments' => 'libraries#save_retrieve_comments'
 get 'libraries/set_location' => 'libraries#set_location'
 get 'libraries/update_floor_chart' => 'libraries#update_floor_chart'
 

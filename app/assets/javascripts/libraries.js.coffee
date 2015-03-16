@@ -66,10 +66,42 @@ $(document).on "click", ".floor-btn", ->
               scrollTop: $(".library-map-section1").offset().top
             , "slow"
 
-        
+$(document).on "click", "#commentSubmitBtn", ->
+  button = $(this)
+  libraryid = button.attr('data-libraryid')
+  articleSection = button.closest('.new-article')
+  recent_article_container = articleSection.next() 
+  recent_article_id = articleSection.next().attr('data-articleid')
+  name = articleSection.find('#commentTitleField').val()
+  rating = articleSection.find('#commentRatingField').val()
+  content = articleSection.find('#commentContentField').val()
+  $.ajax '/libraries/save_retrieve_comments',
+    type: 'GET'
+    dataType: 'html'
+    data:
+      library_id: libraryid
+      title: name
+      rating: rating
+      text: content
+      recent_article_id: recent_article_id
+    error: () -> alert('error')
+    success: (data) -> 
+      # hide_data = $.parseHTML(data).hide()
+      recent_article_container.before data
+      # hide_data.show 'slow'
+    complete: () -> 
+      $('#commentTitleField').val ''
+      $('#commentRatingField').val ''
+      $('#commentContentField').val ''
 
-  
 
+$(document).on "focus", "#commentTitleField", ->
+  textfield = $(this)
+  textfield.css 'border-bottom-color', '#FD7AA6 !important'
+  return
+$(document).ready ->
+  $('#commentRatingField').numeric({ negative : false });
+  return
 
 $ ->
   $ppc = $('.progress-pie-chart')

@@ -1,6 +1,6 @@
 class Library < ActiveRecord::Base
 	has_many :seats, :dependent => :destroy
-
+	has_many :articles, :dependent => :destroy
 	def floor_array
     	return floors.split(',').map(&:to_i)
   	end

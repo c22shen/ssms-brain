@@ -15,11 +15,10 @@ class ArticlesController < ApplicationController
 
 	def create
 		@article = Article.new(article_params)
-	  if @article.save
-	    redirect_to @article
-	  else
-	    render 'new'
-	  end
+	   	@article.save!
+	  respond_to do |format|
+      	format.js {render :nothing => true, :status => 200, :content_type => 'text/html'}
+      end
 	end
 
 	def update
@@ -43,6 +42,6 @@ class ArticlesController < ApplicationController
 
 	private
 	  def article_params
-	    params.require(:article).permit(:title, :text)
+	    params.require(:article).permit(:title, :text, :rating, :library_id)
 	  end
 end

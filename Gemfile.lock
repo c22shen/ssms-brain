@@ -72,9 +72,6 @@ GEM
     mime-types (2.4.3)
     minitest (5.5.0)
     multi_json (1.10.1)
-    numbers_and_words (0.10.0)
-      activesupport
-      i18n
     orm_adapter (0.5.0)
     pg (0.18.1)
     quiet_assets (1.0.3)
@@ -154,7 +151,6 @@ DEPENDENCIES
   figaro
   jbuilder (~> 2.0)
   jquery-rails
-  numbers_and_words
   pg
   quiet_assets
   rails (= 4.1.7)
