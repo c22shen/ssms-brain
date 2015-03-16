@@ -1,5 +1,5 @@
 $ ->
-  if $('#location_container').count 
+  if $('#location_container').length 
     $('#location_container').highcharts
       chart:
         renderTo: 'container'
