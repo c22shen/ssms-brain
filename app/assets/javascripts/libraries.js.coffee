@@ -100,7 +100,8 @@ $(document).on "focus", "#commentTitleField", ->
   textfield.css 'border-bottom-color', '#FD7AA6 !important'
   return
 $(document).ready ->
-  $('#commentRatingField').numeric({ negative : false });
+  if $('#commentRatingField').length
+    $('#commentRatingField').numeric({ negative : false });
   return
 
 $ ->
