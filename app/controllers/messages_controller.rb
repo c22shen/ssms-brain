@@ -67,10 +67,12 @@ class MessagesController < ApplicationController
       new_seat_json = new_seat.to_json
       new_seat_hash = JSON.parse(new_seat_json)
       # Detail Section
+
       new_seat_hash[:free_seat_percentage] = free_seat_percentage.round
       new_seat_hash[:free_seat_count] = free_seat_count
       new_seat_hash[:busy_seat_count] = busy_seat_count
 
+      new_seat_hash[:library_name] = curr_seat.library.name
       new_seat_hash[:freeSeatCountLabelName] = ENV['LABEL_FREE']+library.acronym
       new_seat_hash[:busySeatCountLabelName] = ENV['LABEL_BUSY']+library.acronym
       new_seat_hash[:freeSeatPercentChartName] = ENV['CHART_PERCENT']+library.acronym

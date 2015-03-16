@@ -18,8 +18,16 @@ def getFloorBtnText(id)
 end
 
 def getFloorName(id)
-	result ="Floor: " + id.to_s
+	result ="floor: " + id.to_s
 	return result
+end
+
+def getEmptyMessage(library)
+  library + ' ' + ENV['FREE_MSG']
+end
+
+def getFullMessage(library)
+  library + ' ' + ENV['BUSY_MSG']
 end
 # def personalizeContainer(original,suffix)
 # 	return original+suffix

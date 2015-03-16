@@ -19,6 +19,7 @@ source.addEventListener 'message', (e) ->
 	y = data_source.y
 	z = data_source.z
 	library_id = data_source.library_id
+	library_name = data_source.library_name
 	free_seat_percent = data_source.free_seat_percentage
 	free_seat_count = data_source.free_seat_count
 	busy_seat_count = data_source.busy_seat_count
@@ -88,11 +89,11 @@ source.addEventListener 'message', (e) ->
 		$('.ppc-percents span').html percent + '%'
 
 		if percent > 20
-			$(occupancyMsgContainerName).html("   <i class='fa fa-smile-o' style='color:white; font-size:30px'></i>
-	      - Library is fairly empty right now, studying at the library seems like a great idea.")
+			$(occupancyMsgContainerName).html("   <i class='fa fa-smile-o' style='color:white; font-size:30px'></i> " +library_name + 
+	       " Library is fairly empty right now, studying at the library seems like a great idea.")
 		else
-			$(occupancyMsgContainerName).html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i>
-	        - Library is pretty busy right now, maybe it is better to study at home today.")
+			$(occupancyMsgContainerName).html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i> " + library_name + 
+	        " Library is pretty busy right now, maybe it is better to study at home today.")
 	if ($(barChartContainerName).length)
 		barChart = $(barChartContainerName).highcharts()
 		barChart.series[1].setData(free_seat_data_array)

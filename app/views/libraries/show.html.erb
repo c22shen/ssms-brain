@@ -554,13 +554,13 @@ font-size: 40px;
   <p class="text-center status-message" id=<%= @occupancyMsgContainerName[1..-1] %> style="margin-top:20px; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:20px" > 
       <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
-      - Library is fairly empty right now, studying at the library seems like a great idea.
+      <%= getEmptyMessage(@library.name) %>
     </p>
 <% else %>
   <p class="text-center" style="margin-top:20px; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:20px" > 
         <i class="fa fa-frown-o" style="color:white; font-size:30px"></i>
-        - Library is pretty busy right now, maybe it is better to study at home today.
+       <%= getFullMessage(@library.name) %>
   </p>
 <% end %>
 
@@ -636,7 +636,7 @@ font-size: 40px;
 
 <hr style="border-top: solid 1px; color:white">
 <h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+    font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%= @library.name %> - <%= @library.school %></h2>
 
 
 <% @library.floor_array.each do |floor| %>
@@ -669,7 +669,7 @@ font-size: 40px;
 
     <hr style="border-top: solid 1px; color:black">
      <div class="floor-chart" style="left: 0px; top: 0px;">
-        <h2 id='floorNameDisplay' style="font-family: 'Roboto', sans-serif;font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= getFloorName(@displayFloor) %> </h2>
+        <h2 id='floorNameDisplay' style="font-family: 'Roboto', sans-serif;font-weight: 100; color:black; font-size:30px; margin-bottom:20px"><%= @library.name %> <%= getFloorName(@displayFloor) %> </h2>
         <div id=<%= @floorChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
       </div>
 
@@ -690,7 +690,7 @@ font-size: 40px;
 </h1>
 <hr>
 <h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">University of Waterloo</h2>
+    font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%= @library.school %></h2>
 
 
 <div id= <%= @barChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
@@ -707,7 +707,7 @@ font-size: 40px;
 
 <hr style="border-top: solid 1px; color:white">
 <h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">Davis Centre - University of Waterloo</h2>
+    font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%= @library.name %> - <%= @library.school %></h2>
 
  <div class="new-article" style="margin-top:50px">
   <h2 style="font-family: 'Roboto', sans-serif;
