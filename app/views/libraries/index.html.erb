@@ -1,7 +1,6 @@
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script type="text/javascript">
   $( document ).ready(function() {
-    alert('xiao');
       $('.artGroup.flip').hover(
         function () {
           $(this).find('.artwork').addClass('theFlip');
@@ -12,8 +11,6 @@
       );
 
   });
-  </script>
-<script>
 
       function initialize() {
         var mapCanvas = document.getElementById('map-canvas');
@@ -84,7 +81,7 @@ var marker = new google.maps.Marker({
       }
 
       google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+</script>
 
 
 
@@ -117,12 +114,9 @@ line-height: 0.986; margin-top:150px">UNIVERSITY OF WATERLOO</h1>
        <%= link_to library_path(library.id) do %>
       <div class="artGroup flip">
   <div class="artwork"> 
-    
-
-<%= image_tag(library.acronym + '_tile.png') %>
-
+    <%= image_tag(library.acronym + '_tile.png') %>
     <div class="detail" style="padding-top:70px">
-      <p class="text-center" style="color:white; text-align:center">
+      <p class="text-center" style="color:white; text-align:center; font-size:30px">
         <%= library.description %></p>   
     </div>
   </div>
