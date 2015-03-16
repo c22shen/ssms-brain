@@ -91,7 +91,7 @@ class MessagesController < ApplicationController
       #containerNames
       new_seat_hash[:splineChartContainerName] = ENV['CONTAINER_SPLINE']+library.acronym
       new_seat_hash[:d3ChartContainerName] = ENV['CONTAINER_3D']+library.acronym
-      new_seat_hash[:barChartContainerName] = ENV['CONTAINER_BAR']+library.acronym
+      new_seat_hash[:barChartContainerName] = ENV['CONTAINER_BAR']
       new_seat_hash[:floorChartContainerName] = ENV['CONTAINER_FLOOR']+library.acronym
       
 

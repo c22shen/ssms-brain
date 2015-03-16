@@ -39,10 +39,6 @@ source.addEventListener 'message', (e) ->
 	infoDiv = $('#info-div')
 	displayFloor = infoDiv.attr('data-displayfloor')
 	curr_library_id = infoDiv.attr('data-currlibraryid')
-	# console.log 'displayFloor' 
-	# console.log displayFloor
-	# console.log curr_library_id
-	# console.log library_id
 	if library_id == parseInt(curr_library_id, 10 )
 		if z == parseInt(displayFloor,10)
 			floorChart = $(floorChartContainerName).highcharts()
@@ -97,7 +93,7 @@ source.addEventListener 'message', (e) ->
 		else
 			$(occupancyMsgContainerName).html(" <i class='fa fa-frown-o' style='color:white; font-size:30px'></i>
 	        - Library is pretty busy right now, maybe it is better to study at home today.")
-		
+	if ($(barChartContainerName).length)
 		barChart = $(barChartContainerName).highcharts()
 		barChart.series[1].setData(free_seat_data_array)
 		barChart.series[0].setData(busy_seat_data_array)

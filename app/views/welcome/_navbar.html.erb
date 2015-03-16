@@ -50,19 +50,9 @@
                 <% end %>
               </li>
 
-              <li>
-                                 <% if current_user.option == 'live' %>
-
-                  <button type="button" class="btn btn-success btn-sm option-btn" style="margin-top:10px">LIVE</button>
-                <% else %>
-                  
-                  <button type="button" class="btn btn-default btn-sm option-btn" style="margin-top:10px">SIMULATION</button>
-                <% end %>
-              </li>
 
               <li>
               
-              <%#= link_to "LOCATION", class:"btn", controller: "libraries", action: "set_location" %>
               <%= link_to "LOCATION", {controller: "libraries", action: "set_location"}, class: "" %>
 
             </li>

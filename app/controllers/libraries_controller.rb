@@ -16,11 +16,6 @@ class LibrariesController < ApplicationController
                   seat_info_floor[:y]=seat.y
                   seats_floor_array.push(seat_info_floor)
             end
-            # return seats_floor_array
-            logger.debug "******************************"
-            logger.debug "floor: #{params[:floor_number]}"
-            logger.debug "library: #{params[:library_id]}"
-            logger.debug seats_floor_array
             respond_to do |format|
                   format.js {render json: seats_floor_array.to_json}
             end
@@ -30,13 +25,9 @@ class LibrariesController < ApplicationController
             # CLEAN UP LATERRRR
             @homestyle='white'
 
-            # admin_option = User.find_by_email('admin@ssmsgroup.ca').option
-
-            # query_string = (admin_option=='sim') ? "mode='sim'" : "mode!='sim'"
 
             seats_info = Array.new
-            Seat.where("mode='live'").order( 'uid' ).each do |seat|
-
+            Library.first.seats.each do |seat|
                   if seat.status =='free'
                         color = '#8DEB95'
                   elsif seat.status == 'busy'
@@ -44,21 +35,15 @@ class LibrariesController < ApplicationController
                   else
                         color = "#FFB03B"
                   end
-
                   seat_info = Hash.new
-                  seat_info[:name]=seat.uid
-                  seat_info[:id]=seat.uid
+                  seat_info[:name]=seat.id
+                  seat_info[:id]=seat.id
                   seat_info[:color]=color
                   seat_info[:x]=seat.x
                   seat_info[:y]=seat.y
-                  # seat_info[:z]=0
-                  # seat_info[:lineWidth]=1.5
-                  # seat_info[:lineColor]='white'
                   seats_info.push(seat_info)
-            
             end
                   @seats_info = seats_info.to_json.html_safe
-
       end
 
       def getStatusColor(status)
@@ -128,9 +113,9 @@ class LibrariesController < ApplicationController
             # container names - Easier to generate in ruby
             @splineChartContainerName = ENV['CONTAINER_SPLINE']+@library.acronym
             @d3ChartContainerName = ENV['CONTAINER_3D']+@library.acronym
-            @barChartContainerName = ENV['CONTAINER_BAR']+@library.acronym
+            # @barChartContainerName = ENV['CONTAINER_BAR']+@library.acronym
+            @barChartContainerName = ENV['CONTAINER_BAR']
             @floorChartContainerName = ENV['CONTAINER_FLOOR']+@library.acronym
-
             @freeSeatCountLabelName = ENV['LABEL_FREE']+@library.acronym
             @busySeatCountLabelName = ENV['LABEL_BUSY']+@library.acronym
             @freeSeatPercentChartName = ENV['CHART_PERCENT']+@library.acronym

@@ -24,8 +24,6 @@ $ ->
             # if e.newX < 0
             #   @x = 0
             #   return false
-            
-
             $('#drag').html 'Dragging Device: ' + this.name + ' to <b> x:' + Highcharts.numberFormat(e.newX, 2) + ' y: ' + Highcharts.numberFormat(e.newY, 2) 
             return
           drop: ->
@@ -34,7 +32,7 @@ $ ->
               type: 'GET'
               dataType: 'html'
               data:
-                uid: this.name
+                id: this.name
                 new_x: @x
                 new_y: @y
               error: () -> alert('error')

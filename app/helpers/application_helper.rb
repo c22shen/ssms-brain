@@ -18,7 +18,7 @@ def getFloorBtnText(id)
 end
 
 def getFloorName(id)
-	result ="Floor "+id.to_words.capitalize
+	result ="Floor: " + id.to_s
 	return result
 end
 # def personalizeContainer(original,suffix)
