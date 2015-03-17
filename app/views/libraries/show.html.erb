@@ -755,8 +755,10 @@ font-size: 40px;
 
  </div> 
 
+  <div class="articles-container"> 
  <%# @library.articles.order("id DESC").each do |article| %>
  <%= render partial: "articles", :locals => {:articles => @library.articles} %>
+ </div>
 <%# end %>
 
 

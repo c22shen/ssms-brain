@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+div.article-container:last-child {
+    margin-bottom: 100px;
+}
+
 .tile {
 	width: 229px; 
 	height: 230px; 
