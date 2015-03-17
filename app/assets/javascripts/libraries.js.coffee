@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
+
+
 $(document).on "click", ".mode-btn", ->
   button = $(this)
   if button.hasClass('btn-success')

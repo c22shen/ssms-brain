@@ -39,9 +39,9 @@ def date_display(date)
   now_eastern = Time.now.in_time_zone("Eastern Time (US & Canada)")
   if ((time_eastern.month == now_eastern.month) && (time_eastern.day == now_eastern.day))
     hour_diff = (now_eastern.hour - time_eastern.hour) 
-    if (time_eastern.hour == now_eastern.hour)
-      min_diff = now_eastern.min - time_eastern.min
-      return min_diff.to_s + ' minutes ago'
+    if (now_eastern.to_i- time_eastern.to_i )<3600
+      min_diff = ( now_eastern.to_i - time_eastern.to_i)/60
+      return min_diff.to_i.to_s + ' minutes ago'
     else
       return hour_diff.to_s + ' hours ago'
     end
