@@ -29,6 +29,27 @@ end
 def getFullMessage(library)
   library + ' ' + ENV['BUSY_MSG']
 end
+
+# def is_it_today?(date)
+#   return (date.in_time_zone("Eastern Time (US & Canada)").month == Time.now.in_time_zone("Eastern Time (US & Canada)").month && date.in_time_zone("Eastern Time (US & Canada)").day == Time.now.in_time_zone("Eastern Time (US & Canada)").day)
+# end
+
+def date_display(date)
+  time_eastern = date.in_time_zone("Eastern Time (US & Canada)")
+  now_eastern = Time.now.in_time_zone("Eastern Time (US & Canada)")
+  if ((time_eastern.month == now_eastern.month) && (time_eastern.day == now_eastern.day))
+    hour_diff = (now_eastern.hour - time_eastern.hour) 
+    if (time_eastern.hour == now_eastern.hour)
+      min_diff = now_eastern.min - time_eastern.min
+      return min_diff.to_s + ' minutes ago'
+    else
+      return hour_diff.to_s + ' hours ago'
+    end
+  else
+    return time_eastern.strftime('%h %d')
+  end
+end
+
 # def personalizeContainer(original,suffix)
 # 	return original+suffix
 # end

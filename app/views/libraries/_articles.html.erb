@@ -4,10 +4,14 @@
            font-weight: 500; font-size: 1.5em">
         <i class="fa fa-quote-left "></i>
        <%= article.text %>
+
       </p>
-      <p style="font-family: 'Roboto', sans-serif;
-           font-weight: 500; font-size: 1.3em">
-        <em> - <%= article.title %> </em>
+      <p style="font-family: 'Roboto', sans-serif;">
+        <em style="font-size:1.4em; font-weight: 500">  <%= article.title %> </em>
+
+        <i class="fa fa-clock-o"></i>
+        <%= date_display(article.created_at) %>
+        
       </p>
       <h3 style="color:#2980B9; margin:0">
         <% (1..article.rating).each do |i| %> 
