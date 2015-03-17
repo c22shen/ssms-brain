@@ -32,7 +32,7 @@
 }
 
 .library-info-section {
-	padding: 0px 0 100px 0;
+	padding: 100px 0;
 }
 
 .dc-big-pic-text {
@@ -74,7 +74,7 @@
 .discussion-section {
    padding: 80px 20px;
   background-image: asset-url('discussion-background.jpg');
-  // background-repeat: no-repeat;
+  background-repeat: no-repeat;
   background-position:left top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -88,7 +88,7 @@
     // height:auto;
    // @media (min-width: 0px) and (max-width: 992px) {background-attachment: scroll; height:500px; background-repeat: repeat-y}
   @media only screen and (max-width : 992px) {
-background-attachment: scroll; height:500px; background-repeat: repeat-y
+background-attachment: scroll; height:1200px; background-repeat: repeat-y
     }
 }
 

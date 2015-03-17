@@ -71,7 +71,10 @@ class LibrariesController < ApplicationController
 
       def show
 # Responsible for the very first time display 
-            @homestyle='#252020'
+            # @homestyle='#252020'
+            @homestyle='#526373'
+
+            
             @library = Library.find(params[:id]) 
             seats_floor_array = Array.new
             seats_3d_array = Array.new

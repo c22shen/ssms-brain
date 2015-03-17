@@ -155,7 +155,7 @@
                 data: (function () {
                     // generate an array of random data
                     var data = [],
-                        time = (new Date()).getTime(),
+                        time = (new Date()).getTime()- 4*1000*60*60,
                         i;
 
                     for (i = -10; i <= 0; i += 1) {
@@ -515,7 +515,7 @@ map.set('styles', [
   margin-bottom:0;">
 </div>
 
- <div id="overlay" style=" background:  #fff;
+<!--  <div id="overlay" style=" background:  #fff;
   opacity:      .8;
   position:     relative;
   padding:      10px;
@@ -529,10 +529,10 @@ color: #2D3E50;
 font-family:'Lato Hairline', Arial;
 font-size: 40px;
         "><%=@library_welcome_msg %></h1>
-  </div>
+  </div> -->
 
  <div class="library-info-section" style="width:100%; background: #252020">
-    <div class="container" style="opacity:0.7; padding-bottom:20px">
+    <div class="container" style="opacity:0.7;">
 <!--   <div class="container" style="opacity:0.7; background: #252020; padding-bottom:20px"> -->
   <h1 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:60px">Details</h1>

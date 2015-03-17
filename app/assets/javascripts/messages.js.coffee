@@ -72,7 +72,7 @@ source.addEventListener 'message', (e) ->
 		old_pt.select()
 
 		splineChart = $(splineChartContainerName).highcharts()
-		x_time = (new Date()).getTime() #current time
+		x_time = (new Date()).getTime()- 4*1000*60*60#current time
 		new_pt = [x_time, free_seat_count]
 		splineChart.series[0].addPoint(new_pt,true,true)
 
