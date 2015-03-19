@@ -17,7 +17,7 @@ div.article-container:last-child {
 
 .new-tile {
 	width: 229px; 
-	height: 230px; 
+height: 230px; 
 	margin-bottom:100px; 
 	background-image: image-url('new_tile.png');
 	margin-bottom:100px;
@@ -73,6 +73,12 @@ div.article-container:last-child {
 .library-map-section2 {
   padding: 100px 0;
   background: #2D3E50;
+  /*2D3E50*/
+}
+
+.volume-map-section {
+  padding: 100px 0;
+  background: #DDDDDD;
   /*2D3E50*/
 }
 

@@ -21,6 +21,7 @@ class StatusesController < ApplicationController
         id = params[:uid]
         seat = Seat.find_by_id(id)
         seat.status = params[:status]
+        seat.volume = params[:volume]
         seat.save!
       end
 
@@ -80,6 +81,6 @@ class StatusesController < ApplicationController
 
   	private
   	def status_params
-      params.permit(:uid, :status)
+      params.permit(:uid, :status, :volume)
     end
 end

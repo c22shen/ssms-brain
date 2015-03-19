@@ -16,12 +16,14 @@ class MessagesController < ApplicationController
     
     new_id = 0
     new_status = String.new
+    new_volume = 0 
 
     Status.uncached do
       status = Status.where('created_at > ?', Time.zone.now-5).last
       unless status.nil? 
         new_id = status.uid
         new_status=status.status
+        new_volume = status.volume
       else
         random_num = rand
         if (0..0.3).include?(random_num)
@@ -29,7 +31,7 @@ class MessagesController < ApplicationController
         else
           new_status='busy'
         end
-
+        new_volume = rand *200
         # DC library reserved for live 
         dc_library = Library.find(1)
         new_id = rand(dc_library.seats.maximum(:id)+1..Seat.maximum(:id))
@@ -50,7 +52,18 @@ class MessagesController < ApplicationController
       elsif new_status == 'busy'
         color = ENV['COLOR_BUSY']
       end    
+
+      if new_volume <70 
+        volume_color = ENV['COLOR_FREE']
+      elsif new_volume < 150
+        volume_color = ENV['COLOR_MODERATE']
+      else
+        volume_color = ENV['COLOR_BUSY']        
+      end    
       new_seat.status = color
+      new_seat.volume = new_volume.round
+
+
       library = curr_seat.library
       new_seat.id = new_id
       new_seat.x = curr_seat.x
@@ -67,7 +80,7 @@ class MessagesController < ApplicationController
       new_seat_json = new_seat.to_json
       new_seat_hash = JSON.parse(new_seat_json)
       # Detail Section
-
+      new_seat_hash[:volume_color] = volume_color
       new_seat_hash[:free_seat_percentage] = free_seat_percentage.round
       new_seat_hash[:free_seat_count] = free_seat_count
       new_seat_hash[:busy_seat_count] = busy_seat_count
@@ -95,12 +108,16 @@ class MessagesController < ApplicationController
       new_seat_hash[:d3ChartContainerName] = ENV['CONTAINER_3D']+library.acronym
       new_seat_hash[:barChartContainerName] = ENV['CONTAINER_BAR']
       new_seat_hash[:floorChartContainerName] = ENV['CONTAINER_FLOOR']+library.acronym
+      new_seat_hash[:volumeChartContainerName] = ENV['CONTAINER_VOLUME']+library.acronym
+      
+      # new_seat_hash[:floorChartContainerName] = ENV['CONTAINER_FLOOR']+library.acronym
       
 
       # send data to javascript
       new_seat_hash_json = new_seat_hash.to_json
       response.stream.write "data: #{new_seat_hash_json}\n\n"
       # update seat data
+      curr_seat.volume = new_volume.round
       curr_seat.status = new_status
       curr_seat.save!
     end

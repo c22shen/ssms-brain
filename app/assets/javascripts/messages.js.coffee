@@ -15,6 +15,9 @@ source.addEventListener 'message', (e) ->
 	data_source = $.parseJSON(e.data)
 	id = data_source.id
 	status = data_source.status
+	volume = data_source.volume
+	alert volume
+	volume_color = data_source.volume_color
 	x = data_source.x
 	y = data_source.y
 	z = data_source.z
@@ -31,7 +34,7 @@ source.addEventListener 'message', (e) ->
 	d3ChartContainerName = data_source.d3ChartContainerName
 	barChartContainerName = data_source.barChartContainerName
 	floorChartContainerName = data_source.floorChartContainerName
-
+	volumeChartContainerName = data_source.volumeChartContainerName
 	freeSeatCountLabelName = data_source.freeSeatCountLabelName
 	busySeatCountLabelName = data_source.busySeatCountLabelName
 	freeSeatPercentChartName = data_source.freeSeatPercentChartName
@@ -55,6 +58,19 @@ source.addEventListener 'message', (e) ->
 			      lineColor: shadeColor2(status,0.3)
 			      lineWidth: 5
 			old_pt.select()
+			volumeChart = $(volumeChartContainerName).highcharts()
+			old_pt1 = volumeChart.get(id)
+			old_pt1.update marker:
+			  fillColor: volume_color
+			  states:
+			    hover:
+			      fillColor: volume_color
+			      lineColor: volume_color
+			    select:
+			      fillColor: shadeColor2(volume_color,0.3)
+			      lineColor: shadeColor2(volume_color,0.3)
+			      lineWidth: 5
+			old_pt1.update z:volume
 		
 
 		d3Chart = $(d3ChartContainerName).highcharts()

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316064540) do
+ActiveRecord::Schema.define(version: 20150319040822) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150316064540) do
     t.string   "mode"
     t.float    "z"
     t.integer  "library_id"
+    t.integer  "volume"
   end
 
   create_table "statuses", force: true do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 20150316064540) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "volume"
   end
 
   create_table "users", force: true do |t|

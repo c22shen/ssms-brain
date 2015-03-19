@@ -78,6 +78,8 @@ class LibrariesController < ApplicationController
             @library = Library.find(params[:id]) 
             seats_floor_array = Array.new
             seats_3d_array = Array.new
+            seats_volume_array = Array.new 
+
             @displayFloor = @library.floor_array.min
             @currLibraryId =  @library.id
 
@@ -104,6 +106,15 @@ class LibrariesController < ApplicationController
                         seat_info_floor[:x]=seat.x
                         seat_info_floor[:y]=seat.y
                         seats_floor_array.push(seat_info_floor)
+
+                        seat_info_volume = Hash.new 
+                        seat_info_volume[:name]=seat.id
+                        seat_info_volume[:id]=seat.id
+                        seat_info_volume[:color]=color
+                        seat_info_volume[:x]=seat.x
+                        seat_info_volume[:y]=seat.y
+                        seat_info_volume[:z]=seat.volume
+                        seats_volume_array.push(seat_info_volume) 
                   end
 
                   # Library Detail Section
@@ -123,15 +134,18 @@ class LibrariesController < ApplicationController
                   # @library_names = library_names.to_json.html_safe
                   @library_free_info_array = library_free_info_array
                   @library_busy_info_array = library_busy_info_array
+
             end  
 
             @seats_floor_array = seats_floor_array
             @seats_3d_array = seats_3d_array
+            @seats_volume_array = seats_volume_array
 
             # container names - Easier to generate in ruby
             @splineChartContainerName = ENV['CONTAINER_SPLINE']+@library.acronym
             @d3ChartContainerName = ENV['CONTAINER_3D']+@library.acronym
-            # @barChartContainerName = ENV['CONTAINER_BAR']+@library.acronym
+            @volumeChartContainerName = ENV['CONTAINER_VOLUME']+@library.acronym
+
             @barChartContainerName = ENV['CONTAINER_BAR']
             @floorChartContainerName = ENV['CONTAINER_FLOOR']+@library.acronym
             @freeSeatCountLabelName = ENV['LABEL_FREE']+@library.acronym

@@ -1,7 +1,92 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
  <script type="text/javascript">
+
+    function drawVolumeChart(container_name, seat_data) {
+    $(container_name).highcharts({
+            chart: {
+            type: 'bubble',
+            zoomType: 'xy',
+            backgroundColor: '#DDDDDD'
+        },
+         plotOptions: {
+            bubble: {
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x} fatalities, {point.y} injured, {point.z}  total',
+                    enabled: false
+                },
+                 states: {
+                    hover: {
+                      enabled: false
+
+ // radiusPlus: 5
+                    }},
+            }},
+            tooltip: {
+              enabled: false
+            },
+
+        title: {
+            text: ''
+        },
+        xAxis: {
+            title: {
+                enabled: false,
+                text: ''
+            },
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            // lineColor: 'transparent',
+
+            minorTickLength: 0,
+            tickLength: 0
+        },
+        yAxis: {
+
+            title: {
+                enabled: false,
+                text: ''
+            },
+
+            labels:
+            {
+              enabled: false
+            },
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            lineColor: 'transparent',
+            gridLineColor: 'transparent',
+            
+            minorTickLength: 0,
+            tickLength: 0
+        },
+        legend: {
+
+               enabled: false
+
+        },
+
+
+        series: [{
+             data: seat_data,
+             marker: {
+                lineWidth: 0,
+                // radius: 12,
+                lineColor: null
+            }
+        }]
+    });
+}
+
+
+
     function drawFloorChart(container_name, seat_data) {
     $(container_name).highcharts({
         chart: {
@@ -343,7 +428,7 @@ labels:
                     font: '11px Trebuchet MS, Verdana, sans-serif'
                 }
             },
-            ineWidth: 0,
+            lineWidth: 0,
             minorGridLineWidth: 0,
             lineColor: 'transparent',
             gridLineColor: 'transparent',
@@ -505,7 +590,7 @@ map.set('styles', [
    
 
 
-<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, currLibraryId: @currLibraryId}) %>
+<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, currLibraryId: @currLibraryId, volumeContainerName: @volumeChartContainerName, seatsVolumeArray: @seats_volume_array}) %>
 
 <%= render 'navbar' %>
 <!-- <div class="map-section"> -->
@@ -696,6 +781,25 @@ font-size: 40px;
 <div id= <%= @barChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
 
 </div>
+</div>
+
+
+<div class="volume-map-section"> 
+  <div class="container">
+
+    <h1 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:black; font-size:60px">
+      Volume Chart
+    </h1>
+    <hr>
+    <h2 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:black; font-size:30px; margin-bottom:20px">
+        <%= @library.name %> - <%= @library.school %>
+    <div id= <%= @volumeChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto">
+      
+    </div>
+    
+  </div>
 </div>
 
 <div class="discussion-section" style="">
