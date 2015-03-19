@@ -67,6 +67,18 @@ class LibrariesController < ApplicationController
             else
                   color = ENV['COLOR_BUSY']
             end
+            return color
+      end
+
+      def getVolumeColor(volume)
+            if volume<100
+                  color = ENV['COLOR_FREE']
+            elsif volume<200
+                  color = ENV['COLOR_MODERATE']
+            else
+                  color = ENV['COLOR_BUSY']
+            end
+            return color
       end
 
       def show
@@ -110,7 +122,7 @@ class LibrariesController < ApplicationController
                         seat_info_volume = Hash.new 
                         seat_info_volume[:name]=seat.id
                         seat_info_volume[:id]=seat.id
-                        seat_info_volume[:color]=color
+                        seat_info_volume[:color]= getVolumeColor(seat.volume)
                         seat_info_volume[:x]=seat.x
                         seat_info_volume[:y]=seat.y
                         seat_info_volume[:z]=seat.volume

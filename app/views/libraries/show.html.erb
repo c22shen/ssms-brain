@@ -14,9 +14,9 @@
          plotOptions: {
             bubble: {
                 tooltip: {
-                    headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: '{point.x} fatalities, {point.y} injured, {point.z}  total',
-                    enabled: false
+                    // headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: 'volume: {point.z}'
+                    // enabled: true
                 },
                  states: {
                     hover: {
@@ -26,7 +26,7 @@
                     }},
             }},
             tooltip: {
-              enabled: false
+              enabled: true
             },
 
         title: {
@@ -773,7 +773,7 @@ font-size: 40px;
     font-weight: 100; color:white; font-size:60px">
   Library Comparison
 </h1>
-<hr>
+<hr >
 <h2 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%= @library.school %></h2>
 
@@ -791,7 +791,7 @@ font-size: 40px;
         font-weight: 100; color:black; font-size:60px">
       Volume Chart
     </h1>
-    <hr>
+    <hr style="border-top: solid 1px; color:black">
     <h2 style="font-family: 'Roboto', sans-serif;
         font-weight: 100; color:black; font-size:30px; margin-bottom:20px">
         <%= @library.name %> - <%= @library.school %>
