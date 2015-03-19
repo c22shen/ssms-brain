@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
         else
           new_status='busy'
         end
-        new_volume = rand *200
+        new_volume = rand *500
         # DC library reserved for live 
         dc_library = Library.find(1)
         new_id = rand(dc_library.seats.maximum(:id)+1..Seat.maximum(:id))
@@ -55,7 +55,7 @@ class MessagesController < ApplicationController
 
       if new_volume <70 
         volume_color = ENV['COLOR_FREE']
-      elsif new_volume < 150
+      elsif new_volume < 300
         volume_color = ENV['COLOR_MODERATE']
       else
         volume_color = ENV['COLOR_BUSY']        

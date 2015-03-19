@@ -16,7 +16,6 @@ source.addEventListener 'message', (e) ->
 	id = data_source.id
 	status = data_source.status
 	volume = data_source.volume
-	alert volume
 	volume_color = data_source.volume_color
 	x = data_source.x
 	y = data_source.y
