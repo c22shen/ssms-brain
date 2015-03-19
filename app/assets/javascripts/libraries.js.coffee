@@ -69,6 +69,31 @@ $(document).on "click", ".floor-btn", ->
               scrollTop: $(".library-map-section1").offset().top
             , "slow"
 
+$(document).on "click", ".volume-btn", ->
+  button = $(this)
+  floorContainerName = button.siblings(":last").attr('id')
+  floor = button.attr('data-floor')
+  library = button.attr('data-library')
+  $.ajax '/libraries/update_volume_chart',
+      type: 'GET'
+      dataType: 'html'
+      data:
+        floor_number: floor
+        library_id: library
+      error: () -> alert('error')
+      success: (data) -> 
+        $('#info-div').attr('data-seatsvolumearray', data)
+        $('#info-div').attr('data-volumedisplayfloor', floor)
+      complete: () -> 
+        infoDiv = $('#info-div')
+        volumeContainerName = infoDiv.attr('data-volumecontainername')
+        seatsVolumeArray = infoDiv.attr('data-seatsvolumearray')
+        drawVolumeChart(volumeContainerName, JSON.parse(seatsVolumeArray))
+        $('#volumeNameDisplay').html('FLOOR: '+floor)
+        $("html,body").animate
+              scrollTop: $(".volume-map-section").offset().top
+            , "slow"
+
 $(document).on "click", "#commentSubmitBtn", ->
   button = $(this)
   libraryid = button.attr('data-libraryid')

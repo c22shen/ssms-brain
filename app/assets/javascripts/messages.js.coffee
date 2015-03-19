@@ -41,6 +41,8 @@ source.addEventListener 'message', (e) ->
 	
 	infoDiv = $('#info-div')
 	displayFloor = infoDiv.attr('data-displayfloor')
+	volumeDisplayFloor = infoDiv.attr('data-volumedisplayfloor')
+
 	curr_library_id = infoDiv.attr('data-currlibraryid')
 	if library_id == parseInt(curr_library_id, 10 )
 		if z == parseInt(displayFloor,10)
@@ -57,6 +59,9 @@ source.addEventListener 'message', (e) ->
 			      lineColor: shadeColor2(status,0.3)
 			      lineWidth: 5
 			old_pt.select()
+			
+		
+		if z == parseInt(volumeDisplayFloor,10)
 			volumeChart = $(volumeChartContainerName).highcharts()
 			old_pt1 = volumeChart.get(id)
 			old_pt1.update marker:
@@ -70,7 +75,7 @@ source.addEventListener 'message', (e) ->
 			      lineColor: shadeColor2(volume_color,0.3)
 			      lineWidth: 5
 			old_pt1.update z:volume
-		
+
 
 		d3Chart = $(d3ChartContainerName).highcharts()
 		old_pt = d3Chart.get(id)

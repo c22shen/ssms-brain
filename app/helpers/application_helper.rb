@@ -13,7 +13,7 @@ def getFloorChartBtnId(id)
 end
 
 def getFloorBtnText(id)
-	result = "Floor "+id.to_s+" Details"
+	result = "Floor "+id.to_s
 	return result
 end
 

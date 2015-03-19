@@ -36,6 +36,24 @@ class LibrariesController < ApplicationController
             end
       end
 
+      def update_volume_chart
+            seats_volume_array = Array.new
+            library = Library.find(params[:library_id])
+            library.seats.where("z=#{params[:floor_number]}").each do |seat|
+                  seat_info_volume = Hash.new 
+                  seat_info_volume[:name]=seat.id
+                  seat_info_volume[:id]=seat.id
+                  seat_info_volume[:color]= getVolumeColor(seat.volume)
+                  seat_info_volume[:x]=seat.x
+                  seat_info_volume[:y]=seat.y
+                  seat_info_volume[:z]=seat.volume
+                  seats_volume_array.push(seat_info_volume) 
+            end
+            respond_to do |format|
+                  format.js {render json: seats_volume_array.to_json}
+            end
+      end
+
       def set_location  
             # CLEAN UP LATERRRR
             @homestyle='white'
@@ -93,6 +111,7 @@ class LibrariesController < ApplicationController
             seats_volume_array = Array.new 
 
             @displayFloor = @library.floor_array.min
+            @volumeDisplayFloor = @library.floor_array.min
             @currLibraryId =  @library.id
 
             # z and y are switched in the 3D plot
