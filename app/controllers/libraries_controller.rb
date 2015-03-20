@@ -1,5 +1,17 @@
 class LibrariesController < ApplicationController
 	def index 
+            library_free_info_array = Array.new
+                  library_busy_info_array = Array.new
+                  Library.all.each do |library|
+                        library_free_info_array.push(library.seats.where("status='free'").count)
+                        library_busy_info_array.push(library.seats.where("status='busy'").count)
+                  end
+                  # Libraries Occupany Comparison
+                  @library_names_array = Library.pluck(:name)
+                  # @library_names = library_names.to_json.html_safe
+                  @library_free_info_array = library_free_info_array
+                  @library_busy_info_array = library_busy_info_array
+                  @barChartContainerName = ENV['CONTAINER_BAR']
             
       end
 
@@ -154,17 +166,17 @@ class LibrariesController < ApplicationController
                   @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count) 
 
 
-                  library_free_info_array = Array.new
-                  library_busy_info_array = Array.new
-                  Library.all.each do |library|
-                        library_free_info_array.push(library.seats.where("status='free'").count)
-                        library_busy_info_array.push(library.seats.where("status='busy'").count)
-                  end
-                  # Libraries Occupany Comparison
-                  @library_names_array = Library.pluck(:name)
-                  # @library_names = library_names.to_json.html_safe
-                  @library_free_info_array = library_free_info_array
-                  @library_busy_info_array = library_busy_info_array
+                  # library_free_info_array = Array.new
+                  # library_busy_info_array = Array.new
+                  # Library.all.each do |library|
+                  #       library_free_info_array.push(library.seats.where("status='free'").count)
+                  #       library_busy_info_array.push(library.seats.where("status='busy'").count)
+                  # end
+                  # # Libraries Occupany Comparison
+                  # @library_names_array = Library.pluck(:name)
+                  # # @library_names = library_names.to_json.html_safe
+                  # @library_free_info_array = library_free_info_array
+                  # @library_busy_info_array = library_busy_info_array
 
             end  
 
