@@ -60,7 +60,7 @@ class MessagesController < ApplicationController
       else
         volume_color = ENV['COLOR_BUSY']        
       end    
-      new_seat.status = status_color
+      new_seat.status = new_status
       new_seat.volume = new_volume.round
 
 

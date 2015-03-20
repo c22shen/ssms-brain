@@ -139,7 +139,7 @@ class LibrariesController < ApplicationController
                         seats_floor_array.push(seat_info_floor)
 
                         seat_info_volume = Hash.new 
-                        seat_info_volume[:name]=seat.id
+                        seat_info_volume[:name]=seat.status
                         seat_info_volume[:id]=seat.id
                         seat_info_volume[:color]= getVolumeColor(seat.volume)
                         seat_info_volume[:x]=seat.x
