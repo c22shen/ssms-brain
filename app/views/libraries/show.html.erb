@@ -9,13 +9,13 @@
             chart: {
             type: 'bubble',
             zoomType: 'xy',
-            backgroundColor: '#DDDDDD'
+            backgroundColor: null
         },
          plotOptions: {
             bubble: {
                 tooltip: {
-                    // headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: 'volume: {point.z}'
+                    headerFormat: '',
+                    pointFormat: 'Status: {point.name}'
                     // enabled: true
                 },
                  states: {
@@ -79,6 +79,7 @@
              marker: {
                 lineWidth: 0,
                 // radius: 12,
+                fillOpacity:0.9,
                 lineColor: null
             }
         }]
@@ -793,12 +794,12 @@ font-size: 40px;
   <div class="container">
 
     <h1 style="font-family: 'Roboto', sans-serif;
-        font-weight: 100; color:black; font-size:60px">
-      Volume Chart
+        font-weight: 100; color:white; font-size:60px">
+      Volume Info
     </h1>
-    <hr style="border-top: solid 1px; color:black">
+    <hr style="border-top: solid 1px; color:white">
     <h2 style="font-family: 'Roboto', sans-serif;
-        font-weight: 100; color:black; font-size:30px; margin-bottom:20px" id='volumeNameDisplay'>
+        font-weight: 100; color:white; font-size:30px; margin-bottom:20px" id='volumeNameDisplay'>
         <%= @library.name %> <%= getFloorName(@displayFloor) %> </h2>
         <% @library.floor_array.each do |floor| %>
 
@@ -815,7 +816,7 @@ font-size: 40px;
   <div class="container">
   <h1 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:60px">
-  Student Discussions 
+  Rate University of Waterloo
 </h1>
 
 <hr style="border-top: solid 1px; color:white">

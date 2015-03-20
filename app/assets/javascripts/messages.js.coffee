@@ -15,6 +15,7 @@ source.addEventListener 'message', (e) ->
 	data_source = $.parseJSON(e.data)
 	id = data_source.id
 	status = data_source.status
+	status_color = data_source.status_color
 	volume = data_source.volume
 	volume_color = data_source.volume_color
 	x = data_source.x
@@ -49,14 +50,14 @@ source.addEventListener 'message', (e) ->
 			floorChart = $(floorChartContainerName).highcharts()
 			old_pt = floorChart.get(id)
 			old_pt.update marker:
-			  fillColor: status
+			  fillColor: status_color
 			  states:
 			    hover:
-			      fillColor: status
-			      lineColor: status
+			      fillColor: status_color
+			      lineColor: status_color
 			    select:
-			      fillColor: shadeColor2(status,0.3)
-			      lineColor: shadeColor2(status,0.3)
+			      fillColor: shadeColor2(status_color,0.3)
+			      lineColor: shadeColor2(status_color,0.3)
 			      lineWidth: 5
 			old_pt.select()
 			
@@ -75,19 +76,20 @@ source.addEventListener 'message', (e) ->
 			      lineColor: shadeColor2(volume_color,0.3)
 			      lineWidth: 5
 			old_pt1.update z:volume
+			old_pt1.update name:status
 
 
 		d3Chart = $(d3ChartContainerName).highcharts()
 		old_pt = d3Chart.get(id)
 		old_pt.update marker:
-		  fillColor: status
+		  fillColor: status_color
 		  states:
 		    hover:
-		      fillColor: status
-		      lineColor: status
+		      fillColor: status_color
+		      lineColor: status_color
 		    select:
-		      fillColor: shadeColor2(status,0.3)
-		      lineColor: shadeColor2(status,0.3)
+		      fillColor: shadeColor2(status_color,0.3)
+		      lineColor: shadeColor2(status_color,0.3)
 		      lineWidth: 1
 		old_pt.select()
 

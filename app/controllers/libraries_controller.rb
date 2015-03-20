@@ -90,11 +90,11 @@ class LibrariesController < ApplicationController
 
       def getVolumeColor(volume)
             if volume<100
-                  color = ENV['COLOR_FREE']
+                  color = ENV['COLOR_LOW']
             elsif volume<200
-                  color = ENV['COLOR_MODERATE']
+                  color = ENV['COLOR_MEDIUM']
             else
-                  color = ENV['COLOR_BUSY']
+                  color = ENV['COLOR_HIGH']
             end
             return color
       end

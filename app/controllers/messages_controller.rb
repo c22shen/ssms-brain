@@ -48,9 +48,9 @@ class MessagesController < ApplicationController
     unless curr_seat.nil?
       new_seat = Seat.new
       if new_status =='free'
-        color = ENV['COLOR_FREE']
+        status_color = ENV['COLOR_FREE']
       elsif new_status == 'busy'
-        color = ENV['COLOR_BUSY']
+        status_color = ENV['COLOR_BUSY']
       end    
 
       if new_volume <100 
@@ -60,7 +60,7 @@ class MessagesController < ApplicationController
       else
         volume_color = ENV['COLOR_BUSY']        
       end    
-      new_seat.status = color
+      new_seat.status = status_color
       new_seat.volume = new_volume.round
 
 
@@ -80,6 +80,7 @@ class MessagesController < ApplicationController
       new_seat_json = new_seat.to_json
       new_seat_hash = JSON.parse(new_seat_json)
       # Detail Section
+      new_seat_hash[:status_color] = status_color
       new_seat_hash[:volume_color] = volume_color
       new_seat_hash[:free_seat_percentage] = free_seat_percentage.round
       new_seat_hash[:free_seat_count] = free_seat_count

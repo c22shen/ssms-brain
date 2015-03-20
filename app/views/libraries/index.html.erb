@@ -1,4 +1,3 @@
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script type="text/javascript">
   $( document ).ready(function() {
       $('.artGroup.flip').hover(
@@ -11,6 +10,111 @@
       );
 
   });
+
+// function drawBarGraph(container_name, library_names, free_data, busy_data ) {
+  
+//     $(container_name).highcharts({
+//         chart: {
+//             type: 'bar',
+//             backgroundColor: null
+//         },
+//         title: {
+//             text: ''
+//         },
+//         subtitle: {
+//             text: ''
+//         },
+//         xAxis: {
+//                 gridLineWidth: 0,
+//                 minorGridLineWidth: 0,
+//                 minorTickLength: 0,
+//    tickLength: 0,
+//    gridLineColor: 'transparent',
+//    // lineColor: 'transparent',
+
+//             categories: library_names,
+//             title: {
+//                 text: ''
+//             },
+//             labels: {
+//                 overflow: 'justify',
+//                 style:{
+//                         color:'white'
+//                     }
+//             },
+
+
+//         },
+//         yAxis: {
+//           gridLineWidth: 0,
+//                 minorGridLineWidth: 0,
+//                 minorTickLength: 0,
+//    tickLength: 0,
+//    // gridLineColor: 'transparent',
+//    // lineColor: 'transparent',
+//             min: 0,
+
+//             title: {
+//                 text: '',
+//                 align: 'high',
+//                 // style: {
+//                 //   color: '#ffffff'
+//                 // },
+
+//             },
+
+//             labels: {
+//               enabled: false,
+//                 style:{
+//                         color:'white'
+//                     }
+//             },
+
+//         },
+//         tooltip: {
+//             valueSuffix: 'seats'
+//         },
+//         plotOptions: {
+//             bar: {
+//                 dataLabels: {
+//                     enabled: false
+//                 },
+
+//             },series: {
+//                 borderWidth: 0,
+//                 borderColor: 'black',
+//                 // stacking: 'normal'
+//                 stacking: 'percent'
+//             }
+//         },
+//         legend: {
+// itemStyle: {
+//                  font: '9pt Trebuchet MS, Verdana, sans-serif',
+//                  color: 'white'
+//               }
+//             },
+//         exporting: {
+//                 enabled: false
+//             },
+//         credits: {
+//             enabled: false
+//         },
+//         series: [ 
+//         {
+//             name: 'Busy',
+//             color: "#EF5E43",
+//             data: busy_data
+//         },{
+//             name: 'Free',
+//             color: '#8DEB95',
+//             data: free_data
+//         }
+//         ]
+//     });
+// }
+
+
+
 
       function initialize() {
         var mapCanvas = document.getElementById('map-canvas');
@@ -27,7 +131,7 @@ var map = new google.maps.Map(mapCanvas, mapOptions);
 
 // To add the marker to the map, use the 'map' property
 var marker = new google.maps.Marker({
-    position: dp,
+  position: dp,
     map: map,
     title:"University of Waterloo"
 });
@@ -89,7 +193,7 @@ var marker = new google.maps.Marker({
 
 <%= render 'navbar' %>
 
-
+<%= tag("div", id: "info1-div", data: {barContainerName: @barChartContainerName, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array}) %>
 
 
 
@@ -133,11 +237,29 @@ line-height: 0.986; margin-top:150px">UNIVERSITY OF WATERLOO</h1>
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="library-map-section2" style="">
 
 
+<div class="container" style="opacity:1;">
 
+<h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:60px">
+  Library Comparison
+</h1>
+<hr >
+<h2 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:30px; margin-bottom:20px">University of Waterloo</h2>
+
+
+<div id= <%= @barChartContainerName[1..-1] %> style="height: 400px; min-width: 310px; width:100%; margin: 0 auto"></div>
 
 </div>
+</div>
+
+
+
 
 <div class="bottom-section">
 
