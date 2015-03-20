@@ -8,4 +8,8 @@ class Library < ActiveRecord::Base
   	def acronym
     	return name.scan(/(\A|\W)(\w)/).collect{|s| s[1]}.join.downcase
   	end
+
+  	def num_free_seats
+  		return seats.where("status='free'").count 
+  	end
 end

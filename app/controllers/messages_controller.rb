@@ -1,3 +1,5 @@
+include ActionView::Helpers::TextHelper
+
 class MessagesController < ApplicationController
 	include ActionController::Live
 	def create
@@ -111,7 +113,9 @@ class MessagesController < ApplicationController
       new_seat_hash[:floorChartContainerName] = ENV['CONTAINER_FLOOR']+library.acronym
       new_seat_hash[:volumeChartContainerName] = ENV['CONTAINER_VOLUME']+library.acronym
       
-      # new_seat_hash[:floorChartContainerName] = ENV['CONTAINER_FLOOR']+library.acronym
+      # percentDisplayName #numberOfFreeSeats
+      new_seat_hash[:percentDisplayName] = ENV['PERCENT_DISPLAY']+library.acronym
+      new_seat_hash[:percentDisplayValue] = pluralize(free_seat_count, 'seat') + ' available'
       
 
       # send data to javascript

@@ -40,6 +40,10 @@ source.addEventListener 'message', (e) ->
 	freeSeatPercentChartName = data_source.freeSeatPercentChartName
 	occupancyMsgContainerName = data_source.occupancyMsgContainerName
 	
+	percentDisplayName = data_source.percentDisplayName
+	percentDisplayValue = data_source.percentDisplayValue
+
+
 	infoDiv = $('#info-div')
 	displayFloor = infoDiv.attr('data-displayfloor')
 	volumeDisplayFloor = infoDiv.attr('data-volumedisplayfloor')
@@ -120,6 +124,10 @@ source.addEventListener 'message', (e) ->
 		barChart = $(barChartContainerName).highcharts()
 		barChart.series[1].setData(free_seat_data_array)
 		barChart.series[0].setData(busy_seat_data_array)
+	if ($(percentDisplayName).length)
+		$(percentDisplayName).text percentDisplayValue
+
+
 
 
 

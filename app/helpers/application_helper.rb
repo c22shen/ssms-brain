@@ -30,6 +30,10 @@ def getFullMessage(library)
   library + ' ' + ENV['BUSY_MSG']
 end
 
+def getPercentDisplayIndex(library)
+  ENV['PERCENT_DISPLAY'][1..-1]+library
+end
+
 # def is_it_today?(date)
 #   return (date.in_time_zone("Eastern Time (US & Canada)").month == Time.now.in_time_zone("Eastern Time (US & Canada)").month && date.in_time_zone("Eastern Time (US & Canada)").day == Time.now.in_time_zone("Eastern Time (US & Canada)").day)
 # end

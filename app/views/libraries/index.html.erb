@@ -217,9 +217,12 @@ line-height: 0.986; margin-top:150px">UNIVERSITY OF WATERLOO</h1>
       <div class="artGroup flip">
   <div class="artwork"> 
     <%= image_tag(library.acronym + '_tile.png') %>
-    <div class="detail" style="padding-top:70px">
-      <p class="text-center" style="color:white; text-align:center; font-size:30px">
-        <%= library.description %></p>   
+    <div class="detail" style="padding-top:50px">
+
+
+      <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 40px;"> <%= pluralize(library.num_free_seats,'seat') %> available</p>  
+
     </div>
   </div>
 </div>
