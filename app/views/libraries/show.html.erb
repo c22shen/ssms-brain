@@ -68,21 +68,36 @@
             tickLength: 0
         },
         legend: {
+            itemStyle: {
+                 font: '9pt Trebuchet MS, Verdana, sans-serif',
+                 color: 'white'
+              },
 
-               enabled: false
+               enabled: true
 
         },
 
 
         series: [{
              data: seat_data,
+             color: "#89E991",
+             name: 'Quiet',
              marker: {
                 lineWidth: 0,
                 // radius: 12,
-                fillOpacity:0.9,
+                fillOpacity:0.85,
                 lineColor: null
             }
-        }]
+        },
+        {
+             color: "#E5DB25",
+             name: 'Moderate'
+        },
+         {
+             color: "#EA5D46",
+             name: 'Noisy'
+        },
+        ]
     });
 }
 
@@ -778,7 +793,7 @@ font-size: 40px;
 
     <h1 style="font-family: 'Roboto', sans-serif;
         font-weight: 100; color:white; font-size:60px">
-      Volume Info
+      Noise Map
     </h1>
     <hr style="border-top: solid 1px; color:white">
     <h2 style="font-family: 'Roboto', sans-serif;
