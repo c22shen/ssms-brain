@@ -12,4 +12,8 @@ class Library < ActiveRecord::Base
   	def num_free_seats
   		return seats.where("status='free'").count 
   	end
+
+    def average_rating 
+      return articles.average("rating").round(1)
+    end
 end
