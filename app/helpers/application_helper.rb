@@ -54,6 +54,15 @@ def date_display(date)
   end
 end
 
+def get_tile_front_background(type)
+  result = "front " + type + "-tile"
+  return result
+end
+
+def get_tile_back_background(type)
+    return 'back ' + type + "-tile"
+end
+
 # def personalizeContainer(original,suffix)
 # 	return original+suffix
 # end

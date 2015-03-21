@@ -137,35 +137,44 @@ line-height: 0.986; margin-top:150px">UNIVERSITY OF WATERLOO</h1>
 <div class="container" style="margin-top: 100px">
 	<div class="row">
 
-  <% Library.all.each do |library| %>
+<% Library.pluck(:kind).uniq.each do |kind| %>
+  <% Library.all.where("kind = '#{kind}'").each do |library| %>
   
 
     <div class="col-md-4 col-xs-6">
 
        <%= link_to library_path(library.id) do %>
-      <div class="artGroup flip">
-  <div class="artwork"> 
-    <%= image_tag(library.acronym + '_tile.png') %>
-    <div class="detail" style="padding-top:50px">
+
+<div class="flip-container" style="margin-bottom:50px" ontouchstart="this.classList.toggle('hover');">
+<div class="flipper">
 
 
-      <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size: 40px;"> <%= pluralize(library.num_free_seats,'seat') %> available</p>  
+  <%= content_tag :div, class: get_tile_front_background(library.kind) do %>
+    <p class="text-center" style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 24px;">
+    <%= library.name %>
+    </p>
+  <% end %>
 
-    </div>
-  </div>
+  <%= content_tag :div, class: get_tile_back_background(library.kind) do %>
+    <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 40px; margin-top:50px"> <%= pluralize(library.num_free_seats,'seat') %> available</p>  
+  <% end %>
 </div>
+</div>
+
 <% end %>
 
 </div>
 <% end %> 
+<% end %>
 
 		
 				
-		<div class="col-md-4 col-sm-6">
+<!-- 		<div class="col-md-4 col-sm-6">
 			<div class="new-tile" >
 			</div>
-		</div>
+		</div> -->
 	</div>
 </div>
 
