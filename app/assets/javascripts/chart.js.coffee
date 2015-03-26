@@ -14,7 +14,6 @@ jQuery ->
     plot3dYMax = infoDiv.data('plot3dymax')
     lat = infoDiv.data('lat')
     lon = infoDiv.data('lon')
-    libraryNamesArray = infoDiv.data('librarynamesarray')
     libraryVolumeArray = infoDiv.data('libraryvolumearray')
     drawSplineChart(splineContainerName, freeSeatCount)
     draw3DScatterGraph(d3ContainerName, seats3dArray, plot3dZMax, plot3dYMax)
@@ -28,4 +27,5 @@ jQuery ->
     libraryFreeInfoArray = info1Div.data('libraryfreeinfoarray')
     libraryBusyInfoArray = info1Div.data('librarybusyinfoarray')
     drawBarGraph(barContainerName, libraryNamesArray, libraryFreeInfoArray, libraryBusyInfoArray)
-    
+    nearLibraryLocations = info1Div.data('nearLibraries') 
+    google.maps.event.addDomListener window, 'load', initialize_map([[43.662884, -79.395645], [43.472285, -80.544836],[45.504777, -73.577140]])

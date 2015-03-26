@@ -1,8 +1,28 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+$(document).on "click", "#search-btn", ->
+  button = $(this)
+  location_text  = $('#search_location').val() 
+  if location_text is ''
+    alert 'Fill in location field, it is empty'
+  else
+    $.ajax 'libraries/find_location',
+      type: 'GET'
+      dataType: 'json'
+      data:
+        location_text: location_text
+      error: () -> alert('error')
+      success: (data) -> 
+        lat = data[0]
+        lng = data[1]
+        $('#library_lat').val(lat)
+        $('#library_lon').val(lng)
+        new_src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + lat + ',' + lng + '&zoom=14&size=300x300&markers=color:blue|' + lat + ',' + lng
+        $('#map_img').attr('src', new_src)
 
 
+  
 
 
 $(document).on "click", ".mode-btn", ->

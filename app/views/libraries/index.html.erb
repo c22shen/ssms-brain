@@ -1,3 +1,4 @@
+<script src="https://maps.googleapis.com/maps/api/js"></script>
  <script src="http://code.highcharts.com/highcharts.js"></script>
   <script type="text/javascript">
   $( document ).ready(function() {
@@ -112,6 +113,110 @@ itemStyle: {
     });
 }
 
+
+
+
+
+
+function initialize_map(locations) {
+var bounds = new google.maps.LatLngBounds();  
+var mapCanvas = document.getElementById('map-canvas');
+var map = new google.maps.Map(mapCanvas);
+
+// function success(pos) {
+// lat = pos.coords.latitude;
+// lon = pos.coords.longitude;
+// var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
+// var marker = new google.maps.Marker({
+//     position: new google.maps.LatLng(lat, lon),
+//     map: map,
+//     icon: iconBase + 'man.png'
+//   });
+// bounds.extend(marker.position);
+// map.fitBounds(bounds);
+// }
+for (i = 0; i < locations.length; i++) {  
+  // alert(locations[i]);
+
+var marker;
+
+  if (i==0)
+  {
+    marker = new google.maps.Marker({
+    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+    map: map,
+    icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-stars.png'
+  });
+  }
+  else {
+    // alert(locations[i][0]);
+    // alert(locations[i][1]);
+    marker = new google.maps.Marker({
+    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+    map: map,
+    icon: "http://maps.google.com/mapfiles/kml/paddle/" + i + ".png"
+  });
+}
+
+  //extend the bounds to include each marker's position
+  bounds.extend(marker.position);
+}
+//now fit the map to the newly inclusive bounds
+map.fitBounds(bounds);
+
+// var mapCanvas = document.getElementById('map-canvas');
+// var dc = new google.maps.LatLng(lat,lon);
+// var mapOptions = {
+//   zoom: 18,
+//   center: dc
+// }
+
+
+// To add the marker to the map, use the 'map' property
+
+// var marker = new google.maps.Marker({
+//     position: dc,
+//     map: map,
+//     title:"University of Waterloo"
+// });
+
+map.set('styles', [
+  {
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [
+      { color: '#34495E' },
+      { weight: 1.3 }
+    ]
+  }, {
+    featureType: 'road',
+    elementType: 'labels',
+    stylers: [
+      { saturation: -100 },
+      { invert_lightness: true }
+    ]
+  }, {
+    featureType: 'landscape',
+    elementType: 'geometry',
+    stylers: [
+      { hue: '#008080' },
+      { gamma: 1.4 },
+      { saturation: 82 },
+      { lightness: 96 }
+    ]
+  }, {
+    featureType: 'poi.school',
+    elementType: 'geometry',
+    stylers: [
+      { hue: '#2980B9' },
+      { lightness: -15 },
+      { saturation: 99 }
+    ]
+  }
+]);     
+}
+
 </script>
 
 
@@ -120,7 +225,13 @@ itemStyle: {
 
 <%= render 'navbar' %>
 
-<%= tag("div", id: "info1-div", data: {barContainerName: @barChartContainerName, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array}) %>
+ <div id="map-canvas" class="jumbotron" style="height:100%; width:100%;background:  transparent no-repeat 1 1;
+  height:       450px;
+  margin-top:52px;
+  margin-bottom:0;">
+</div>
+
+<%= tag("div", id: "info1-div", data: {barContainerName: @barChartContainerName, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, nearLibraries: @near_library_locations }) %>
 
 
 
@@ -154,7 +265,20 @@ line-height: 0.986; margin-top:150px">Pick a spot you like</h1>
     font-weight: 100; color:white; font-size: 24px;">
     <%= library.name %>
     </p>
+      <% if library.plug? %>
+      <i class="fa fa-plug" style="color:white; margin-left:10px"></i>
+      <% end %>
+
+      <% if library.wifi? %>
+        <i class="fa fa-wifi" style="color:white"></i>
+      <% end %>
+
+      <% if library.coffee? %>
+        <i class="fa fa-coffee" style="color:white"></i>
+      <% end %>
   <% end %>
+
+
 
   <%= content_tag :div, class: get_tile_back_background(library.kind) do %>
     <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
@@ -166,15 +290,101 @@ line-height: 0.986; margin-top:150px">Pick a spot you like</h1>
 <% end %>
 
 </div>
-<% end %> 
+  <% end %> 
 <% end %>
+
+
 
 		
 				
-<!-- 		<div class="col-md-4 col-sm-6">
-			<div class="new-tile" >
+		<div class="col-md-4 col-sm-6">
+			<div class="new-tile"  data-toggle="modal" data-target=".bs-example-modal-lg">
 			</div>
-		</div> -->
+		</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <h1>Create New Library</h1>
+    <%= form_for :library, url: libraries_path do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    Location
+    <%= f.label :lat %><br>
+    <%= f.number_field :lat, :value => @lat, :step=>"any" %> 
+
+    <%= f.label :lat %><br>
+    <%= f.number_field :lon, :value => @lon, :step=>"any" %> 
+      
+<p> Search for Location</p>
+<%= text_field_tag "search_location" %>  
+
+<%= content_tag("a","search for location", :style=> "", id: 'search-btn') %>
+
+
+    <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=43.471897899999995,-80.5405018&zoom=14&size=300x300&markers=color:blue|43.471897899999995,-80.5405018", :id=>'map_img' %>
+
+      </p>
+
+  
+
+
+  <p>
+    <%= f.label :noise %><br>
+    <%= f.range_field :noise, :min=>1, :max=>5, :class=>"slide", :id=>"slider1"%>
+  </p>
+ <p>
+   <%= f.label :plug %><br>
+   <%= f.check_box :plug %>
+ </p>
+
+  <p>
+   <%= f.label :wifi %><br>
+   <%= f.check_box :wifi %>
+ </p>
+
+  <p>
+   <%= f.label :coffee %><br>
+   <%= f.check_box :coffee %>
+ </p>
+
+<p>
+   <%#= f.label :coffee %>
+   <%= f.radio_button :kind, "library" %>
+     <%= label :kind_library, 'Library' %>
+      <%= f.radio_button :kind, "coffee" %>
+     <%= label :kind_coffee, 'coffee' %>
+   <%= f.radio_button :kind, "space" %>
+     <%= label :kind_space, 'space' %>
+
+ </p>
+
+
+
+
+
+   <%#=f.hidden_field :kind, :value => "virtual" %>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+  </div>
+  </div>
+</div>
+
+
+
+
 	</div>
 </div>
 

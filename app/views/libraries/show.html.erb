@@ -1,6 +1,6 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/highcharts-more.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
  <script type="text/javascript">
 
@@ -607,7 +607,7 @@ map.set('styles', [
    
 
 
-<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.lat, lon: @library.lon, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, volumeDisplayFloor: @volumeDisplayFloor, currLibraryId: @currLibraryId, volumeContainerName: @volumeChartContainerName, seatsVolumeArray: @seats_volume_array}) %>
+<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.latitude, lon: @library.longitude, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, volumeDisplayFloor: @volumeDisplayFloor, currLibraryId: @currLibraryId, volumeContainerName: @volumeChartContainerName, seatsVolumeArray: @seats_volume_array}) %>
 
 <%= render 'navbar' %>
 <!-- <div class="map-section"> -->
@@ -652,7 +652,7 @@ font-size: 40px;
   </div>
 </div>
 
-<% if @free_seat_percentage > 20 %>
+<% if !@free_seat_percentage.nil? && @free_seat_percentage > 20 %>
   <p class="text-center status-message" id=<%= @occupancyMsgContainerName[1..-1] %> style="margin-top:20px; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:20px" > 
       <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>

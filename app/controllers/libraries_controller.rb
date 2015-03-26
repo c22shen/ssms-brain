@@ -1,5 +1,28 @@
 class LibrariesController < ApplicationController
 	def index 
+            # city = request.location.city
+
+            # logger.debug country = request.location.country_code
+
+            # Current Location
+            # @lat = request.location.latitude
+            # @lon = request.location.longitude 
+
+            location_info = request.location
+
+            near_libraries = Library.near([location_info.latitude, location_info.longitude],5)
+            # @near_libraries.pluck(:id, :name)
+            
+            @near_library_locations = Array.new 
+            @near_library_locations.push([location_info.latitude, location_info.longitude])
+
+            near_libraries.all.each do |library|
+                  @near_library_locations.push[library.latitude, library.longitude]
+            end
+
+
+
+
             library_free_info_array = Array.new
                   library_busy_info_array = Array.new
                   Library.all.each do |library|
@@ -66,6 +89,22 @@ class LibrariesController < ApplicationController
             end
       end
 
+      def find_location
+        data = Geocoder.search(params[:location_text])
+        unless data.count==0
+          lng = data[0].geometry["location"]["lng"]
+          lat = data[0].geometry["location"]["lat"]
+          result = String.new
+          result = lng.to_s + ',' + lat.to_s
+            
+            # result = []
+            result=[lat, lng]
+          respond_to do |format|
+                  format.js {render json: result.to_json}
+            end
+        end
+      end
+
       def set_location  
             # CLEAN UP LATERRRR
             @homestyle='white'
@@ -111,6 +150,14 @@ class LibrariesController < ApplicationController
             return color
       end
 
+      def create
+            @library = Library.new(library_params)
+ 
+  @library.save!
+  redirect_to @library
+
+      end
+
       def show
 # Responsible for the very first time display 
             # @homestyle='#252020'
@@ -122,63 +169,66 @@ class LibrariesController < ApplicationController
             seats_3d_array = Array.new
             seats_volume_array = Array.new 
 
-            @displayFloor = @library.floor_array.min
-            @volumeDisplayFloor = @library.floor_array.min
+            unless @library.floor_array.nil?
+                  @displayFloor = @library.floor_array.min
+                  @volumeDisplayFloor = @library.floor_array.min
+            end
             @currLibraryId =  @library.id
 
             # z and y are switched in the 3D plot
-            @plot_3d_z_max = @library.seats.maximum("y")
-            @plot_3d_y_max = @library.seats.maximum("z")+1
-            @library.seats.each do |seat|
-                  color = getStatusColor(seat.status)
-                  seat_info_3d = Hash.new
-                  seat_info_3d[:name]=seat.id
-                  seat_info_3d[:id]=seat.id
-                  seat_info_3d[:color]= color
-                  # Change display orientation, switched on purpose
-                  seat_info_3d[:x]=seat.x
-                  seat_info_3d[:y]=seat.z
-                  seat_info_3d[:z]=seat.y
-                  seats_3d_array.push(seat_info_3d)
+            unless @library.seats.count == 0 
+                  @plot_3d_z_max = @library.seats.maximum("y")
+                  @plot_3d_y_max = @library.seats.maximum("z")+1
+                  @library.seats.each do |seat|
+                        color = getStatusColor(seat.status)
+                        seat_info_3d = Hash.new
+                        seat_info_3d[:name]=seat.id
+                        seat_info_3d[:id]=seat.id
+                        seat_info_3d[:color]= color
+                        # Change display orientation, switched on purpose
+                        seat_info_3d[:x]=seat.x
+                        seat_info_3d[:y]=seat.z
+                        seat_info_3d[:z]=seat.y
+                        seats_3d_array.push(seat_info_3d)
 
-                  if seat.z == @displayFloor
-                        seat_info_floor = Hash.new
-                        seat_info_floor[:name]=seat.id
-                        seat_info_floor[:id]=seat.id
-                        seat_info_floor[:color]=color
-                        seat_info_floor[:x]=seat.x
-                        seat_info_floor[:y]=seat.y
-                        seats_floor_array.push(seat_info_floor)
+                        if seat.z == @displayFloor
+                              seat_info_floor = Hash.new
+                              seat_info_floor[:name]=seat.id
+                              seat_info_floor[:id]=seat.id
+                              seat_info_floor[:color]=color
+                              seat_info_floor[:x]=seat.x
+                              seat_info_floor[:y]=seat.y
+                              seats_floor_array.push(seat_info_floor)
 
-                        seat_info_volume = Hash.new 
-                        seat_info_volume[:name]=seat.status
-                        seat_info_volume[:id]=seat.id
-                        seat_info_volume[:color]= getVolumeColor(seat.volume)
-                        seat_info_volume[:x]=seat.x
-                        seat_info_volume[:y]=seat.y
-                        seat_info_volume[:z]=seat.volume
-                        seats_volume_array.push(seat_info_volume) 
-                  end
+                              seat_info_volume = Hash.new 
+                              seat_info_volume[:name]=seat.status
+                              seat_info_volume[:id]=seat.id
+                              seat_info_volume[:color]= getVolumeColor(seat.volume)
+                              seat_info_volume[:x]=seat.x
+                              seat_info_volume[:y]=seat.y
+                              seat_info_volume[:z]=seat.volume
+                              seats_volume_array.push(seat_info_volume) 
+                        end
 
-                  # Library Detail Section
-                  @busy_seat_count = @library.seats.where("status='busy'").count
-                  @free_seat_count = @library.seats.where("status='free'").count
-                  @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count) 
+                        # Library Detail Section
+                        @busy_seat_count = @library.seats.where("status='busy'").count
+                        @free_seat_count = @library.seats.where("status='free'").count
+                        @free_seat_percentage = @free_seat_count * 100.0/(@busy_seat_count+@free_seat_count) 
 
 
-                  # library_free_info_array = Array.new
-                  # library_busy_info_array = Array.new
-                  # Library.all.each do |library|
-                  #       library_free_info_array.push(library.seats.where("status='free'").count)
-                  #       library_busy_info_array.push(library.seats.where("status='busy'").count)
-                  # end
-                  # # Libraries Occupany Comparison
-                  # @library_names_array = Library.pluck(:name)
-                  # # @library_names = library_names.to_json.html_safe
-                  # @library_free_info_array = library_free_info_array
-                  # @library_busy_info_array = library_busy_info_array
-
-            end  
+                        # library_free_info_array = Array.new
+                        # library_busy_info_array = Array.new
+                        # Library.all.each do |library|
+                        #       library_free_info_array.push(library.seats.where("status='free'").count)
+                        #       library_busy_info_array.push(library.seats.where("status='busy'").count)
+                        # end
+                        # # Libraries Occupany Comparison
+                        # @library_names_array = Library.pluck(:name)
+                        # # @library_names = library_names.to_json.html_safe
+                        # @library_free_info_array = library_free_info_array
+                        # @library_busy_info_array = library_busy_info_array
+                  end  
+            end
 
             @seats_floor_array = seats_floor_array
             @seats_3d_array = seats_3d_array
@@ -199,4 +249,10 @@ class LibrariesController < ApplicationController
             @library_welcome_msg = "Welcome to " + @library.name + " Library"
 
       end
+
+
+      private
+  def library_params
+    params.require(:library).permit(:name, :description, :kind, :plug, :table, :noise, :lat, :lon,:latitude, :longtitude, :coffee, :wifi, :plug)
+  end
 end

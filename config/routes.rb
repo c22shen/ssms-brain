@@ -17,6 +17,8 @@ get 'libraries/save_retrieve_comments' => 'libraries#save_retrieve_comments'
 get 'libraries/set_location' => 'libraries#set_location'
 get 'libraries/update_floor_chart' => 'libraries#update_floor_chart'
 get 'libraries/update_volume_chart' => 'libraries#update_volume_chart'
+get 'libraries/find_location' => 'libraries#find_location'
+
 
 
 resources :articles do
