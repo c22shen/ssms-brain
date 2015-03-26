@@ -136,7 +136,7 @@ var map = new google.maps.Map(mapCanvas);
 // bounds.extend(marker.position);
 // map.fitBounds(bounds);
 // }
-for (i = 1; i <= locations.length; i++) {  
+for (i = 0; i < locations.length; i++) {  
   // alert(locations[i]);
 
 var marker;
@@ -152,10 +152,12 @@ var marker;
   // else {
     // alert(locations[i][0]);
     // alert(locations[i][1]);
+
+    var plusone = i+1;
     marker = new google.maps.Marker({
     position: new google.maps.LatLng(locations[i][0], locations[i][1]),
     map: map,
-    icon: "http://maps.google.com/mapfiles/kml/paddle/" + i + ".png"
+    icon: "http://maps.google.com/mapfiles/kml/paddle/" + plusone + ".png"
   });
 // }
 
