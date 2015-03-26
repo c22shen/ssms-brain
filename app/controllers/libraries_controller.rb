@@ -9,7 +9,8 @@ class LibrariesController < ApplicationController
             # @lon = request.location.longitude 
 
             location_info = request.location
-
+            @latt = location_info.latitude
+            @lonn = location_info.longitude
             logger.debug '***********************************'
             logger.debug location_info.latitude
             logger.debug location_info.longitude
