@@ -27,5 +27,5 @@ jQuery ->
     libraryFreeInfoArray = info1Div.data('libraryfreeinfoarray')
     libraryBusyInfoArray = info1Div.data('librarybusyinfoarray')
     drawBarGraph(barContainerName, libraryNamesArray, libraryFreeInfoArray, libraryBusyInfoArray)
-    nearLibraryLocations = info1Div.data('nearLibraries') 
-    google.maps.event.addDomListener window, 'load', initialize_map([[43.662884, -79.395645], [43.472285, -80.544836],[45.504777, -73.577140]])
+    nearLibraryLocations = info1Div.data('nearlibraries') 
+    google.maps.event.addDomListener window, 'load', initialize_map(nearLibraryLocations)
