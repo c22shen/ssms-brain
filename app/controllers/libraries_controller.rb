@@ -255,6 +255,6 @@ class LibrariesController < ApplicationController
 
       private
   def library_params
-    params.require(:library).permit(:name, :description, :kind, :plug, :table, :noise, :lat, :lon,:latitude, :longtitude, :coffee, :wifi, :plug)
+    params.require(:library).permit(:name, :description, :kind, :plug, :table, :noise, :lat, :lon,:latitude, :longitude, :coffee, :wifi, :plug)
   end
 end

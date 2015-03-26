@@ -16,8 +16,8 @@ $(document).on "click", "#search-btn", ->
       success: (data) -> 
         lat = data[0]
         lng = data[1]
-        $('#library_lat').val(lat)
-        $('#library_lon').val(lng)
+        $('#library_latitude').val(lat)
+        $('#library_longitude').val(lng)
         new_src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + lat + ',' + lng + '&zoom=14&size=300x300&markers=color:blue|' + lat + ',' + lng
         $('#map_img').attr('src', new_src)
 
