@@ -1,0 +1,39 @@
+<%= link_to library_path(library.id) do %>
+
+<div class="flip-container" style="margin-bottom:50px" ontouchstart="this.classList.toggle('hover');">
+<div class="flipper">
+
+
+  <%= content_tag :div, class: get_tile_front_background(library.kind) do %>
+    <p class="text-center" style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 24px;">
+    <%= library.name %>
+    </p>
+    <% if rank %> 
+      <span style="font-family: 'Roboto', sans-serif;
+    font-weight: 300; color:white; font-size:24px; margin-left: 10px"><%= library.id %> </span>
+    <% end %>
+
+      <% if library.plug? %>
+      <i class="fa fa-plug" style="color:white; margin-left:10px"></i>
+      <% end %>
+
+      <% if library.wifi? %>
+        <i class="fa fa-wifi" style="color:white"></i>
+      <% end %>
+
+      <% if library.coffee? %>
+        <i class="fa fa-coffee" style="color:white"></i>
+      <% end %>
+  <% end %>
+
+
+
+  <%= content_tag :div, class: get_tile_back_background(library.kind) do %>
+    <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 40px; margin-top:50px"> <%= pluralize(library.num_free_seats,'seat') %> available</p>  
+  <% end %>
+</div>
+</div>
+
+<% end %>

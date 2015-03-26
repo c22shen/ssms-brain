@@ -227,71 +227,71 @@ map.set('styles', [
 
 <%= render 'navbar' %>
 
- <div id="map-canvas" class="jumbotron" style="height:100%; width:100%;background:  transparent no-repeat 1 1;
-  height:       450px;
-  margin-top:52px;
-  margin-bottom:0;">
-</div>
 
+<% unless  @near_library_ids.empty? %>
+   <div id="map-canvas" class="jumbotron" style="height:100%; width:100%;background:  transparent no-repeat 1 1;
+    height:       450px;
+    margin-top:52px;
+    margin-bottom:0;">
+  </div>
+<% end %>
 <%= tag("div", id: "info1-div", data: {barContainerName: @barChartContainerName, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, nearLibraries: @near_library_locations }) %>
 
 
 
 
 
-<h1 class="text-center" style="font-family: 'lato';
+<!-- <h1 class="text-center" style="font-family: 'lato';
 font-size: 40px;
 color: rgb(255, 255, 255);
 line-height: 0.986; margin-top:150px">Pick a spot you like</h1>
+ -->
 
-<h1>LATT:  <%= @latt %></h1>
-<h1>LONN:  <%= @lonn %></h1>
+
 
 
 
 <div class="container" style="margin-top: 100px">
 	<div class="row">
+<% unless  @near_library_ids.empty? %>
+
+  <h1 style="color:white; text-align:left; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 40px; margin-bottom: 100px">Locations closest to you</h1>
+
+
+<% @near_library_ids.each do |id| %> 
+  <% library = Library.find_by_id(id) %>
+
+
+
+    <div class="col-md-4 col-xs-6">
+
+  <%= render partial: "flip_tile", :locals => {:library => library, :rank=>true } %>
+
+</div>
+<% end %>
+
+<% end %>
+
+
+
+
+
+
+
+<h1 style="color:white; text-align:left; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 40px; margin-bottom: 100px">Available Locations</h1>
+
+
+
+
 
 <% Library.pluck(:kind).uniq.each do |kind| %>
   <% Library.all.where("kind = '#{kind}'").each do |library| %>
   
 
     <div class="col-md-4 col-xs-6">
-
-       <%= link_to library_path(library.id) do %>
-
-<div class="flip-container" style="margin-bottom:50px" ontouchstart="this.classList.toggle('hover');">
-<div class="flipper">
-
-
-  <%= content_tag :div, class: get_tile_front_background(library.kind) do %>
-    <p class="text-center" style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size: 24px;">
-    <%= library.name %>
-    </p>
-      <% if library.plug? %>
-      <i class="fa fa-plug" style="color:white; margin-left:10px"></i>
-      <% end %>
-
-      <% if library.wifi? %>
-        <i class="fa fa-wifi" style="color:white"></i>
-      <% end %>
-
-      <% if library.coffee? %>
-        <i class="fa fa-coffee" style="color:white"></i>
-      <% end %>
-  <% end %>
-
-
-
-  <%= content_tag :div, class: get_tile_back_background(library.kind) do %>
-    <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size: 40px; margin-top:50px"> <%= pluralize(library.num_free_seats,'seat') %> available</p>  
-  <% end %>
-</div>
-</div>
-
-<% end %>
+      <%= render partial: "flip_tile", :locals => {:library => library, :rank=>false} %>
 
 </div>
   <% end %> 

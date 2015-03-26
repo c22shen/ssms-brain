@@ -14,12 +14,14 @@ class LibrariesController < ApplicationController
             
             near_libraries = Library.near([location_info.latitude, location_info.longitude],50)
             # @near_libraries.pluck(:id, :name)
-            
+
+            @near_library_ids = Array.new            
             @near_library_locations = Array.new 
             # @near_library_locations.push([location_info.latitude, location_info.longitude])
 
             near_libraries.all.each do |library|
                   @near_library_locations.push([library.latitude, library.longitude])
+                  @near_library_ids.push(library.id)
             end
 
 
