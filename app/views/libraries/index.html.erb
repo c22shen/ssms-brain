@@ -259,7 +259,7 @@ line-height: 0.986; margin-top:150px">Pick a spot you like</h1>
     font-weight: 100; color:white; font-size: 40px; margin-bottom: 100px">Locations closest to you</h1>
 
 
-<% @near_library_ids.each_with_index do |id, index| %> 
+<% @near_library_ids.each.with_index(1) do |id, index| %> 
   <% library = Library.find_by_id(id) %>
 
 
