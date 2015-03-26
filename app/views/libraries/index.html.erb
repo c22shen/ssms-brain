@@ -136,20 +136,20 @@ var map = new google.maps.Map(mapCanvas);
 // bounds.extend(marker.position);
 // map.fitBounds(bounds);
 // }
-for (i = 0; i < locations.length; i++) {  
+for (i = 1; i <= locations.length; i++) {  
   // alert(locations[i]);
 
 var marker;
 
-  if (i==0)
-  {
-    marker = new google.maps.Marker({
-    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-    map: map,
-    icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-stars.png'
+  // if (i==0)
+  // {
+    // marker = new google.maps.Marker({
+    // position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+    // map: map,
+    // icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-stars.png'
   });
-  }
-  else {
+  // }
+  // else {
     // alert(locations[i][0]);
     // alert(locations[i][1]);
     marker = new google.maps.Marker({
@@ -157,7 +157,7 @@ var marker;
     map: map,
     icon: "http://maps.google.com/mapfiles/kml/paddle/" + i + ".png"
   });
-}
+// }
 
   //extend the bounds to include each marker's position
   bounds.extend(marker.position);
@@ -321,11 +321,11 @@ line-height: 0.986; margin-top:150px">Pick a spot you like</h1>
 
   <p>
     Location
-    <%= f.label :lat %><br>
-    <%= f.number_field :lat, :value => @lat, :step=>"any" %> 
+    <%= f.label :latitude %><br>
+    <%= f.number_field :latitude, :value => @lat, :step=>"any" %> 
 
-    <%= f.label :lat %><br>
-    <%= f.number_field :lon, :value => @lon, :step=>"any" %> 
+    <%= f.label :longitude %><br>
+    <%= f.number_field :longitude, :value => @lon, :step=>"any" %> 
       
 <p> Search for Location</p>
 <%= text_field_tag "search_location" %>  

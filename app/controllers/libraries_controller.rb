@@ -11,15 +11,12 @@ class LibrariesController < ApplicationController
             location_info = request.location
             @latt = location_info.latitude
             @lonn = location_info.longitude
-            logger.debug '***********************************'
-            logger.debug location_info.latitude
-            logger.debug location_info.longitude
             
             near_libraries = Library.near([location_info.latitude, location_info.longitude],50)
             # @near_libraries.pluck(:id, :name)
             
             @near_library_locations = Array.new 
-            @near_library_locations.push([location_info.latitude, location_info.longitude])
+            # @near_library_locations.push([location_info.latitude, location_info.longitude])
 
             near_libraries.all.each do |library|
                   @near_library_locations.push([library.latitude, library.longitude])
