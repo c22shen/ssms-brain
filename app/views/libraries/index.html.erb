@@ -261,18 +261,13 @@ line-height: 0.986; margin-top:150px">Pick a spot you like</h1>
 
 <% @near_library_ids.each.with_index(1) do |id, index| %> 
   <% library = Library.find_by_id(id) %>
-
-
-
     <div class="col-md-4 col-xs-6">
 
-  <%= render partial: "flip_tile", :locals => {:library => library, :rank=>index } %>
-
+      <%= render partial: "flip_tile", :locals => {:library => library, :rank=>index } %>
+    </div>
+  <% end %>
+<% end %>
 </div>
-<% end %>
-
-<% end %>
-
 
 
 
