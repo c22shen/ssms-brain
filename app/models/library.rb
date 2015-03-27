@@ -33,6 +33,16 @@ class Library < ActiveRecord::Base
   		return seats.where("status='free'").count 
   	end
 
+    def popularity
+      popularity_arr = Array.new
+      Library.all.each do |library| 
+        popularity_arr.push(library.articles.count)
+      end
+      popularity_arr  = popularity_arr.sort.reverse
+      hash = Hash[popularity_arr.map.with_index.to_a]
+      return hash[articles.count]+1
+    end
+
     def average_rating 
       unless articles.count==0
         return articles.average("rating").round(1)

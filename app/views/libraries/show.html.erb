@@ -607,7 +607,8 @@ map.set('styles', [
    
 
 
-<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.latitude, lon: @library.longitude, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, volumeDisplayFloor: @volumeDisplayFloor, currLibraryId: @currLibraryId, volumeContainerName: @volumeChartContainerName, seatsVolumeArray: @seats_volume_array}) %>
+<%= tag("div", id: "info-div", data: {splineContainerName: @splineChartContainerName, d3ContainerName: @d3ChartContainerName, floorContainerName: @floorChartContainerName, barContainerName: @barChartContainerName, freeSeatCount: @free_seat_count, seats3dArray: @seats_3d_array, seatsFloorArray: @seats_floor_array, plot3dZMax: @plot_3d_z_max, plot3dYMax: @plot_3d_y_max, lat: @library.latitude, lon: @library.longitude, libraryNamesArray: @library_names_array, libraryFreeInfoArray: @library_free_info_array, libraryBusyInfoArray: @library_busy_info_array, freeSeatCountLabelName: @freeSeatCountLabelName, busySeatCountLabelName: @busySeatCountLabelName, freeSeatPercentChartName: @freeSeatPercentChartName, occupancyMsgContainerName: @occupancyMsgContainerName, displayFloor: @displayFloor, volumeDisplayFloor: @volumeDisplayFloor, currLibraryId: @currLibraryId, volumeContainerName: @volumeChartContainerName, seatsVolumeArray: @seats_volume_array, activateChart: @activate_chart}) %>
+
 
 <%= render 'navbar' %>
 <!-- <div class="map-section"> -->
@@ -639,34 +640,37 @@ font-size: 40px;
   <h1 style="font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size:60px">Details</h1>
   <hr>
+
+
+<% unless @library.seats.empty? %>
+
   <div class="row">
     <div class="col-sm-6">
       <div class="progress-pie-chart" id=<%= @freeSeatPercentChartName[1..-1] %> data-percent=<%=@free_seat_percentage %> >
-  <div class="ppc-progress">
+    <div class="ppc-progress">
     <div class="ppc-progress-fill"></div>
-  </div>
-  <div class="ppc-percents">
+     </div>
+     <div class="ppc-percents">
     <div class="pcc-percents-wrapper">
       <span>%</span>
     </div>
-  </div>
-</div>
-
-<% if !@free_seat_percentage.nil? && @free_seat_percentage > 20 %>
-  <p class="text-center status-message" id=<%= @occupancyMsgContainerName[1..-1] %> style="margin-top:20px; font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:20px" > 
-      <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
-      <%= getEmptyMessage(@library.name) %>
-    </p>
-<% else %>
-  <p class="text-center" style="margin-top:20px; font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:20px" > 
-        <i class="fa fa-frown-o" style="color:white; font-size:30px"></i>
-       <%= getFullMessage(@library.name) %>
-  </p>
-<% end %>
-
     </div>
+    </div>
+
+    <% if !@free_seat_percentage.nil? && @free_seat_percentage > 20 %>
+      <p class="text-center status-message" id=<%= @occupancyMsgContainerName[1..-1] %> style="margin-top:20px; font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:20px" > 
+          <i class="fa fa-smile-o" style="color:white; font-size:30px"></i>
+          <%= getEmptyMessage(@library.name) %>
+        </p>
+    <% else %>
+      <p class="text-center" style="margin-top:20px; font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:20px" > 
+            <i class="fa fa-frown-o" style="color:white; font-size:30px"></i>
+           <%= getFullMessage(@library.name) %>
+      </p>
+    <% end %>
+</div>
 
     <div class="col-sm-6">
       <div class="row">
@@ -717,10 +721,111 @@ font-size: 40px;
     </div>
   </div>
 
+  <% else %>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="h2" style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:30px; margin-bottom:20px">
+            <%#= @library.description %>
+            <div class="row">
+                <% unless @library.articles.empty? %>
+                    <div class="col-xs-6">
+
+                         <h1 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white">User Rating</h1> 
+                    </div>
+                    <div class="col-xs-6">
+                        <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:40px"><%= @library.average_rating %> </h1>
+                    </div>
+                <% end %>
+            </div>
+
+            <div class="row">
+
+                    <div class="col-xs-6">
+
+                         <h1 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white">Popularity</h1> 
+                    </div>
+                    <div class="col-xs-6">
+                        <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:40px"><%= @library.popularity %> </h1>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-xs-6">
+                <h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white">Power Outlets</h1> 
+            </div>
+            <div class="col-xs-6">
+                <% if @library.plug? %>
+                <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px">Yes</h1>
+                <% else %> 
+                <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px">No</h1>
+                <% end %>
+
+            </div>
+            <div class="col-xs-12">
+                <hr style="border-top: dotted 1px; color:grey" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white">Free Wifi</h1> 
+            </div>
+            <div class="col-xs-6">
+                <% if @library.wifi? %>
+                <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px">Yes</h1>
+                <% else %> 
+                <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px">No</h1>
+                <% end %>
+
+            </div>
+            <div class="col-xs-12">
+                <hr style="border-top: dotted 1px; color:grey" />
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-xs-6">
+                <h1 style="font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white">Coffee nearby</h1> 
+            </div>
+            <div class="col-xs-6">
+                <% if @library.coffee? %>
+                <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px">Yes</h1>
+                <% else %> 
+                <h1 class='' style="text-align:right; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size:40px">No</h1>
+                <% end %>
+
+            </div>
+            <div class="col-xs-12">
+                <hr style="border-top: dotted 1px; color:grey" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<% end %>
+
 </div>
 </div>
 
-
+<% unless @library.seats.empty? %> 
  <div class="library-map-section">
 
 
@@ -740,41 +845,41 @@ font-size: 40px;
 </div>
 </div>
 
-<div class="library-map-section3d" style="">
+    <div class="library-map-section3d" style="">
 
-<div class="container" style="opacity:1;">
+    <div class="container" style="opacity:1;">
 
-
-<h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:60px">
-  Study Space Locations and Availabilities 
-</h1>
-
-<hr style="border-top: solid 1px; color:white">
-<h2 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%= @library.name %> - <%= @library.school %></h2>
-
-
-<% @library.floor_array.each do |floor| %>
-
-<%= content_tag(:button, getFloorBtnText(floor), class:["btn", "btn-info", "btn-sm", "floor-btn"], :"data-floor" => floor, :"data-library" => @library.id) %>
-<% end %>
-
-<div id=<%= @d3ChartContainerName[1..-1] %>> </div>
-<div id="sliders" class="hidden-lg">
 
     <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:20px; margin:50px">Vertical Rotation</h1> 
-    <input id="R0" type="range" min="0" max="45" value="15"/> 
-      <h1 style="font-family: 'Roboto', sans-serif;
-    font-weight: 100; color:white; font-size:20px; margin:50px">Horizontal Rotation</h1>
-      <input id="R1" type="range" min="0" max="45" value="15"/> 
-  </table>
-</div>
+        font-weight: 100; color:white; font-size:60px">
+      Study Space Locations and Availabilities 
+    </h1>
+
+    <hr style="border-top: solid 1px; color:white">
+    <h2 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:30px; margin-bottom:20px"><%= @library.name %> - <%= @library.school %></h2>
 
 
-</div>
-</div>
+    <% @library.floor_array.each do |floor| %>
+
+    <%= content_tag(:button, getFloorBtnText(floor), class:["btn", "btn-info", "btn-sm", "floor-btn"], :"data-floor" => floor, :"data-library" => @library.id) %>
+    <% end %>
+
+    <div id=<%= @d3ChartContainerName[1..-1] %>> </div>
+    <div id="sliders" class="hidden-lg">
+
+        <h1 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:20px; margin:50px">Vertical Rotation</h1> 
+        <input id="R0" type="range" min="0" max="45" value="15"/> 
+          <h1 style="font-family: 'Roboto', sans-serif;
+        font-weight: 100; color:white; font-size:20px; margin:50px">Horizontal Rotation</h1>
+          <input id="R1" type="range" min="0" max="45" value="15"/> 
+    </div>
+
+    </div>
+    </div>
+
+
 
 <div class="library-map-section1" style="">
   <div class="container" style="opacity:1;">
@@ -823,6 +928,18 @@ font-size: 40px;
     
   </div>
 </div>
+
+
+<% end %>
+
+
+
+
+
+
+
+
+
 
 <div class="discussion-section" style="">
   <div class="container">

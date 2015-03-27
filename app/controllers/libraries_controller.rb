@@ -54,7 +54,13 @@ class LibrariesController < ApplicationController
             new_article.save!
 
             library = Library.find_by_id(params[:library_id])
-            new_articles = library.articles.where("id>#{params[:recent_article_id]}")
+            # logger.debug "*************#{params[:recent_article_id]}*******************"
+            
+            if params[:recent_article_id].nil? 
+                  new_articles = library.articles
+            else      
+                  new_articles = library.articles.where("id>#{params[:recent_article_id]}")
+            end
             respond_to do |format| 
                   format.js {render :partial => "libraries/articles", :locals => {:articles => new_articles}} 
             end            
@@ -176,12 +182,16 @@ class LibrariesController < ApplicationController
       end
 
       def show
+
+
 # Responsible for the very first time display 
             # @homestyle='#252020'
             @homestyle='#526373'
 
             
             @library = Library.find(params[:id]) 
+
+            @activate_chart = @library.seats.any? 
             seats_floor_array = Array.new
             seats_3d_array = Array.new
             seats_volume_array = Array.new 

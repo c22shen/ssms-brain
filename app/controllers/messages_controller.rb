@@ -33,16 +33,13 @@ class MessagesController < ApplicationController
         else
           new_status='busy'
         end
-        new_volume = rand *300
+        new_volume = rand *50
         # DC library reserved for live 
         dc_library = Library.find(1)
         new_id = rand(dc_library.seats.maximum(:id)+1..Seat.maximum(:id))
       end
     end
     
-    # logger.debug "*******************#{new_id}*************"
-    # logger.debug "***************#{new_status}************************"
-  # only two piece of info required: UID, STATUS
 
     curr_seat = Seat.find_by_id(new_id)
 
