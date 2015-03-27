@@ -3,7 +3,6 @@ jQuery ->
 
     infoDiv = $('#info-div')
     activateChart = infoDiv.data('activatechart')
-    alert activateChart
     splineContainerName = infoDiv.data('splinecontainername')
     d3ContainerName = infoDiv.data('d3containername')
     floorContainerName = infoDiv.data('floorcontainername')

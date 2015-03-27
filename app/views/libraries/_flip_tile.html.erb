@@ -15,23 +15,30 @@
     <% end %>
 
       <% if library.plug? %>
-      <i class="fa fa-plug" style="color:white; margin-left:10px"></i>
+      <i class="fa fa-plug" style="color:white; margin-left:5px"></i>
       <% end %>
 
       <% if library.wifi? %>
-        <i class="fa fa-wifi" style="color:white"></i>
+        <i class="fa fa-wifi" style="color:white; margin-left:5px"></i>
       <% end %>
 
       <% if library.coffee? %>
-        <i class="fa fa-coffee" style="color:white"></i>
+        <i class="fa fa-coffee" style="color:white; margin-left:5px"></i>
       <% end %>
   <% end %>
 
 
 
   <%= content_tag :div, class: get_tile_back_background(library.kind) do %>
+  <% if library.seats.any? %>
     <p class="text-center" id=<%= getPercentDisplayIndex(library.acronym) %>   style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
     font-weight: 100; color:white; font-size: 40px; margin-top:50px"> <%= pluralize(library.num_free_seats,'seat') %> available</p>  
+  <% else %>
+  <p class="text-center" style="color:white; text-align:center; font-family: 'Roboto', sans-serif;
+    font-weight: 100; color:white; font-size: 28px; margin-top:50px"> 
+  <%= library.description %>
+  </p>  
+  <% end %>
   <% end %>
 </div>
 </div>
