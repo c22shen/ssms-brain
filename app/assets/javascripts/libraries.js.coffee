@@ -7,19 +7,30 @@ $(document).on "click", "#search-btn", ->
   if location_text is ''
     alert 'Fill in location field, it is empty'
   else
-    $.ajax 'libraries/find_location',
+    $.ajax '/libraries/find_location',
       type: 'GET'
       dataType: 'json'
       data:
         location_text: location_text
-      error: () -> alert('error')
+      error: () -> alert('Server is busy, please try again later.')
       success: (data) -> 
         lat = data[0]
         lng = data[1]
+        place = data[2]
+        region = data[3]
+        # province = data[4]
         $('#library_latitude').val(lat)
         $('#library_longitude').val(lng)
+        $('#map-place').text(place)
+        $('#map-region').text(region)
+        # $('#map-province').text(province)
+        $('#library_longitude').val(lng)
+        
         new_src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + lat + ',' + lng + '&zoom=14&size=300x300&markers=color:blue|' + lat + ',' + lng
         $('#map_img').attr('src', new_src)
+        $('#map_img').show()
+        $('#map-submit').show()
+
 
 
   

@@ -26,15 +26,18 @@ class LibrariesController < ApplicationController
 
 
 
-
+            library_names_array = Array.new
             library_free_info_array = Array.new
                   library_busy_info_array = Array.new
                   Library.all.each do |library|
-                        library_free_info_array.push(library.seats.where("status='free'").count)
-                        library_busy_info_array.push(library.seats.where("status='busy'").count)
+                        unless library.seats.empty?
+                              library_free_info_array.push(library.seats.where("status='free'").count)
+                              library_busy_info_array.push(library.seats.where("status='busy'").count)
+                              library_names_array.push(library.name)
+                        end
                   end
                   # Libraries Occupany Comparison
-                  @library_names_array = Library.pluck(:name)
+                  @library_names_array = library_names_array
                   # @library_names = library_names.to_json.html_safe
                   @library_free_info_array = library_free_info_array
                   @library_busy_info_array = library_busy_info_array
@@ -98,11 +101,21 @@ class LibrariesController < ApplicationController
         unless data.count==0
           lng = data[0].geometry["location"]["lng"]
           lat = data[0].geometry["location"]["lat"]
-          result = String.new
-          result = lng.to_s + ',' + lat.to_s
-            
-            # result = []
-            result=[lat, lng]
+          
+          place = data[0].address_components[0]["long_name"]
+          if data[0].address_components.count < 5
+            region = ''
+            # province = ''
+          else
+            region = data[0].address_components[3]["long_name"]
+            # province= data[0].address_components[5]["long_name"]
+          end
+          result = Array.new
+          result.push(lat) 
+          result.push(lng)
+          result.push(place)
+          result.push(region)
+          # result.push(province)
           respond_to do |format|
                   format.js {render json: result.to_json}
             end
@@ -144,9 +157,9 @@ class LibrariesController < ApplicationController
       end
 
       def getVolumeColor(volume)
-            if volume<100
+            if volume<10
                   color = ENV['COLOR_LOW']
-            elsif volume<200
+            elsif volume<20
                   color = ENV['COLOR_MEDIUM']
             else
                   color = ENV['COLOR_HIGH']
@@ -257,6 +270,6 @@ class LibrariesController < ApplicationController
 
       private
   def library_params
-    params.require(:library).permit(:name, :description, :kind, :plug, :table, :noise, :lat, :lon,:latitude, :longitude, :coffee, :wifi, :plug)
+    params.require(:library).permit(:name, :description, :kind, :plug, :table, :noise, :lat, :lon,:latitude, :longitude, :coffee, :wifi, :plug, :size)
   end
 end

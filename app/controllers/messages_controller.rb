@@ -99,8 +99,10 @@ class MessagesController < ApplicationController
       busy_seat_data_array = Array.new 
       
       Library.all.each do |library|
-        free_seat_data_array.push(library.seats.where("status='free'").count)
-        busy_seat_data_array.push(library.seats.where("status='busy'").count)
+        unless library.seats.empty?
+          free_seat_data_array.push(library.seats.where("status='free'").count)
+          busy_seat_data_array.push(library.seats.where("status='busy'").count)
+        end
       end
 
       new_seat_hash[:free_seat_data_array] = free_seat_data_array
