@@ -76,6 +76,11 @@ class MessagesController < ApplicationController
       free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count)*100.0
       
 
+      #test data 
+      test_status = Library.find_by_name('machine shop').seats.first.status
+
+      test_status = (test_status == '1') ? 'ON' : 'OFF'
+
       new_seat_json = new_seat.to_json
       new_seat_hash = JSON.parse(new_seat_json)
       # Detail Section
@@ -90,7 +95,9 @@ class MessagesController < ApplicationController
       new_seat_hash[:busySeatCountLabelName] = ENV['LABEL_BUSY']+library.acronym
       new_seat_hash[:freeSeatPercentChartName] = ENV['CHART_PERCENT']+library.acronym
       new_seat_hash[:occupancyMsgContainerName] = ENV['CONTAINER_OCCUPANCY_MSG']+library.acronym
-            
+      
+      #test data
+      new_seat_hash[:testStatus] = test_status
       # bar chart info
       free_seat_data_array = Array.new 
       busy_seat_data_array = Array.new 

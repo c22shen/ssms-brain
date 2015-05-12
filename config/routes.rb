@@ -8,6 +8,8 @@ Rails.application.routes.draw do
  get 'statuses/seat_location_update' => 'statuses#seat_location_update'
 
    get 'welcome/team' => 'welcome#team'
+
+   get 'welcome/testpage' => 'welcome#testpage'
    
 # get 'welcome/index' => 'welcome#index'
 # resources :articles
@@ -19,7 +21,7 @@ get 'libraries/update_floor_chart' => 'libraries#update_floor_chart'
 get 'libraries/update_volume_chart' => 'libraries#update_volume_chart'
 get 'libraries/find_location' => 'libraries#find_location'
 
-
+post 'statuses/current_sensor' =>'statuses#current_sensor'
 
 resources :articles do
   resources :comments

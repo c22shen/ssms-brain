@@ -77,6 +77,15 @@ class StatusesController < ApplicationController
       end
     end
 
+    def current_sensor 
+      seat = Library.find_by_name('machine shop').seats.first
+      seat.status = params[:status]
+      seat.save!
+      respond_to do |format|
+        format.js {render :nothing => true, :status => 200, :content_type => 'text/html'}
+      end
+    end 
+
 
 
   	private

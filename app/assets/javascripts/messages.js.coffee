@@ -43,6 +43,12 @@ source.addEventListener 'message', (e) ->
 	percentDisplayName = data_source.percentDisplayName
 	percentDisplayValue = data_source.percentDisplayValue
 
+	testStatus = data_source.testStatus
+	testColor = 'red'
+	if testStatus == 'ON'
+		testColor = 'green'
+	else
+		tetColor = 'red'
 
 	infoDiv = $('#info-div')
 	displayFloor = infoDiv.attr('data-displayfloor')
@@ -126,7 +132,10 @@ source.addEventListener 'message', (e) ->
 		barChart.series[0].setData(busy_seat_data_array)
 	if ($(percentDisplayName).length)
 		$(percentDisplayName).text percentDisplayValue
-
+	if ($('#status-field').length)
+		$('#status-field').html testStatus
+		document.getElementById("status-field").style.color = testColor
+		
 
 
 
