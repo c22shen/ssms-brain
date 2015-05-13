@@ -82,7 +82,7 @@ class StatusesController < ApplicationController
       seat.status = params[:status]
       seat.save!
       respond_to do |format|
-        format.js {render :nothing => true, :status => 200, :content_type => 'text/html'}
+        format.html {render :nothing => true, :status => 200, :content_type => 'text/html'}
       end
     end 
 
