@@ -35,8 +35,10 @@ class MessagesController < ApplicationController
         end
         new_volume = rand *50
         # DC library reserved for live 
-        dc_library = Library.find(1)
-        new_id = rand(dc_library.seats.maximum(:id)+1..Seat.maximum(:id))
+        # DP Library for demo 
+        dp_library = Library.find(2)
+        
+        new_id = dp_library.seats.pluck(:id).sample
       end
     end
     
@@ -73,7 +75,7 @@ class MessagesController < ApplicationController
       # try to eliminate 
       free_seat_count=library.seats.where("status='free'").count
       busy_seat_count=library.seats.where("status='busy'").count
-      free_seat_percentage =free_seat_count.to_f/(free_seat_count+busy_seat_count)*100.0
+      free_seat_percentage = free_seat_count.to_f.zero? ? 0 : free_seat_count.to_f/(free_seat_count+busy_seat_count)*100.0
       
 
       #test data 
@@ -86,7 +88,9 @@ class MessagesController < ApplicationController
       # Detail Section
       new_seat_hash[:status_color] = status_color
       new_seat_hash[:volume_color] = volume_color
-      new_seat_hash[:free_seat_percentage] = free_seat_percentage.round
+      unless free_seat_percentage.nil?
+        new_seat_hash[:free_seat_percentage] = free_seat_percentage.round
+      end
       new_seat_hash[:free_seat_count] = free_seat_count
       new_seat_hash[:busy_seat_count] = busy_seat_count
 

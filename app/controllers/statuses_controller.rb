@@ -81,10 +81,11 @@ class StatusesController < ApplicationController
       seat = Library.find_by_name('machine shop').seats.first
       seat.status = params[:status]
       seat.save!
-      status = Status.new
-      status.status = params[:status]
-      status.uid = -1
-      status.save!
+      message = Message.new
+      message.message = params[:status]
+      message.email = 'fakeEmail'
+      message.name = 'currentSensor'
+      message.save!
       respond_to do |format|
         format.html {render :nothing => true, :status => 200, :content_type => 'text/html'}
       end
