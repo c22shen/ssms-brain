@@ -1,5 +1,8 @@
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+
 <h1 class="text-center" style="font-size: 30px; font-family: 'Roboto'; color:white"> Current Sensor System Demo </h1> 
-<% if @status == 'ON' %>
+<% if @status == '1' %>
 	<p class="text-center" style="font-size: 25px; font-family: 'Roboto';  sans-serif; font-weight: 100; color:white">
 		Device is: <em id="status-field" style="padding-left:10px; font-size: 40px; font-family: 'Roboto';  sans-serif; font-weight: 500; font-style: normal; color:green">ON</em>
 	</p>
@@ -9,3 +12,80 @@
 		Device is: <em id="status-field" style="padding-left:10px; font-size: 40px; font-family: 'Roboto';  sans-serif; font-weight: 500; font-style: normal; color:red">OFF</em>
 	</p>
 <% end %>
+
+<div id="testcontainer" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+
+$(function () {
+    $(document).ready(function () {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        var yourLabels = ["OFF", "ON"];
+        $('#testcontainer').highcharts({
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+            },
+            title: {
+                text: 'Live Current Sensor data'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+	                labels: {
+		            formatter: function() {
+		                return yourLabels[this.value];
+		            }
+        		},
+                title: {
+                    text: 'Status'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: '',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -5; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: 0.0
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        });
+    });
+});
+
+</script>
+

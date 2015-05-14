@@ -81,7 +81,7 @@ class MessagesController < ApplicationController
       #test data 
       test_status = Library.find_by_name('machine shop').seats.first.status
 
-      test_status = (test_status == '1') ? 'ON' : 'OFF'
+      # test_status = (test_status == '1') ? 'ON' : 'OFF'
 
       new_seat_json = new_seat.to_json
       new_seat_hash = JSON.parse(new_seat_json)

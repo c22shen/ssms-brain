@@ -44,12 +44,6 @@ source.addEventListener 'message', (e) ->
 	percentDisplayValue = data_source.percentDisplayValue
 
 	testStatus = data_source.testStatus
-	testColor = 'red'
-	if testStatus == 'ON'
-		testColor = 'green'
-	else
-		tetColor = 'red'
-
 	infoDiv = $('#info-div')
 	displayFloor = infoDiv.attr('data-displayfloor')
 	volumeDisplayFloor = infoDiv.attr('data-volumedisplayfloor')
@@ -133,8 +127,18 @@ source.addEventListener 'message', (e) ->
 	if ($(percentDisplayName).length)
 		$(percentDisplayName).text percentDisplayValue
 	if ($('#status-field').length)
-		$('#status-field').html testStatus
-		document.getElementById("status-field").style.color = testColor
+		
+		if testStatus == '1'
+			$('#status-field').html 'ON'
+			document.getElementById("status-field").style.color = 'green'
+		else
+			$('#status-field').html 'OFF'
+			document.getElementById("status-field").style.color = 'red'
+		
+		testSplineChart = $('#testcontainer').highcharts()
+		x_time = (new Date()).getTime()#current time
+		new_pt = [x_time, parseInt(testStatus)]
+		testSplineChart.series[0].addPoint(new_pt,true,true)
 		
 
 

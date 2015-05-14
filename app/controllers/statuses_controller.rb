@@ -79,13 +79,19 @@ class StatusesController < ApplicationController
 
     def current_sensor 
       seat = Library.find_by_name('machine shop').seats.first
-      seat.status = params[:status]
-      seat.save!
-      message = Message.new
-      message.message = params[:status]
-      message.email = 'fakeEmail'
-      message.name = 'currentSensor'
-      message.save!
+      prevStatus = seat.status
+
+      # do not save status if did not change 
+      unless prevStatus == params[:status]
+        seat.status = params[:status]
+        seat.save!
+
+        message = Message.new
+        message.message = params[:status]
+        message.email = 'fakeEmail'
+        message.name = 'currentSensor'
+        message.save!
+      end
       respond_to do |format|
         format.html {render :nothing => true, :status => 200, :content_type => 'text/html'}
       end

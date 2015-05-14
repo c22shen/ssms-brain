@@ -11,10 +11,8 @@ class WelcomeController < ApplicationController
   end
 
   def testpage 
-  	@seat = Library.find_by_name('machine shop').seats.first
-    @seat.status = params[:status]
-    @seat.save!
+  	seat = Library.find_by_name('machine shop').seats.first
+    @status = seat.status
 
-    @status = (@seat.status == 1) ? 'ON' : 'OFF'
   end 
 end
